@@ -111,7 +111,8 @@ Les éléments financiers, tarifaires, réglementaires et de conformité contenu
 
 ## 7. Versionnement
 
-Le dossier est un dépôt git local, branche `main`.
+Dépôt distant : **`https://github.com/dilevembamu12/fbb-ppc-apix`** (privé, branche par défaut `main`).
+La branche `main` locale suit `origin/main` ; un `git push` suffit donc à publier.
 
 Aucune identité git n'étant configurée sur le poste au moment de l'initialisation, une **identité locale provisoire** a été posée (`FBB Data Science <fbb@local>`). Elle ne concerne que ce dépôt et n'affecte pas la configuration de la machine. Pour la remplacer par la vraie identité :
 
@@ -120,13 +121,7 @@ cd 'e:\DILEVE\DILEVE\BUSINESS\PROJECTS\FBB\PPC'
 git config --local user.name "Nom Prénom"
 git config --local user.email "prenom.nom@fbb.example"
 git commit --amend --reset-author --no-edit
-```
-
-Pour rattacher le dépôt à un dépôt distant :
-
-```powershell
-git remote add origin <url-du-depot>
-git push -u origin main
+git push --force-with-lease
 ```
 
 Les fichiers de `dist/` sont versionnés volontairement, car ils constituent le livrable présenté à PPC. Pour alléger le dépôt, décommenter la ligne `# dist/` dans `.gitignore`.
