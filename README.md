@@ -100,7 +100,7 @@ python outils\build_docs.py --check          # vérifie les tableaux Markdown sa
 | `dist/xlsx/02-Matrice-roles-droits.xlsx` | 30 fonctions × 9 rôles | Sécurité et conception des écrans |
 | `dist/xlsx/03-Grille-tarifaire-logistique.xlsx` | Référentiel d'axes, engins, simulateur de prix | Atelier barème avec PPC |
 | `dist/xlsx/04-Simulateur-groupage.xlsx` | Répartition des frais d'une course groupée | Démonstration client |
-| `dist/pptx/APIX-All-In-One-12-slides-PPC.pptx` | **Version réunion** : 12 diapositives + 5 annexes (règle 10/20/30) | Rendez-vous avec la direction générale |
+| `dist/pptx/APIX-All-In-One-12-slides-PPC.pptx` | **Version réunion** : 12 diapositives + 6 annexes (règle 10/20/30) | Rendez-vous avec la direction générale |
 | `dist/pptx/APIX-All-In-One-Presentation-PPC.pptx` | Version détaillée : 22 diapositives | Dossier de fond, réunion technique |
 
 > Les valeurs numériques des classeurs (distances, coûts, seuils) sont des **propositions de travail** à remplacer par les données de PPC.
@@ -111,8 +111,27 @@ Deux fichiers, deux usages :
 
 | Version | Script | Format | Usage |
 |---|---|---|---|
-| Réunion | `outils/build_pptx_reunion.py` | 12 diapositives + 5 annexes | 20 minutes, règle 10/20/30 de Guy Kawasaki |
+| Réunion | `outils/build_pptx_reunion.py` | 12 diapositives + 6 annexes | 20 minutes, règle 10/20/30 de Guy Kawasaki |
 | Détaillée | `outils/build_pptx.py` | 22 diapositives | Dossier de fond, questions techniques |
+
+Séquence de la version réunion — les douleurs d'abord, le produit ensuite :
+
+| # | Diapositive | Fonction |
+|---|---|---|
+| 1 | APIX All In One | Accroche |
+| 2 | Le paiement est certifié. La marchandise, non. | Problème, quatre questions sans réponse |
+| 3 | Trois fuites qui coûtent, sans figurer dans aucun rapport | Coût de l'inaction |
+| 4 | Il n'achète pas une application. Il achète une certitude. | Marché et cible |
+| 5 | La chaîne de preuve, en six jalons | Solution |
+| 6 | Partout où le client se trouve | Ubiquité et maquettes |
+| 7 | L'argent ne part pas avant que le sac n'arrive | Séquestre |
+| 8 | Quatre éléments, un seul dossier | Preuve de livraison, photo géolocalisée |
+| 9 | Le transport cesse d'être un forfait | Barème et calculateur |
+| 10 | Cinq petits acheteurs, un seul camion | Groupage |
+| 11 | Deux approches, deux natures différentes | Concurrence |
+| 12 | PPC garde la main — cinq décisions | Souveraineté et appel à l'action |
+
+Annexes : A1 modèle économique, A2 équipe, A3 feuille de route, A4 arbitrage du groupage, A5 preuve et litige, A6 socle technique. À n'ouvrir que sur question.
 
 Points communs :
 
