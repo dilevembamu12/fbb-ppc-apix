@@ -56,6 +56,7 @@ PPC/
 │   ├── build_xlsx.py              génération des classeurs de travail (.xlsx)
 │   ├── build_pptx.py              génération de la présentation détaillée (.pptx, 22 diapos)
 │   ├── build_pptx_reunion.py      génération de la version réunion (.pptx, 12 diapos + annexes)
+│   ├── build_fiche.py             fiche A4 à remettre à PPC (une page, à compléter)
 │   ├── fetch_images.py            récupération des images libres (Wikimedia Commons)
 │   └── requirements.txt
 └── dist/                          livrables générés (créé par les scripts)
@@ -76,6 +77,7 @@ python outils\build_docs.py      # -> dist/docs/*.docx
 python outils\build_xlsx.py      # -> dist/xlsx/*.xlsx
 python outils\build_pptx_reunion.py   # -> dist/pptx/*12-slides*.pptx
 python outils\build_pptx.py      # -> dist/pptx/*Presentation*.pptx
+python outils\build_fiche.py     # -> dist/docs/F1-Fiche-cadrage-reglement-PPC.docx
 ```
 
 Options utiles :
@@ -102,6 +104,7 @@ python outils\build_docs.py --check          # vérifie les tableaux Markdown sa
 | `dist/xlsx/04-Simulateur-groupage.xlsx` | Répartition des frais d'une course groupée | Démonstration client |
 | `dist/pptx/APIX-All-In-One-12-slides-PPC.pptx` | **Version réunion** : 12 diapositives + 6 annexes (règle 10/20/30) | Rendez-vous avec la direction générale |
 | `dist/pptx/APIX-All-In-One-Presentation-PPC.pptx` | Version détaillée : 22 diapositives | Dossier de fond, réunion technique |
+| `dist/docs/F1-Fiche-cadrage-reglement-PPC.docx` | Fiche A4 d'une page : cinq questions sur le règlement des transporteurs, à compléter par PPC | À laisser en fin de réunion |
 
 > Les valeurs numériques des classeurs (distances, coûts, seuils) sont des **propositions de travail** à remplacer par les données de PPC.
 
