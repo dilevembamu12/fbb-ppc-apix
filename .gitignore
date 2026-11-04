@@ -1,0 +1,28 @@
+# ---------------------------------------------------------------------------
+# Dépôt du dossier APIX / PPC
+#
+# Les livrables de dist/ sont versionnés volontairement : ils sont le produit
+# fini présenté à PPC. Ils restent regénérables à tout moment par
+#   python outils\build_docs.py
+#   python outils\build_xlsx.py
+# Pour ne plus les versionner (et alléger le dépôt), décommenter la ligne ci-dessous.
+# ---------------------------------------------------------------------------
+# dist/
+
+# Fichiers temporaires de bureautique
+~$*
+*.tmp
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Éditeurs
+.vscode/
+.idea/
