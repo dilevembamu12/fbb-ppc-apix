@@ -46,10 +46,10 @@ Or la valeur perçue par le client final de PPC ne se joue pas au moment du paie
 
 ## 4. Ce que le transporteur partenaire y gagne
 
-- Des courses **réglées par PPC sur preuve**, sous 24 heures : aucun impayé côté client, aucun retard côté transporteur.
+- Des courses **réglées par PPC sur preuve**, dans le délai qu'il aura fixé : aucun impayé côté client.
 - Des rotations **pleines**, jamais des retours à vide subis.
 - Une **grille tarifaire claire**, connue à l'avance.
-- Un **paiement rapide** : libération sous 24 heures après preuve de livraison conforme.
+- Un **règlement prévisible** : déclenché par la preuve de livraison, dans le délai que PPC aura fixé.
 - Un **score de fiabilité** qui, avec le temps, lui donne accès aux meilleures courses.
 
 > Conséquence à assumer devant PPC : APIX devient le **donneur d'ordre préféré** des meilleurs transporteurs de la place. Un transporteur qui refuse APIX se prive de rotations garanties.

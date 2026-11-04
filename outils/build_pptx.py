@@ -684,7 +684,7 @@ def d13_sequestre(prs):
         ("1", "Le client paie PPC", "Ciment, et transport si l'offre l'inclut. Paiement par mobile money, virement ou espèces via un agent agréé."),
         ("2", "APIX certifie et ventile", "La part transport est isolée dans la commande et provisionnée. Offre sans transport : aucune provision."),
         ("3", "Le ciment est livré", "Le client valide sur son téléphone : quantité, état, scellé. La preuve est signée."),
-        ("4", "PPC règle le transporteur", "Sur preuve conforme, sous 24 heures. Retenue partielle en cas d'écart constaté."),
+        ("4", "PPC règle le transporteur", "Sur preuve conforme, dans le délai que PPC arrêtera. Retenue partielle en cas d'écart constaté."),
     ]
     largeur = Inches(2.72)
     x = MARGE
@@ -712,7 +712,8 @@ def d13_sequestre(prs):
     pied(diapo, sombre=True)
     notes(diapo, "Correction de fond : l'argent quitte le compte du client vers PPC avant même que le transporteur "
                  "voie la commande. Il n'y a pas de séquestre des fonds du client. Ce qu'APIX garantit, c'est un "
-                 "règlement du transport déclenché par la preuve, et une retenue possible sur la course concernée.")
+                 "règlement du transport déclenché par la preuve, et une retenue possible sur la course concernée. "
+                 "Ne jamais annoncer de délai de règlement : le circuit actuel de PPC n'est pas connu.")
 
 
 def d14_preuve_livraison(prs):

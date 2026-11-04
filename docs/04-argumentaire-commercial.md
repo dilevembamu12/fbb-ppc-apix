@@ -214,7 +214,7 @@ Un transporteur partenaire n'a qu'une question en tête : **« est-ce que je gag
 |---|---|---|
 | **Le camion part à moitié vide** | Courses publiées uniquement lorsque le volume est consolidé | Taux de remplissage moyen des courses APIX |
 | **PPC ne paie pas à l'arrivée** | Le règlement est engagé dès la commande et déclenché par la preuve | Délai moyen de règlement mesuré |
-| **Le paiement arrive des semaines plus tard** | Libération sous 24 heures après preuve de livraison | Délai moyen de paiement mesuré |
+| **Le paiement arrive des semaines plus tard** | Règlement déclenché par la preuve, dans le délai fixé par PPC | Délai moyen de règlement mesuré (référence actuelle à établir) |
 | **Les frais de route ne sont jamais couverts** | Frais annexes intégrés au barème, connus à l'avance | Détail du barème par axe |
 | **Trop d'attente au chargement** | Créneau de chargement planifié | Temps d'attente moyen avant / après |
 | **Les litiges sont tranchés à charge** | Dossier de preuve contradictoire, contestation possible avec pièces | Nombre de litiges tranchés en faveur du transporteur |
@@ -222,7 +222,9 @@ Un transporteur partenaire n'a qu'une question en tête : **« est-ce que je gag
 
 ### 5.1 Le message à faire passer aux transporteurs
 
-> **« APIX ne vous impose pas un logiciel. APIX vous apporte du chiffre d'affaires organisé : des courses pleines, payées d'avance, avec une grille de prix connue et un paiement sous 24 heures. »**
+> **« APIX ne vous impose pas un logiciel. APIX vous apporte du chiffre d'affaires organisé : des courses pleines, un règlement déclenché par la preuve de livraison, et une grille de prix connue à l'avance. »**
+
+> Le délai de règlement n'est pas annoncé dans cette phrase : il se fixe avec PPC au cadrage, une fois son circuit actuel connu.
 
 ### 5.2 La contrepartie, à assumer clairement
 

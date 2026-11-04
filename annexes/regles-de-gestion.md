@@ -68,7 +68,7 @@ FBB pour PPC · version 1.0 · 4 novembre 2026
 | **RG-PAY-01** | Un paiement n'est réputé confirmé qu'après notification authentifiée de l'établissement émetteur | Délai d'attente maximal : 15 minutes avant passage en revue manuelle | Évite les validations sur promesse |
 | **RG-PAY-02** | Toute opération financière porte une clé d'idempotence ; un rejeu ne produit jamais de second mouvement | — | Garantit l'intégrité des comptes |
 | **RG-PAY-03** | Le paiement est encaissé par PPC dès confirmation ; les fonds ne transitent jamais par APIX ni par le transporteur | — | Circuit réel du marché, et FBB n'a pas à porter les fonds d'autrui |
-| **RG-PAY-04** | Lorsque l'offre vendue comprend le transport, la part correspondante est isolée dans la commande et provisionnée pour la course ; elle n'est réglée au transporteur qu'après preuve de livraison conforme. Une offre sans transport ne crée aucune provision | Rétention : 24 heures `[À VALIDER PPC]` | Le règlement devient un levier de qualité, sans toucher au paiement du client |
+| **RG-PAY-04** | Lorsque l'offre vendue comprend le transport, la part correspondante est isolée dans la commande et provisionnée pour la course ; elle n'est réglée au transporteur qu'après preuve de livraison conforme. Une offre sans transport ne crée aucune provision | Délai de rétention : à définir avec PPC (proposition : 24 heures) | Le règlement devient un levier de qualité, sans toucher au paiement du client |
 | **RG-PAY-05** | Le règlement du transporteur ne peut être déclenché que par un fait générateur enregistré : preuve de livraison conforme ou décision explicite de PPC | — | Aucun versement sans preuve opposable |
 | **RG-PAY-06** | Un litige ouvert gèle la part contestée des fonds, et elle seule | — | Évite de pénaliser la totalité de la course |
 | **RG-PAY-07** | Le remboursement d'un bon non chargé est intégral, sans frais | — | Protège le client en cas de défaillance |
@@ -246,7 +246,7 @@ Tous les paramètres ci-dessous doivent être fixés au cadrage, consignés dans
 | Préavis d'expiration de pièce | RG-KYC-06 | 30 jours | |
 | Expiration d'un bon non payé | RG-CMD-06 | 2 heures | |
 | Délai d'attente d'une confirmation de paiement | RG-PAY-01 | 15 minutes | |
-| Délai de rétention avant libération | RG-PAY-04 | 24 heures | |
+| Délai de rétention avant règlement | RG-PAY-04 | À définir avec PPC | |
 | Seuil d'alerte sur dépôt en espèces | RG-PAY-11 | À définir | |
 | Seuil de double validation d'une libération | RG-PAY-12 | À définir | |
 | Périodicité de révision du barème | RG-TAR-09 | Trimestrielle | |

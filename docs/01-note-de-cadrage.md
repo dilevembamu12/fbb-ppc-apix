@@ -451,7 +451,7 @@ Le détail des règles (délai de validité du lot, prorata, annulation, ré-tar
 | **KPI-01** | Taux de commandes dématérialisées | Part des commandes passées dans APIX sur le total de l'axe pilote | ≥ 40 % |
 | **KPI-02** | Taux de service logistique (OTIF) | Livraisons complètes et à l'heure / livraisons totales | ≥ 85 % |
 | **KPI-03** | Taux de litige | Dossiers litigieux / livraisons | ≤ 3 % |
-| **KPI-04** | Délai de paiement du transporteur | Temps entre preuve de livraison et paiement | ≤ 24 heures |
+| **KPI-04** | Délai de règlement du transporteur | Temps entre preuve de livraison et règlement effectif | À fixer avec PPC après mesure du délai actuel |
 | **KPI-05** | Taux de remplissage des camions groupés | Charge réelle / capacité | ≥ 85 % |
 | **KPI-06** | Écart de coût logistique au sac | Coût APIX vs coût informel constaté antérieurement | Réduction ≥ 15 % |
 | **KPI-07** | Taux de bons non utilisés | Bons émis et jamais présentés au chargement | ≤ 2 % |

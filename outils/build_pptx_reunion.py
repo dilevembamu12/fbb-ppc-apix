@@ -503,7 +503,7 @@ def s07_sequestre(prs):
         ("1", "Le client paie PPC", "Ciment, et transport si l'offre l'inclut. Paiement par mobile money, virement ou espèces via un agent agréé."),
         ("2", "APIX certifie et ventile", "La part transport est isolée dans la commande et provisionnée. Offre sans transport : aucune provision."),
         ("3", "Le ciment est livré", "Le client valide sur son téléphone : quantité, état, scellé. La preuve est signée."),
-        ("4", "PPC règle le transporteur", "Sur preuve conforme, sous 24 heures. Retenue partielle en cas d'écart constaté."),
+        ("4", "PPC règle le transporteur", "Sur preuve conforme, dans le délai que PPC arrêtera. Retenue partielle en cas d'écart constaté."),
     ]
     largeur = Inches(2.72)
     x = MARGE
@@ -532,7 +532,8 @@ def s07_sequestre(prs):
     notes(diapo, "Correction de fond : l'argent quitte le compte du client vers PPC avant même que le transporteur "
                  "voie la commande. Il n'y a donc pas de séquestre des fonds du client. Ce qu'APIX garantit, c'est "
                  "un règlement du transport déclenché par la preuve, et une retenue possible sur la course concernée. "
-                 "FBB n'exécute aucun paiement : il instruit et certifie.")
+                 "FBB n'exécute aucun paiement : il instruit et certifie. Ne JAMAIS annoncer de délai de règlement : "
+                 "nous ne connaissons pas le circuit actuel de PPC. C'est précisément la décision D2.")
 
 
 def s08_preuve(prs):
@@ -710,7 +711,7 @@ def s12_decisions(prs):
 
     decisions = [
         ("D1", "Qui est le donneur d'ordre du transport ?", "Le client final ou PPC ?"),
-        ("D2", "Comment PPC règle-t-il le transporteur aujourd'hui ?", "Délai, moyen, litiges."),
+        ("D2", "Comment PPC règle-t-il le transporteur aujourd'hui ?", "À établir : délai, moyen, litiges."),
         ("D3", "Sur quelle base construire le barème ?", "Le forfait actuel, ou un calcul à l'axe ?"),
         ("D4", "Quel circuit pour l'encaissement en espèces ?", "Part du cash et du mobile money."),
         ("D5", "Quel rôle pour le réseau de dépôts ?", "Points de retrait, ou vente directe."),

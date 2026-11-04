@@ -14,7 +14,7 @@ Ces questions conditionnent la faisabilité du produit. Elles doivent être trai
 | N° | Question | Pourquoi c'est bloquant | Réponse attendue | Réponse obtenue |
 |---|---|---|---|---|
 | **Q-01** | Le client final ou PPC est-il le donneur d'ordre du transport ? | Détermine le contrat, la responsabilité en cas de sinistre, et le circuit de paiement | Décision écrite de PPC | |
-| **Q-02** | Comment PPC règle-t-il ses transporteurs aujourd'hui : délai, moyen, traitement des litiges ? | Le circuit cible doit reproduire le circuit réel ; l'argent du client va à PPC avant le chargement, il n'y a pas de séquestre | Description chiffrée du circuit actuel | |
+| **Q-02** | Comment PPC règle-t-il ses transporteurs aujourd'hui : délai, moyen, traitement des litiges ? | Le circuit cible doit reproduire le circuit réel ; l'argent du client va à PPC avant le chargement, il n'y a pas de séquestre | Description chiffrée du circuit actuel : délai moyen constaté, moyen de paiement, qui émet l'ordre, avances carburant, retenues pratiquées | |
 | **Q-03** | PPC dispose-t-il d'un barème logistique par axe et par engin, ou faut-il le construire ? | Sans barème, aucun prix ne peut être calculé ni opposé | Barème existant ou validation d'un barème proposé | |
 | **Q-04** | Quel est le circuit réel d'encaissement des clients finaux aujourd'hui ? | Détermine les moyens de paiement du MVP et le circuit espèces | Description chiffrée par moyen de paiement | |
 | **Q-05** | Quel est le statut juridique exact de l'homologation prononcée par PPC ? | Détermine la rédaction du contrat tripartite et l'exposition de PPC | Avis du conseil juridique de PPC | |
@@ -81,7 +81,7 @@ Ces questions sont sensibles et doivent être posées avec tact. Elles visent à
 | **Q-34** | Comment trouvez-vous vos courses aujourd'hui ? | Le canal de substitution à battre | |
 | **Q-35** | Combien de temps attendez-vous au chargement, en moyenne ? | Le coût caché à éliminer | |
 | **Q-36** | Quels frais engagez-vous en route qui ne sont pas refacturés ? | Le contenu réel du coût fixe d'axe | |
-| **Q-37** | Quand êtes-vous payés, et avec quel retard ? | L'argument de la libération sous 24 heures | |
+| **Q-37** | Quand êtes-vous payés, et avec quel retard ? | Mesurer le point de départ : c'est ce délai qui détermine la cible, pas l'inverse | |
 | **Q-38** | Quels litiges vous oppose-t-on le plus souvent ? | Priorités du module de litige | |
 | **Q-39** | Quel téléphone utilisez-vous ? Avez-vous de la data en permanence ? | Contraintes techniques réelles | |
 | **Q-40** | Acceptez-vous un prix fixé par PPC sans négociation ? À quelles conditions ? | Faisabilité du barème | |
