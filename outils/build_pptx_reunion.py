@@ -496,12 +496,12 @@ def s07_sequestre(prs):
     fond(diapo, NUIT)
     en_tete(diapo, "Le circuit de l'argent", "Le client paie PPC. Le transporteur est payé sur preuve.", 7, sombre=True)
     texte(diapo, MARGE, Inches(1.88), Inches(11.4), Inches(0.4),
-          "L'argent est encaissé avant le chargement ; le transport n'est réglé qu'après la livraison prouvée.",
+          "Encaissé avant le chargement. Le transport n'est réglé qu'après la livraison prouvée — et seulement s'il figure dans l'offre.",
           taille=14, couleur=RGBColor(0xB6, 0xC6, 0xD4), italique=True)
 
     etapes = [
-        ("1", "Le client paie PPC", "Ciment et transport, par mobile money, virement ou espèces via un agent agréé."),
-        ("2", "APIX certifie et ventile", "La part transport est identifiée dans la commande et provisionnée pour la course."),
+        ("1", "Le client paie PPC", "Ciment, et transport si l'offre l'inclut. Paiement par mobile money, virement ou espèces via un agent agréé."),
+        ("2", "APIX certifie et ventile", "La part transport est isolée dans la commande et provisionnée. Offre sans transport : aucune provision."),
         ("3", "Le ciment est livré", "Le client valide sur son téléphone : quantité, état, scellé. La preuve est signée."),
         ("4", "PPC règle le transporteur", "Sur preuve conforme, sous 24 heures. Retenue partielle en cas d'écart constaté."),
     ]

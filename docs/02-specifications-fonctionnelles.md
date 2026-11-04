@@ -236,7 +236,7 @@ En tant que PPC, je veux que la part transport soit identifiée dès l'encaissem
 
 *Critères d'acceptation :*
 - Le paiement est encaissé **par PPC** ; les fonds ne transitent ni par APIX ni par le transporteur.
-- La part transport est **ventilée puis provisionnée** dès la confirmation du paiement, et rattachée à la course.
+- Lorsque l'offre comprend le transport, la part correspondante est **ventilée puis provisionnée** dès la confirmation du paiement, et rattachée à la course. Une offre sans transport ne crée aucune provision.
 - Aucun règlement au transporteur n'est possible sans un **fait générateur** enregistré : preuve de livraison conforme ou décision explicite de PPC.
 - Toute écriture est **idempotente** : un rejeu technique ne produit jamais de double mouvement.
 

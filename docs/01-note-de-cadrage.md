@@ -110,7 +110,7 @@ Le circuit réel est le suivant : **l'argent quitte le compte du client vers PPC
 Trois conséquences à écrire noir sur blanc avant toute ligne de code :
 
 1. **Ce que le client achète** : une commande et un transport, payés à PPC. Sa protection n'est pas un gel de ses fonds, mais un **dossier de preuve** et une réclamation opposable.
-2. **Ce que PPC doit** : régler le transporteur. Le levier d'APIX est de **conditionner ce règlement à la preuve de livraison**, et de permettre une retenue partielle sur la course concernée.
+2. **Ce que PPC doit** : régler le transporteur, **mais uniquement lorsque l'offre vendue comprend le transport**. Le levier d'APIX est de **conditionner ce règlement à la preuve de livraison**, et de permettre une retenue partielle sur la course concernée. Une offre sans transport ne crée aucune dette envers un transporteur.
 3. **Ce que FBB ne fait pas** : APIX n'exécute aucun paiement et ne détient aucun fonds. Il instruit, certifie et trace.
 
 **Recommandation :** abandonner le mot « séquestre » dans la communication. Parler d'**encaissement certifié** et de **règlement conditionné par la preuve**. Le mot « séquestre » promet une protection que le circuit réel ne permet pas, et crée une attente juridique que PPC ne pourrait pas tenir.
