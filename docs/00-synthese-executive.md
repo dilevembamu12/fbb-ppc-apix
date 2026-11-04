@@ -18,7 +18,7 @@ Or la valeur perçue par le client final de PPC ne se joue pas au moment du paie
 | Le paiement est certifié, la marchandise ne l'est pas | Le paiement **et** la livraison sont certifiés sur la même chaîne |
 | Le prix du transport se négocie au bord du camion | Le prix du transport est fixé par un **barème publié par PPC** |
 | Le transporteur est un tiers non documenté | Le transporteur est **homologué par PPC**, noté et suivi |
-| Un litige de livraison opposé à un paiement déjà encaissé | Un litige traité par **retenue partielle sur séquestre** |
+| Un litige de livraison opposé à un paiement déjà encaissé | Un litige instruit sur preuve, avec **retenue partielle sur le règlement du transport** |
 | Petites commandes impossibles à livrer (coût unitaire prohibitif) | **Groupage logistique** : plusieurs petits acheteurs, un seul camion |
 
 ---
@@ -37,7 +37,7 @@ Or la valeur perçue par le client final de PPC ne se joue pas au moment du paie
 
 - Commander du bon pied depuis son téléphone, sans intermédiaire opaque.
 - **Connaître le prix total avant de payer**, transport inclus.
-- **Payer sans que l'argent ne parte** tant que le ciment n'est pas livré conforme (séquestre).
+- **Savoir exactement ce qu'il a payé**, et pouvoir le prouver en cas de livraison non conforme.
 - **Suivre le camion** et être alerté par SMS, WhatsApp ou notification.
 - **Acheter en petite quantité sans être puni par le transport**, grâce au groupage.
 - **Détenir une preuve** de ce qu'il a acheté : reçu certifié, historique, justificatif comptable.
@@ -46,7 +46,7 @@ Or la valeur perçue par le client final de PPC ne se joue pas au moment du paie
 
 ## 4. Ce que le transporteur partenaire y gagne
 
-- Des courses **payées à la commande** (fonds déjà séquestrés), donc aucun impayé côté client.
+- Des courses **réglées par PPC sur preuve**, sous 24 heures : aucun impayé côté client, aucun retard côté transporteur.
 - Des rotations **pleines**, jamais des retours à vide subis.
 - Une **grille tarifaire claire**, connue à l'avance.
 - Un **paiement rapide** : libération sous 24 heures après preuve de livraison conforme.
@@ -67,7 +67,7 @@ La bonne réponse n'est pas « nous gérons aussi les petites transactions ». L
 | Validation des transporteurs | Locale, au cas par cas | **Homologation administrative par PPC**, documentée et révocable |
 | Prix du transport | Négocié | **Barème PPC** opposable, calculé au poids et à la distance |
 | Preuve de livraison | Reçu simple | **QR nominatif + photo géolocalisée + pesée contradictoire + scellé** |
-| Sécurité des fonds | Paiement direct | **Séquestre avec libération par jalons** |
+| Sécurité du règlement | Paiement direct, sans preuve | **Règlement du transport déclenché par la preuve** |
 | Petits volumes | Traités isolément | **Groupage multi-clients avec TTL et prorata** |
 | Réseau dégradé | Dépendance totale à Internet | **Mode hors-ligne transporteur, repli SMS / USSD** |
 
@@ -87,7 +87,7 @@ Faire les quatre premiers jalons de la chaîne de preuve très bien, plutôt que
 - Application chauffeur / transporteur avec mode hors-ligne.
 - Homologation des transporteurs dans le back-office PPC.
 - Preuve de livraison : QR nominatif, photo géolocalisée, horodatage, validation de conformité.
-- Séquestre et libération des fonds par jalons.
+- Encaissement certifié, ventilation de la part transport, règlement du transporteur sur preuve.
 - Back-office PPC : transporteurs, barèmes, litiges, tableau de bord.
 
 **Hors MVP, en V1 :**
@@ -113,7 +113,7 @@ Ces cinq points ne sont pas techniques : ils conditionnent la faisabilité et la
 | N° | Décision attendue | Pourquoi c'est bloquant |
 |---|---|---|
 | D1 | **Qui est le donneur d'ordre du transport ?** Le client final ou PPC ? | Détermine le contrat, la responsabilité en cas de casse, et le circuit de paiement |
-| D2 | **Qui détient l'argent pendant le transport**, et sous quel véhicule juridique ? | Un séquestre doit être porté par une banque ou un établissement agréé, pas par un prestataire technique |
+| D2 | **Comment PPC règle-t-il ses transporteurs aujourd'hui** : délai, moyen, traitement des litiges ? | Le modèle cible doit reproduire ce circuit réel, en le conditionnant à la preuve de livraison |
 | D3 | **Le barème logistique existe-t-il déjà**, et qui le publie ? | Sans barème opposable, le produit ne peut pas calculer le prix — et le prix est le cœur de la valeur |
 | D4 | **Comment le client final paie-t-il réellement**, en pratique, aujourd'hui ? | Si le cash reste majoritaire et n'est pas canalisé, l'adoption plafonne |
 | D5 | **Le canal des dépôts et revendeurs est-il protégé ou remplacé ?** | Le risque de conflit de canal peut faire capoter l'adhésion commerciale de PPC |

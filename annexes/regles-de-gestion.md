@@ -11,7 +11,7 @@ FBB pour PPC · version 1.0 · 4 novembre 2026
 
 1. [Règles de compte et de vérification d'identité](#1-règles-de-compte-et-de-vérification-didentité)
 2. [Règles de bon de commande](#2-règles-de-bon-de-commande)
-3. [Règles de paiement et de séquestre](#3-règles-de-paiement-et-de-séquestre)
+3. [Règles de paiement, d'encaissement et de règlement](#3-règles-de-paiement-dencaissement-et-de-règlement)
 4. [Règles de tarification du transport](#4-règles-de-tarification-du-transport)
 5. [Règles d'affectation des courses](#5-règles-daffectation-des-courses)
 6. [Règles de groupage](#6-règles-de-groupage)
@@ -59,15 +59,17 @@ FBB pour PPC · version 1.0 · 4 novembre 2026
 
 ---
 
-## 3. Règles de paiement et de séquestre
+## 3. Règles de paiement, d'encaissement et de règlement
+
+> Principe de base, aligné sur le circuit réel : **le client paie PPC**, avant le chargement. La part transport est identifiée dans la commande, puis réglée au transporteur **sur preuve de livraison**. Il n'existe pas de séquestre des fonds du client.
 
 | Code | Règle | Paramètre | Justification |
 |---|---|---|---|
 | **RG-PAY-01** | Un paiement n'est réputé confirmé qu'après notification authentifiée de l'établissement émetteur | Délai d'attente maximal : 15 minutes avant passage en revue manuelle | Évite les validations sur promesse |
 | **RG-PAY-02** | Toute opération financière porte une clé d'idempotence ; un rejeu ne produit jamais de second mouvement | — | Garantit l'intégrité des comptes |
-| **RG-PAY-03** | Les fonds sont cantonnés dès confirmation ; ils ne sont pas versés au transporteur avant la preuve de livraison | — | Protège le client |
-| **RG-PAY-04** | La libération au profit du transporteur intervient sur preuve de livraison conforme, après application du délai de rétention | Rétention : 24 heures `[À VALIDER PPC]` | Permet une contestation immédiate |
-| **RG-PAY-05** | La libération au profit de PPC intervient à la sortie certifiée du stock, sauf disposition contractuelle contraire | — | Sécurise la trésorerie de PPC |
+| **RG-PAY-03** | Le paiement est encaissé par PPC dès confirmation ; les fonds ne transitent jamais par APIX ni par le transporteur | — | Circuit réel du marché, et FBB n'a pas à porter les fonds d'autrui |
+| **RG-PAY-04** | La part transport est identifiée dans chaque commande et provisionnée pour la course ; elle n'est réglée au transporteur qu'après preuve de livraison conforme | Rétention : 24 heures `[À VALIDER PPC]` | Le règlement devient un levier de qualité, sans toucher au paiement du client |
+| **RG-PAY-05** | Le règlement du transporteur ne peut être déclenché que par un fait générateur enregistré : preuve de livraison conforme ou décision explicite de PPC | — | Aucun versement sans preuve opposable |
 | **RG-PAY-06** | Un litige ouvert gèle la part contestée des fonds, et elle seule | — | Évite de pénaliser la totalité de la course |
 | **RG-PAY-07** | Le remboursement d'un bon non chargé est intégral, sans frais | — | Protège le client en cas de défaillance |
 | **RG-PAY-08** | Le remboursement d'un bon partiellement livré porte sur la part non livrée, au prix réellement payé | — | Proportionnalité |
@@ -76,18 +78,18 @@ FBB pour PPC · version 1.0 · 4 novembre 2026
 | **RG-PAY-11** | Les dépôts en espèces sont plafonnés par client et par période, et déclenchent une alerte au-delà du seuil | Seuil : `[À VALIDER PPC]` | Conformité anti-blanchiment |
 | **RG-PAY-12** | Une libération supérieure à un seuil exige une double validation | Seuil : `[À VALIDER PPC]` | Lutte contre la fraude interne |
 
-### Tableau 3.1 — Matrice de libération des fonds
+### Tableau 3.1 — Matrice du règlement du transport
 
-| Situation constatée | Part ciment (PPC) | Part transport (transporteur) |
-|---|---|---|
-| Bon non payé | Aucune | Aucune |
-| Payé, non chargé, non annulé | Cantonné | Cantonné |
-| Payé, chargé, en cours de transport | Libéré | Cantonné |
-| Livraison prouvée conforme | Libéré | Libéré après rétention |
-| Livraison prouvée avec écart dans la tolérance | Libéré | Libéré après rétention |
-| Livraison prouvée avec écart hors tolérance | Libéré | Part contestée gelée, solde libéré |
-| Non-livraison constatée | Remboursement au client | Aucune libération |
-| Annulation avant chargement | Remboursement au client | Aucune |
+| Situation constatée | Versement au transporteur |
+|---|---|
+| Bon non payé | Aucun |
+| Payé, non chargé, non annulé | Aucun — provision en attente |
+| Payé, chargé, en cours de transport | Aucun |
+| Livraison prouvée conforme | Règlement intégral après rétention |
+| Livraison prouvée avec écart dans la tolérance | Règlement intégral après rétention |
+| Livraison prouvée avec écart hors tolérance | Retenue calculée au prorata, solde réglé |
+| Non-livraison constatée | Aucun règlement ; remboursement ou avoir au client par PPC |
+| Annulation avant chargement | Aucun règlement ; remboursement ou avoir au client |
 
 ---
 

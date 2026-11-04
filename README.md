@@ -124,7 +124,7 @@ Séquence de la version réunion — les douleurs d'abord, le produit ensuite :
 | 4 | Il n'achète pas une application. Il achète une certitude. | Marché et cible |
 | 5 | La chaîne de preuve, en six jalons | Solution |
 | 6 | Partout où le client se trouve | Ubiquité et maquettes |
-| 7 | L'argent ne part pas avant que le sac n'arrive | Séquestre |
+| 7 | Le client paie PPC. Le transporteur est payé sur preuve. | Circuit de l'argent |
 | 8 | Quatre éléments, un seul dossier | Preuve de livraison, photo géolocalisée |
 | 9 | Le transport cesse d'être un forfait | Barème et calculateur |
 | 10 | Cinq petits acheteurs, un seul camion | Groupage |

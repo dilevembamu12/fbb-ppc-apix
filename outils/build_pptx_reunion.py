@@ -411,7 +411,7 @@ def s05_chaine(prs):
     jalons = [
         ("J1", "Compte vérifié", "Identité et plafonds"),
         ("J2", "Bon certifié", "Numéro unique, QR signé"),
-        ("J3", "Paiement séquestré", "Fonds cantonnés"),
+        ("J3", "Paiement encaissé", "Encaissé par PPC, certifié APIX"),
         ("J4", "Chargement", "Pesée, scellé, photo"),
         ("J5", "Transport suivi", "Positions et incidents"),
         ("J6", "Livraison prouvée", "Validation, litige tranché"),
@@ -494,16 +494,16 @@ def s06_ubiquite(prs):
 def s07_sequestre(prs):
     diapo = prs.slides.add_slide(prs.slide_layouts[6])
     fond(diapo, NUIT)
-    en_tete(diapo, "La garantie", "L'argent ne part pas avant que le sac n'arrive", 7, sombre=True)
+    en_tete(diapo, "Le circuit de l'argent", "Le client paie PPC. Le transporteur est payé sur preuve.", 7, sombre=True)
     texte(diapo, MARGE, Inches(1.88), Inches(11.4), Inches(0.4),
-          "Les fonds sont cantonnés chez un établissement habilité, et libérés par jalons.",
+          "L'argent est encaissé avant le chargement ; le transport n'est réglé qu'après la livraison prouvée.",
           taille=14, couleur=RGBColor(0xB6, 0xC6, 0xD4), italique=True)
 
     etapes = [
-        ("1", "Le client paie", "Mobile money, virement ou espèces via un agent agréé."),
-        ("2", "Les fonds sont cantonnés", "Compte dédié chez la banque partenaire. Ni PPC ni le transporteur n'y touchent."),
-        ("3", "Le ciment est livré", "Le client valide sur son téléphone : quantité, état, scellé."),
-        ("4", "Les fonds sont libérés", "Transporteur payé sous 24 heures, PPC encaissé, facture émise."),
+        ("1", "Le client paie PPC", "Ciment et transport, par mobile money, virement ou espèces via un agent agréé."),
+        ("2", "APIX certifie et ventile", "La part transport est identifiée dans la commande et provisionnée pour la course."),
+        ("3", "Le ciment est livré", "Le client valide sur son téléphone : quantité, état, scellé. La preuve est signée."),
+        ("4", "PPC règle le transporteur", "Sur preuve conforme, sous 24 heures. Retenue partielle en cas d'écart constaté."),
     ]
     largeur = Inches(2.72)
     x = MARGE
@@ -525,12 +525,14 @@ def s07_sequestre(prs):
 
     rectangle(diapo, MARGE, Inches(5.32), LARGEUR_UTILE, Inches(1.15), ORANGE, arrondi=True)
     texte(diapo, MARGE + Inches(0.35), Inches(5.5), Inches(10.6), Inches(0.85),
-          ["« Payez, mais ne vous faites pas payer deux fois. »",
-           "Le séquestre est porté par un établissement bancaire habilité ; APIX orchestre, il ne détient pas les fonds."],
+          ["« Le client paie PPC. PPC paie le transport — et seulement sur preuve. »",
+           "Le client est protégé par un dossier qu'il peut produire, pas par un gel de ses fonds."],
           taille=13, couleur=BLANC, gras=True, interligne=1.35)
     pied(diapo, sombre=True)
-    notes(diapo, "Point à ne jamais approximer : FBB ne détient pas l'argent. C'est une banque partenaire qui le "
-                 "fait, sous convention. Le dire clairement renforce la crédibilité au lieu de la fragiliser.")
+    notes(diapo, "Correction de fond : l'argent quitte le compte du client vers PPC avant même que le transporteur "
+                 "voie la commande. Il n'y a donc pas de séquestre des fonds du client. Ce qu'APIX garantit, c'est "
+                 "un règlement du transport déclenché par la preuve, et une retenue possible sur la course concernée. "
+                 "FBB n'exécute aucun paiement : il instruit et certifie.")
 
 
 def s08_preuve(prs):
@@ -679,7 +681,7 @@ def s11_concurrence(prs):
         ["Transporteurs", "Gestion locale, non documentée", "Homologation par PPC, datée et révocable"],
         ["Prix du transport", "Forfaitaire", "Calculé à l'axe et au poids, barème PPC"],
         ["Preuve de livraison", "Reçu simple", "QR, photo géolocalisée, pesée, scellé"],
-        ["Sécurité des fonds", "Paiement direct", "Séquestre libéré par jalons"],
+        ["Sécurité du règlement", "Paiement direct, sans preuve", "Règlement sur preuve de livraison"],
         ["Hors connexion", "Connexion requise", "72 heures pour le chauffeur"],
         ["Litige", "Traité au cas par cas", "Dossier de preuve, décision motivée par PPC"],
     ]
@@ -708,7 +710,7 @@ def s12_decisions(prs):
 
     decisions = [
         ("D1", "Qui est le donneur d'ordre du transport ?", "Le client final ou PPC ?"),
-        ("D2", "Quelle banque porte le compte de cantonnement ?", "À désigner."),
+        ("D2", "Comment PPC règle-t-il le transporteur aujourd'hui ?", "Délai, moyen, litiges."),
         ("D3", "Sur quelle base construire le barème ?", "Le forfait actuel, ou un calcul à l'axe ?"),
         ("D4", "Quel circuit pour l'encaissement en espèces ?", "Part du cash et du mobile money."),
         ("D5", "Quel rôle pour le réseau de dépôts ?", "Points de retrait, ou vente directe."),
@@ -779,7 +781,7 @@ def a02_equipe(prs):
 
     roles = [
         ("Direction de projet", "Pilotage, arbitrages de périmètre, relation PPC."),
-        ("Ingénierie plateforme", "Applications mobile et web, séquestre, sécurité, hors-ligne."),
+        ("Ingénierie plateforme", "Applications mobile et web, encaissement, règlement, sécurité, hors-ligne."),
         ("Métier logistique", "Barème, homologation, traitement des litiges."),
     ]
     largeur = (LARGEUR_UTILE - Inches(0.6)) / 3
@@ -917,8 +919,8 @@ def a06_technique(prs):
     en_tete(diapo, "Annexe A6 · Socle technique", "Ce qui protège l'argent et la preuve", 18, sombre=True)
 
     blocs = [
-        ("Séquestre", "Compte de cantonnement chez un établissement habilité. FBB n'orchestre que les "
-                      "instructions : il ne détient jamais les fonds."),
+        ("Règlement conditionnel", "Le transport est provisionné à l'encaissement, puis libéré au transporteur sur "
+                                    "preuve de livraison. FBB n'exécute aucun paiement : il instruit et certifie."),
         ("Signature", "Bons et preuves signés cryptographiquement, vérifiables hors ligne par la console "
                       "de chargement, sans appel serveur."),
         ("Journal d'audit", "Écriture en ajout seul, chaînée par empreintes, conservée dix ans. Rien ne se "

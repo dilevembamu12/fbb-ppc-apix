@@ -14,7 +14,7 @@ Ces questions conditionnent la faisabilité du produit. Elles doivent être trai
 | N° | Question | Pourquoi c'est bloquant | Réponse attendue | Réponse obtenue |
 |---|---|---|---|---|
 | **Q-01** | Le client final ou PPC est-il le donneur d'ordre du transport ? | Détermine le contrat, la responsabilité en cas de sinistre, et le circuit de paiement | Décision écrite de PPC | |
-| **Q-02** | Quelle personne morale détient les fonds pendant le transport ? | Un séquestre ne peut être porté que par un établissement habilité | Nom de l'établissement et type de convention | |
+| **Q-02** | Comment PPC règle-t-il ses transporteurs aujourd'hui : délai, moyen, traitement des litiges ? | Le circuit cible doit reproduire le circuit réel ; l'argent du client va à PPC avant le chargement, il n'y a pas de séquestre | Description chiffrée du circuit actuel | |
 | **Q-03** | PPC dispose-t-il d'un barème logistique par axe et par engin, ou faut-il le construire ? | Sans barème, aucun prix ne peut être calculé ni opposé | Barème existant ou validation d'un barème proposé | |
 | **Q-04** | Quel est le circuit réel d'encaissement des clients finaux aujourd'hui ? | Détermine les moyens de paiement du MVP et le circuit espèces | Description chiffrée par moyen de paiement | |
 | **Q-05** | Quel est le statut juridique exact de l'homologation prononcée par PPC ? | Détermine la rédaction du contrat tripartite et l'exposition de PPC | Avis du conseil juridique de PPC | |
@@ -112,7 +112,7 @@ Ces questions sont sensibles et doivent être posées avec tact. Elles visent à
 |---|---|---|---|
 | **D-01** | Périmètre exact du MVP et de l'axe pilote | Comité de pilotage | Fin du cadrage |
 | **D-02** | Donneur d'ordre du transport | Direction PPC | Fin du cadrage |
-| **D-03** | Montage du séquestre et établissement porteur | Direction financière PPC | Fin du cadrage |
+| **D-03** | Circuit de règlement du transport et validation juridique | Direction financière PPC | Fin du cadrage |
 | **D-04** | Barème logistique initial | Direction commerciale PPC | Fin du cadrage |
 | **D-05** | Rôle commercial des dépôts | Direction commerciale PPC | Fin du cadrage |
 | **D-06** | Modèle économique retenu | Direction PPC et FBB | Fin du cadrage |

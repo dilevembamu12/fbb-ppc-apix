@@ -59,7 +59,7 @@ flowchart TB
     subgraph COEUR["Coeur APIX Logistique"]
         GW["Passerelle applicative<br/>authentification, quotas, journaux"]
         CMD["Domaine Commande<br/>bon certifié"]
-        PAY["Domaine Paiement<br/>séquestre, réconciliation"]
+        PAY["Domaine Paiement<br/>encaissement, règlement"]
         LOG["Domaine Logistique<br/>barème, affectation, groupage"]
         PRE["Domaine Preuve<br/>chargement, livraison, litige"]
         REF["Domaine Référentiels<br/>produits, zones, engins, transporteurs"]
@@ -80,7 +80,7 @@ flowchart TB
         APIXC["APIX — certification CIMA"]
         MM1["Opérateur mobile money 1"]
         MM2["Opérateur mobile money 2"]
-        BNK["Banque — compte de cantonnement"]
+        BNK["Banque — encaissement et règlements"]
         SMS["Passerelle SMS / WhatsApp"]
         CARTO["Fonds de carte / géocodage"]
         FISC["Facturation électronique"]
@@ -120,7 +120,7 @@ flowchart TB
 ```mermaid
 flowchart LR
     A["Bon créé<br/>brouillon"] --> B["Bon certifié<br/>en attente de paiement"]
-    B --> C["Paiement confirmé<br/>fonds séquestrés"]
+    B --> C["Paiement confirmé<br/>encaissé par PPC"]
     C --> D{"Option d'achat"}
     D -->|A — sans transport| E["Bon de sortie<br/>prêt pour enlèvement"]
     D -->|B — avec transport| F["Course publiée<br/>aux transporteurs"]
@@ -181,7 +181,7 @@ Le socle APIX existant (certification CIMA) impose des contraintes non connues �
 | **Référentiels** | Produits, prix, zones, axes, engins, transporteurs, points de chargement, plafonds | Ne connaît aucune commande |
 | **Comptes** | Identités, profils, vérifications, appareils, rôles | Ne calcule aucun prix |
 | **Commande** | Bon de commande, versions, réservation de stock, certification, expiration | Ne touche pas à l'argent |
-| **Paiement** | Encaissement, cantonnement, réconciliation, libération, remboursement | Ne décide pas de la conformité d'une livraison |
+| **Paiement** | Encaissement, ventilation de la part transport, réconciliation, règlement sur preuve, remboursement | Ne décide pas de la conformité d'une livraison |
 | **Logistique** | Barème, calcul de prix, compatibilité engin, affectation, tournées, groupage | Ne signe aucune preuve de livraison |
 | **Preuve** | Chargement, scellés, livraison, litiges, dossiers de preuve | N'exécute aucun mouvement financier, seulement l'instruction |
 | **Notification** | Modèles de messages, canaux, préférences, traces d'envoi | Ne contient aucune règle métier |
@@ -222,7 +222,7 @@ flowchart LR
 |---|---|---|---|
 | `commande.certifiee` | Commande | Notification, Audit | Envoi du bon au client |
 | `paiement.confirme` | Paiement | Commande, Logistique, Notification | Passage à l'état payé, déclenchement de la course |
-| `paiement.cantonne` | Paiement | Audit | Fonds sous séquestre |
+| `paiement.encaisse` | Paiement | Audit, Logistique | Encaissement confirmé, part transport provisionnée |
 | `course.affectee` | Logistique | Notification, Audit | Information du client |
 | `chargement.certifie` | Preuve | Commande, Logistique, Notification | Bon clôturé, suivi activé |
 | `livraison.prouvee` | Preuve | Paiement, Notification, Pilotage | Libération des fonds |
@@ -256,7 +256,7 @@ flowchart LR
 | Commande | `ligne_commande` | Détail produit | `id`, `commande_id`, `produit_id`, `quantite`, `poids_kg`, `prix_unitaire` |
 | Commande | `reservation_stock` | Réservation liée | `id`, `commande_id`, `point_chargement_id`, `quantite`, `statut` |
 | Paiement | `paiement` | Encaissement | `id`, `commande_id`, `moyen`, `montant`, `devise`, `statut`, `reference_externe` |
-| Paiement | `mouvement_sequestre` | Écriture de cantonnement | `id`, `paiement_id`, `sens`, `montant`, `fait_generateur`, `cle_idempotence` |
+| Paiement | `provision_transport` | Écriture de provision et de règlement | `id`, `paiement_id`, `sens`, `montant`, `fait_generateur`, `cle_idempotence` |
 | Paiement | `beneficiaire` | Bénéficiaire d'une libération | `id`, `type` (PPC / transporteur / client), `reference` |
 | Logistique | `course` | Ordre de transport | `id`, `axe_id`, `engin_requis_id`, `poids_total_kg`, `prix_transport`, `statut`, `transporteur_id`, `vehicule_id` |
 | Logistique | `arret` | Point de livraison d'une course | `id`, `course_id`, `zone_id`, `repere`, `latitude`, `longitude`, `ordre_livraison`, `ordre_chargement` |
@@ -392,7 +392,7 @@ sequenceDiagram
 | APIX certification CIMA | Sortant | Critique | Synchrone avec délai borné | File d'attente, statut « certification en cours », jamais de validation sans réponse |
 | Opérateur mobile money 1 | Les deux | Critique | Asynchrone (notification de paiement) | Bascule vers opérateur 2, paiement en attente visible |
 | Opérateur mobile money 2 | Les deux | Critique | Asynchrone | Idem |
-| Banque — compte de cantonnement | Les deux | Critique | Fichier ou interface bancaire | Rappel manuel, rapprochement différé, blocage des libérations |
+| Banque — encaissement et règlements | Les deux | Critique | Fichier ou interface bancaire | Rappel manuel, rapprochement différé, blocage des règlements |
 | Passerelle SMS | Sortant | Élevé | Asynchrone | Nouvelle tentative, canal WhatsApp en repli, notification dans l'application |
 | Messagerie WhatsApp Business | Sortant | Moyen | Asynchrone | Repli sur SMS |
 | Fonds de carte auto-hébergé | Sortant | Moyen | Synchrone (tuiles) | Cache local, affichage sans fond de carte |
@@ -516,7 +516,7 @@ Ces ordres de grandeur servent à dimensionner, non à prévoir. Ils doivent êt
 
 - Chaque modification passe par une demande de fusion, une revue de code et une batterie de tests automatisés.
 - Tests obligatoires : unitaires sur les règles de gestion, tests d'intégration sur les adaptateurs, tests de bout en bout sur les trois parcours critiques (commande, chargement, livraison).
-- **Tests de non-régression financière** : tout changement touchant au calcul de prix ou au séquestre rejoue un jeu de cas de référence dont les résultats sont figés.
+- **Tests de non-régression financière** : tout changement touchant au calcul de prix ou au règlement rejoue un jeu de cas de référence dont les résultats sont figés.
 - Déploiement en production hors heures d'activité logistique, avec possibilité de retour arrière immédiat.
 - Migration de base de données toujours compatible avec la version précédente pendant la fenêtre de bascule.
 
@@ -551,7 +551,7 @@ Ces décisions doivent être arbitrées formellement et consignées. Chacune a u
 | **DA-01** | Socle mobile | React Native / Flutter / natif double | React Native, sauf équipe déjà formée à Flutter |
 | **DA-02** | Socle des services | Monolithe modulaire / microservices | Monolithe modulaire, découpage ultérieur |
 | **DA-03** | Hébergement | Nuage régional / nuage international / centre de données local | Décision de PPC ; privilégier un nuage avec région proche pour la latence, sous réserve de validation juridique |
-| **DA-04** | Porteur du compte de cantonnement | Banque / établissement de paiement agréé | Banque partenaire de PPC, avec convention tripartite |
+| **DA-04** | Porteur du circuit d'encaissement et de règlement | Banque de PPC / établissement de paiement agréé | Banque de PPC, avec convention tripartite |
 | **DA-05** | Périmètre du hors-ligne | Chauffeur seul / chauffeur + agent d'expédition | Chauffeur **et** agent d'expédition |
 | **DA-06** | Technologie du QR signé | Signature asymétrique / code à usage unique vérifié en ligne | Signature asymétrique, vérifiable hors ligne |
 | **DA-07** | Stratégie de carte | Auto-hébergée / fournisseur commercial | Auto-hébergée avec repli commercial |

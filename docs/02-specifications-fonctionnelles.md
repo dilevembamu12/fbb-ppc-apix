@@ -14,7 +14,7 @@ FBB pour PPC · version 1.0 · 4 novembre 2026
 | M1 | Compte client final et vérification d'identité | MVP |
 | M2 | Catalogue, prix et disponibilité | MVP |
 | M3 | Bon de commande certifié | MVP |
-| M4 | Paiement, séquestre et libération | MVP |
+| M4 | Paiement, encaissement et règlement du transport | MVP |
 | M5 | Option A — Enlèvement et chargement | MVP |
 | M6 | Option B — Transport, barème et affectation | MVP |
 | M7 | Suivi, notifications et incidents | MVP |
@@ -201,11 +201,11 @@ En tant que client, je veux désigner une personne pour retirer ma marchandise a
 
 ---
 
-## M4 — Paiement, séquestre et libération
+## M4 — Paiement, encaissement et règlement du transport
 
 ### Objectif
 
-Encaisser de façon certaine, cantonner les fonds, et ne les libérer que sur preuve ou décision explicite.
+Encaisser de façon certaine, ventiler la part transport, et ne régler le transporteur que sur preuve ou décision explicite.
 
 ### Références croisées
 
@@ -231,23 +231,23 @@ En tant que client, je veux payer en espèces chez un agent agréé afin de comm
 - Le bon passe à l'état payé **après rapprochement** (automatique si l'agent est intégré, manuel sinon).
 - Le plafond de dépôt en espèces par client et par période est paramétrable (conformité anti-blanchiment).
 
-**US-M4-03 — Séquestre** *(MVP)*
-En tant que client, je veux que mon argent soit conservé et non versé au transporteur avant livraison.
+**US-M4-03 — Encaissement et provision du transport** *(MVP)*
+En tant que PPC, je veux que la part transport soit identifiée dès l'encaissement afin de ne régler le transporteur qu'après preuve.
 
 *Critères d'acceptation :*
-- À la confirmation du paiement, les fonds sont **cantonnés** sur un compte dédié chez l'établissement partenaire.
-- Le client voit en clair : *payé*, *sous séquestre*, *libéré*.
-- Aucune libération n'est possible sans un **fait générateur** enregistré : preuve de livraison conforme, décision de PPC, ou expiration du délai de réclamation.
+- Le paiement est encaissé **par PPC** ; les fonds ne transitent ni par APIX ni par le transporteur.
+- La part transport est **ventilée puis provisionnée** dès la confirmation du paiement, et rattachée à la course.
+- Aucun règlement au transporteur n'est possible sans un **fait générateur** enregistré : preuve de livraison conforme ou décision explicite de PPC.
 - Toute écriture est **idempotente** : un rejeu technique ne produit jamais de double mouvement.
 
-**US-M4-04 — Libération des fonds** *(MVP)*
-En tant que système, je veux libérer les fonds selon des règles explicites afin que transporteur et PPC soient payés au bon moment.
+**US-M4-04 — Règlement du transporteur** *(MVP)*
+En tant que système, je veux régler le transporteur selon des règles explicites afin qu'il soit payé au bon moment.
 
 *Critères d'acceptation :*
-- **Transport** : libéré à la preuve de livraison conforme (ou au prorata en cas de litige partiel).
-- **Ciment** : libéré à PPC à la sortie certifiée du stock, sauf disposition contraire de PPC.
-- Un délai de rétention paramétrable est possible avant libération effective (proposition : 24 heures après preuve).
-- Toute libération produit une pièce justificative téléchargeable.
+- Le règlement intervient à la preuve de livraison conforme, ou au prorata en cas de litige partiel.
+- Un délai de rétention paramétrable précède le versement (proposition : 24 heures après preuve).
+- Un règlement supérieur à un seuil exige une double validation.
+- Tout règlement produit une pièce justificative téléchargeable.
 
 **US-M4-05 — Remboursement** *(MVP)*
 En tant que client, je veux être remboursé lorsqu'une commande n'est pas honorée.
@@ -264,7 +264,7 @@ En tant que client, je veux être remboursé lorsqu'une commande n'est pas honor
 |---|---|---|
 | RF-M4-01 | Abstraction des fournisseurs de paiement : au moins deux opérateurs mobiles + virement bancaire | MVP |
 | RF-M4-02 | Réconciliation automatique des paiements (rapprochement opérateur / commande) | MVP |
-| RF-M4-03 | Journal financier en partie double pour tout mouvement de séquestre | MVP |
+| RF-M4-03 | Journal financier en partie double pour tout encaissement et tout règlement de transport | MVP |
 | RF-M4-04 | Blocage anti-blanchiment : seuils et alertes sur dépôts en espèces | MVP |
 | RF-M4-05 | Paiement par carte bancaire | V1 |
 | RF-M4-06 | Échelonnement du paiement (acompte / solde) | V2 |
@@ -624,7 +624,7 @@ En tant que transporteur, je veux suivre mes courses et mes paiements afin de g�
 
 *Critères d'acceptation :*
 - Relevé des courses : date, axe, poids, montant, statut du paiement.
-- Statut de paiement explicite : *en séquestre*, *libéré*, *retenu pour litige*.
+- Statut de paiement explicite : *provisionné pour la course*, *réglé*, *retenu pour litige*.
 - Export au format tableur.
 
 ### Exigences fonctionnelles
@@ -772,7 +772,7 @@ En tant qu'agent d'expédition, je veux connaître l'ordre de chargement afin qu
 |---|---|---|
 | J1 — Compte et KYC | M1 | — |
 | J2 — Bon de commande certifié | M2, M3 | — |
-| J3 — Paiement séquestré | M4 | — |
+| J3 — Paiement encaissé | M4 | — |
 | J4 — Chargement certifié | M5, M10 | — |
 | J5 — Transport suivi | M6, M7 | — |
 | J6 — Livraison prouvée | M8 | — |

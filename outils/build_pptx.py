@@ -598,7 +598,7 @@ def d11_chaine_preuve(prs):
     jalons = [
         ("J1", "Compte vérifié", "Identité et plafonds"),
         ("J2", "Bon certifié", "Numéro unique, QR signé"),
-        ("J3", "Paiement séquestré", "Fonds cantonnés"),
+        ("J3", "Paiement encaissé", "Encaissé par PPC, certifié"),
         ("J4", "Chargement", "Pesée, scellé, photo"),
         ("J5", "Transport suivi", "Positions et incidents"),
         ("J6", "Livraison prouvée", "Validation, litige tranché"),
@@ -675,16 +675,16 @@ def d12_ubiquite(prs):
 def d13_sequestre(prs):
     diapo = prs.slides.add_slide(prs.slide_layouts[6])
     fond(diapo, NUIT)
-    en_tete(diapo, "La garantie", "L'argent ne part pas avant que le sac n'arrive", 13, sombre=True)
+    en_tete(diapo, "Le circuit de l'argent", "Le client paie PPC. Le transporteur est payé sur preuve.", 13, sombre=True)
     texte(diapo, MARGE, Inches(1.9), Inches(11.4), Inches(0.4),
-          "Les fonds sont cantonnés chez un établissement habilité, et libérés par jalons.",
+          "L'argent est encaissé avant le chargement ; le transport n'est réglé qu'après la livraison prouvée.",
           taille=14, couleur=RGBColor(0xB6, 0xC6, 0xD4), italique=True)
 
     etapes = [
-        ("1", "Le client paie", "Mobile money, virement ou espèces via un agent agréé."),
-        ("2", "Les fonds sont cantonnés", "Compte dédié chez la banque partenaire. Ni PPC ni le transporteur n'y touchent."),
-        ("3", "Le ciment est livré", "Le client valide sur son téléphone : quantité, état, scellé."),
-        ("4", "Les fonds sont libérés", "Transporteur payé sous 24 heures, PPC encaissé, facture émise."),
+        ("1", "Le client paie PPC", "Ciment et transport, par mobile money, virement ou espèces via un agent agréé."),
+        ("2", "APIX certifie et ventile", "La part transport est identifiée dans la commande et provisionnée pour la course."),
+        ("3", "Le ciment est livré", "Le client valide sur son téléphone : quantité, état, scellé. La preuve est signée."),
+        ("4", "PPC règle le transporteur", "Sur preuve conforme, sous 24 heures. Retenue partielle en cas d'écart constaté."),
     ]
     largeur = Inches(2.72)
     x = MARGE
@@ -706,12 +706,13 @@ def d13_sequestre(prs):
 
     rectangle(diapo, MARGE, Inches(5.42), LARGEUR_UTILE, Inches(1.15), ORANGE, arrondi=True)
     texte(diapo, MARGE + Inches(0.35), Inches(5.62), Inches(10.5), Inches(0.8),
-          ["« Payez, mais ne vous faites pas payer deux fois. »",
-           "Le séquestre est porté par un établissement bancaire habilité ; APIX orchestre, il ne détient pas les fonds."],
+          ["« Le client paie PPC. PPC paie le transport — et seulement sur preuve. »",
+           "Le client est protégé par un dossier de preuve, pas par un gel de ses fonds."],
           taille=13, couleur=BLANC, gras=True, interligne=1.3)
     pied(diapo, sombre=True)
-    notes(diapo, "Point à ne jamais approximer en réunion : FBB ne détient pas l'argent. C'est une banque "
-                 "partenaire qui le fait, sous convention. Le dire clairement renforce la crédibilité.")
+    notes(diapo, "Correction de fond : l'argent quitte le compte du client vers PPC avant même que le transporteur "
+                 "voie la commande. Il n'y a pas de séquestre des fonds du client. Ce qu'APIX garantit, c'est un "
+                 "règlement du transport déclenché par la preuve, et une retenue possible sur la course concernée.")
 
 
 def d14_preuve_livraison(prs):
@@ -862,7 +863,7 @@ def d17_comparaison(prs):
         ["Transporteurs", "Gestion locale, non documentée", "Homologation administrative par PPC, datée et révocable"],
         ["Prix du transport", "Négocié", "Barème PPC appliqué automatiquement"],
         ["Preuve de livraison", "Reçu simple", "QR nominatif, photo géolocalisée, pesée, scellé"],
-        ["Sécurité des fonds", "Paiement direct au bénéficiaire", "Séquestre libéré par jalons"],
+        ["Sécurité du règlement", "Paiement direct au bénéficiaire", "Règlement sur preuve de livraison"],
         ["Litige", "Traité au cas par cas", "Dossier de preuve, décision motivée, retenue partielle"],
         ["Connexion requise", "Permanente", "Hors ligne 72 heures pour le chauffeur"],
     ]
@@ -986,7 +987,7 @@ def d21_decisions(prs):
 
     decisions = [
         ("D1", "Qui est le donneur d'ordre du transport ?", "Le client final ou PPC ? Cela fixe la responsabilité et le circuit de paiement."),
-        ("D2", "Qui détient l'argent pendant le transport ?", "Une banque partenaire, sous convention. À désigner."),
+        ("D2", "Comment PPC règle-t-il le transporteur aujourd'hui ?", "Délai réel, moyen de paiement, litiges."),
         ("D3", "Le barème logistique existe-t-il ?", "S'il existe, nous l'appliquons. Sinon, nous le construisons avec vous."),
         ("D4", "Comment le client paie-t-il réellement ?", "Part du cash, part du mobile money. Cela définit le circuit d'encaissement."),
         ("D5", "Quel rôle pour le réseau de dépôts ?", "Points de retrait renforcés, ou vente directe. La décision vous revient."),

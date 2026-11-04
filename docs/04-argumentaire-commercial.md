@@ -63,7 +63,7 @@ Trois mots à répéter : **continuité**, **preuve**, **contrôle**.
 | Homologation des transporteurs | Gestion locale, non documentée | **Décision administrative de PPC**, pièces contrôlées, validité datée, révocation possible | La marque PPC est engagée par le transporteur qu'elle laisse opérer |
 | Prix du transport | Négocié | **Barème publié par PPC**, calculé au poids et à la distance | Tant que le prix se négocie, PPC ne maîtrise pas son prix final |
 | Preuve de livraison | Reçu simple | **QR nominatif + photo géolocalisée + pesée contradictoire + numéro de scellé** | En contentieux, un reçu simple ne prouve pas la remise |
-| Sécurité des fonds | Paiement direct au bénéficiaire | **Séquestre avec libération par jalons** | L'argent ne part pas avant que le ciment soit livré conforme |
+| Sécurité du règlement | Paiement direct au bénéficiaire, sans preuve | **Règlement du transport déclenché par la preuve** | Le transporteur n'est payé qu'après livraison prouvée |
 | Traitement du litige | Au cas par cas | **Dossier de preuve constitué**, décision motivée, retenue partielle au prorata | Un litige non instruit coûte plus cher qu'un litige tranché |
 | Petits volumes | Traités isolément | **Groupage** : plusieurs clients, un camion, coût mutualisé | C'est le seul moyen de servir le petit acheteur sans perdre d'argent |
 | Réseau dégradé | Dépendance à la connexion | **Application chauffeur hors ligne 72 h**, repli SMS et USSD | Entre deux villes, le réseau tombe systématiquement |
@@ -160,7 +160,7 @@ Cette section est la plus importante du dossier. Elle parle du **client**, pas d
 
 **Ce que vit PPC.** Commandes fermes non payées, encaissements dispersés, rapprochements manuels, impayés sur les petits clients difficiles à poursuivre.
 
-**Ce que fait APIX.** Les fonds sont encaissés **avant** le chargement et séquestrés. Il n'y a plus de commande livrée non payée.
+**Ce que fait APIX.** Le paiement est encaissé **avant** le chargement, certifié et ventilé. Il n'y a plus de commande livrée non payée, et plus aucun transport réglé sans preuve.
 
 **Ce que cela vaut.** `[À VALIDER PPC]` encours client et taux d'impayé actuels.
 
@@ -177,7 +177,7 @@ Cette section est la plus importante du dossier. Elle parle du **client**, pas d
 | Marchandise détournée | Bons papier, sorties non tracées | Bon nominatif à usage unique | Taux de bons non utilisés, écarts de stock |
 | Demande finale invisible | Pilotage sur les distributeurs | Signal direct par axe et produit | Précision de la prévision de demande |
 | Transporteurs non maîtrisés | Sélection informelle | Homologation documentée et score | Nombre de transporteurs conformes |
-| Impayés | Recouvrement après livraison | Encaissement préalable séquestré | Encours client, taux d'impayé |
+| Impayés | Recouvrement après livraison | Encaissement préalable certifié | Encours client, taux d'impayé |
 
 ---
 
@@ -198,11 +198,11 @@ Cette section est la plus importante du dossier. Elle parle du **client**, pas d
 
 ### 4.2 Le point qui fait basculer le client final
 
-Le séquestre. C'est la seule fonctionnalité qui transforme la méfiance en confiance :
+La preuve. C'est la seule fonctionnalité qui transforme la méfiance en confiance :
 
-> **« Votre argent ne part pas. Il est bloqué. Il n'est versé au transporteur que lorsque vous avez confirmé, sur votre téléphone, que vos sacs sont arrivés conformes. »**
+> **« Ce que vous avez payé est écrit, daté et signé. Et le transporteur n'est réglé par PPC que lorsque vous avez confirmé, sur votre téléphone, que vos sacs sont arrivés conformes. »**
 
-C'est une phrase compréhensible par un client de quartier, et impossible à copier sans une infrastructure de paiement certifiée.
+C'est une phrase compréhensible par un client de quartier, et impossible à copier sans une chaîne de preuve certifiée.
 
 ---
 
@@ -213,7 +213,7 @@ Un transporteur partenaire n'a qu'une question en tête : **« est-ce que je gag
 | Douleur du transporteur | Réponse APIX | Preuve à apporter |
 |---|---|---|
 | **Le camion part à moitié vide** | Courses publiées uniquement lorsque le volume est consolidé | Taux de remplissage moyen des courses APIX |
-| **Le client ne paie pas à l'arrivée** | Fonds déjà séquestrés avant le départ | Zéro impayé constaté sur les courses APIX |
+| **PPC ne paie pas à l'arrivée** | Le règlement est engagé dès la commande et déclenché par la preuve | Délai moyen de règlement mesuré |
 | **Le paiement arrive des semaines plus tard** | Libération sous 24 heures après preuve de livraison | Délai moyen de paiement mesuré |
 | **Les frais de route ne sont jamais couverts** | Frais annexes intégrés au barème, connus à l'avance | Détail du barème par axe |
 | **Trop d'attente au chargement** | Créneau de chargement planifié | Temps d'attente moyen avant / après |
@@ -255,9 +255,9 @@ Trois réponses cumulatives :
 2. Le **repli SMS et USSD** couvre les téléphones à clavier.
 3. Le **dépôt agréé** reste un point de contact humain : le client peut commander avec de l'aide, et le dépôt y gagne un rôle.
 
-### O-04 — « Le séquestre, est-ce légal chez nous ? »
+### O-04 — « Vous voulez bloquer l'argent de nos clients ? »
 
-Le séquestre est un service **bancaire**, porté par un établissement habilité, orchestré par APIX. Ce n'est pas FBB qui détient les fonds. Le montage doit être validé par le conseil juridique de PPC — c'est un préalable, pas une conséquence du projet.
+Non, et il ne faut jamais le dire ainsi. Le client paie PPC, comme aujourd'hui : l'argent part immédiatement, ce qui supprime d'ailleurs tout impayé. Ce qu'APIX ajoute se situe en aval : la part transport est identifiée dans la commande, et le transporteur n'est réglé qu'après preuve de livraison. Aucun compte de cantonnement n'est nécessaire.
 
 ### O-05 — « Et si le réseau ne passe pas ? »
 
@@ -345,7 +345,7 @@ La démonstration doit être faite avec **leurs** chiffres, sur trois lignes seu
 | 0 – 2 min | **Le constat** : APIX certifie le paiement, mais rien ne certifie la livraison | On ne remet pas en cause l'existant, on pointe le trou |
 | 2 – 5 min | **Les trois douleurs qui coûtent cher** : camions à moitié vides, litiges non arbitrables, prix final non maîtrisé | Parler en coûts, pas en fonctionnalités |
 | 5 – 8 min | **La chaîne de preuve** : les six jalons, du compte à la facture | Montrer la continuité, pas des écrans |
-| 8 – 10 min | **La démonstration du séquestre** : « l'argent ne part pas avant que le sac arrive » | C'est l'argument qui reste en mémoire |
+| 8 – 10 min | **Le circuit de l'argent** : « le client paie PPC, PPC paie le transport sur preuve » | C'est l'argument qui reste en mémoire |
 | 10 – 12 min | **Le groupage** : 30 petits acheteurs deviennent une commande de 30 tonnes | Réponse directe à Digiciment |
 | 12 – 14 min | **Le contrôle reste chez PPC** : homologation, barème, litiges | Lever la crainte de la perte de souveraineté |
 | 14 – 15 min | **Les cinq décisions à prendre** et le calendrier | Sortir de la réunion avec un engagement daté |
@@ -372,7 +372,7 @@ La crédibilité se gagne par la démonstration, pas par le discours.
 | **PR-02** | Démonstration du fonctionnement hors ligne du parcours chauffeur | Prototype sur téléphone réel, mode avion | Avant signature |
 | **PR-03** | Simulation de litige sur écart de poids, avec décision et libération partielle | Scénario joué en séance | Avant signature |
 | **PR-04** | Simulation de groupage : trois clients, un camion, répartition des frais | Tableur de calcul commenté | Avant signature |
-| **PR-05** | Note juridique sur le montage du séquestre | Document du conseil de PPC | Avant développement |
+| **PR-05** | Note juridique sur le circuit d'encaissement et de règlement du transport | Document du conseil de PPC | Avant développement |
 | **PR-06** | Engagement écrit des transporteurs pilotes | Lettres d'intention | Avant pilote |
 | **PR-07** | Références de FBB sur des dispositifs de certification en production | Dossier de références | Avant signature |
 
@@ -384,7 +384,7 @@ La crédibilité se gagne par la démonstration, pas par le discours.
 |---|---|---|
 | « Nous allons tuer Digiciment » | Met PPC en position d'arbitre géné, et donne à Digiciment un statut d'égal | « Nous couvrons ce que Digiciment ne peut structurellement pas couvrir » |
 | « Notre application fait tout » | Crée une attente de périmètre impossible | « Notre périmètre du MVP est celui-ci ; le reste est planifié » |
-| « Le séquestre est garanti par APIX » | Faux sur le plan juridique, et dangereux | « Le séquestre est porté par un établissement habilité, orchestré par APIX » |
+| « L'argent du client est bloqué jusqu'à la livraison » | Faux : le client paie PPC avant le chargement | « La part transport n'est réglée au transporteur qu'après preuve de livraison » |
 | « Les transporteurs seront obligés d'accepter » | Impossible, et perçu comme autoritaire | « Les transporteurs qui acceptent les règles accèdent à des courses payées d'avance » |
 | « Le client final n'aura plus besoin des dépôts » | Déclenche immédiatement l'opposition du réseau commercial | « Les dépôts deviennent des points de retrait de l'application » |
 | « C'est prêt en trois mois » | Non tenable pour une chaîne logistique complète | « Un axe pilote est opérationnel en 12 à 16 semaines après cadrage » |

@@ -103,15 +103,17 @@ Demander au client final de « tracer l'itinéraire » sur une carte est irréal
 
 Le tracé d'itinéraire devient alors un outil du **transporteur**, pas une obligation du client.
 
-### 2.5 Point de vigilance n° 4 — L'argent : qui le détient, et sous quel statut ?
+### 2.5 Point de vigilance n° 4 — L'argent : un circuit qui n'est pas un séquestre
 
-Le séquestre est la fonction la plus puissante du produit et la plus risquée juridiquement. Trois questions doivent être tranchées avant toute ligne de code :
+Le circuit réel est le suivant : **l'argent quitte le compte du client vers PPC avant même que le transporteur ne voie la commande**. Le transport est donc une dépense de PPC, pas un paiement du client au transporteur. Confondre les deux conduit à promettre une protection que le circuit ne permet pas.
 
-1. **Qui ouvre le compte de cantonnement ?** En pratique, une **banque partenaire** ou un **établissement de paiement agréé**. FBB ne peut pas porter les fonds d'autrui sans agrément.
-2. **Quel est le fait générateur de la libération ?** Livraison conforme prouvée ? Délai écoulé sans réclamation ? Décision de PPC ?
-3. **Que se passe-t-il en cas de litige partiel** (95 sacs livrés sur 100) ? La règle doit être écrite avant le premier litige, pas après.
+Trois conséquences à écrire noir sur blanc avant toute ligne de code :
 
-**Recommandation :** présenter le séquestre comme un **service bancaire partenaire orchestré par APIX**, et non comme une fonction d'APIX elle-même. Cela protège FBB et rassure PPC.
+1. **Ce que le client achète** : une commande et un transport, payés à PPC. Sa protection n'est pas un gel de ses fonds, mais un **dossier de preuve** et une réclamation opposable.
+2. **Ce que PPC doit** : régler le transporteur. Le levier d'APIX est de **conditionner ce règlement à la preuve de livraison**, et de permettre une retenue partielle sur la course concernée.
+3. **Ce que FBB ne fait pas** : APIX n'exécute aucun paiement et ne détient aucun fonds. Il instruit, certifie et trace.
+
+**Recommandation :** abandonner le mot « séquestre » dans la communication. Parler d'**encaissement certifié** et de **règlement conditionné par la preuve**. Le mot « séquestre » promet une protection que le circuit réel ne permet pas, et crée une attente juridique que PPC ne pourrait pas tenir.
 
 ### 2.6 Point de vigilance n° 5 — Le prix du transport doit être un barème, pas une négociation
 
@@ -175,7 +177,7 @@ Une part importante des transactions se règle en espèces. Si l'application n'a
 
 ### 2.13 Point de vigilance n° 12 — La concurrence ne doit pas être sous-estimée sur son terrain
 
-Digiciment est déjà présent sur les **petites transactions**. Attaquer frontalement sur ce terrain, c'est jouer à domicile chez l'adversaire. Le terrain où APIX est imbattable est **la preuve et la responsabilité** : dossier de litige complet, séquestre, homologation, barème opposable.
+Digiciment est déjà présent sur les **petites transactions**. Attaquer frontalement sur ce terrain, c'est jouer à domicile chez l'adversaire. Le terrain où APIX est imbattable est **la preuve et la responsabilité** : dossier de litige complet, règlement conditionné, homologation, barème opposable.
 
 **Recommandation :** ne pas se battre sur « nous faisons aussi les petits paiements », mais sur « nous sommes les seuls à pouvoir prouver ce qui s'est passé ».
 
@@ -186,7 +188,7 @@ Digiciment est déjà présent sur les **petites transactions**. Attaquer fronta
 ### 3.1 Énoncé de vision
 
 > **APIX : la chaîne de preuve du ciment, du paiement à la livraison.**
-> Un identifiant client, un bon de commande certifié, un paiement séquestré, un chargement documenté, une livraison prouvée — et la certitude, pour chacun, de savoir où se trouve sa responsabilité.
+> Un identifiant client, un bon de commande certifié, un paiement encaissé et certifié, un chargement documenté, une livraison prouvée — et la certitude, pour chacun, de savoir où se trouve sa responsabilité.
 
 ### 3.2 La chaîne de preuve en six jalons
 
@@ -195,7 +197,7 @@ C'est le squelette fonctionnel de tout le produit. Chaque jalon produit une preu
 ```mermaid
 flowchart LR
     J1["J1<br/>Compte<br/>et KYC"] --> J2["J2<br/>Bon de<br/>commande certifié"]
-    J2 --> J3["J3<br/>Paiement<br/>séquestré"]
+    J2 --> J3["J3<br/>Paiement<br/>encaissé"]
     J3 --> J4["J4<br/>Chargement<br/>certifié"]
     J4 --> J5["J5<br/>Transport<br/>suivi"]
     J5 --> J6["J6<br/>Livraison<br/>prouvée"]
@@ -206,7 +208,7 @@ flowchart LR
 |---|---|---|
 | **J1 — Compte et KYC** | Identité vérifiée, profil de compte, plafonds | Accès aux prix, plafonds de commande, conformité |
 | **J2 — Bon de commande certifié** | Bon signé, numéro unique, QR nominatif | Réservation du stock, engagement réciproque |
-| **J3 — Paiement séquestré** | Transaction certifiée APIX, fonds cantonnés | Le transporteur peut être mobilisé sans risque d'impayé |
+| **J3 — Paiement encaissé** | Transaction certifiée APIX, part transport identifiée | La course peut être engagée : PPC est solvable, le règlement est conditionné |
 | **J4 — Chargement certifié** | Ticket de pesée, numéro de scellé, photo | Le poids de départ devient une référence opposable |
 | **J5 — Transport suivi** | Positions, événements, incidents | Le client sait où est son ciment ; PPC sait où est son camion |
 | **J6 — Livraison prouvée** | QR flashé, photo géolocalisée, conformité signée | Libération des fonds, clôture du litige potentiel |
@@ -216,7 +218,7 @@ flowchart LR
 
 | Option | Description | Qui organise le transport | Ce qui change dans le parcours |
 |---|---|---|---|
-| **Option A — Sans transporteur** | Le client vient chercher le ciment, ou mandate son propre transporteur | Le client | Génération d'un **bon de sortie** à présenter au point de chargement ; pas de séquestre transport |
+| **Option A — Sans transporteur** | Le client vient chercher le ciment, ou mandate son propre transporteur | Le client | Génération d'un **bon de sortie** à présenter au point de chargement ; pas de règlement de transport |
 | **Option B — Avec transporteur** | APIX organise le transport avec un partenaire homologué PPC | APIX / PPC | Choix de la zone de livraison, calcul du barème, affectation d'un transporteur, suivi et preuve de livraison |
 | **Option C — Autre** | Cas particuliers : retrait en dépôt agréé, enlèvement par un tiers mandaté, transport fourni par le client | Variable, validé par PPC | Parcours paramétrable, validé au cas par cas dans le back-office |
 
@@ -244,10 +246,10 @@ Ces refus sont des arguments de crédibilité devant PPC.
 | **AC-CHF** | Chauffeur | Agent du transporteur, exécute la course | Application mobile chauffeur |
 | **AC-EXP** | Agent d'expédition / chargement | Opérateur PPC au point de chargement (usine ou dépôt) | Console de chargement (Web / tablette) |
 | **AC-ADM** | Administrateur PPC | Homologation, barèmes, litiges, pilotage | Back-office PPC |
-| **AC-FIN** | Contrôleur financier PPC | Suivi des séquestres, rapprochements, litiges financiers | Back-office PPC (lecture + actions) |
+| **AC-FIN** | Contrôleur financier PPC | Suivi des provisions de transport, des règlements et des retenues, rapprochements | Back-office PPC (lecture + actions) |
 | **AC-DEP** | Dépôt / point de retrait agréé | Canal existant intégré comme point de retrait | Console dépôt (Web / mobile) |
 | **AC-FBB** | Super-administrateur APIX | Supervision technique, support, configuration | Console d'exploitation APIX |
-| **AC-BNK** | Banque / établissement de paiement | Porte le compte de cantonnement, exécute les mouvements | Intégration (pas d'interface utilisateur) |
+| **AC-BNK** | Banque / établissement de paiement | Encaisse les paiements clients pour PPC et exécute les règlements vers les transporteurs | Intégration (pas d'interface utilisateur) |
 
 ### 4.2 Matrice des responsabilités (RACI simplifié)
 
@@ -274,7 +276,7 @@ Trois parcours suffisent à structurer le MVP.
 sequenceDiagram
     actor C as Client final
     participant AP as APIX Client
-    participant SE as Séquestre (banque)
+    participant PC as Compte PPC (banque)
     participant TR as Transporteur
     participant EX as Agent expédition PPC
     participant CH as Chauffeur
@@ -283,8 +285,8 @@ sequenceDiagram
     C->>AP: Crée un bon de commande (produit, quantité, zone)
     AP->>C: Affiche prix ciment + prix transport (barème PPC)
     C->>AP: Choisit l'option "avec transporteur"
-    C->>SE: Paie (mobile money, virement, cash agent)
-    SE-->>AP: Fonds cantonnés, transaction certifiée
+    C->>PC: Paie PPC (mobile money, virement, cash agent)
+    PC-->>AP: Encaissement confirmé, transaction certifiée
     AP->>TR: Publie la course disponible
     TR->>AP: Accepte la course
     AP->>C: Transporteur affecté et suivi activé
@@ -293,8 +295,8 @@ sequenceDiagram
     CH->>AP: Positions et événements de route
     CH->>C: Livraison
     C->>AP: Flash QR et validation de conformité
-    AP->>SE: Ordre de libération
-    SE-->>TR: Paiement du transport
+    AP->>PC: Ordre de règlement du transport
+    PC-->>TR: Règlement du transport
     AP-->>C: Reçu certifié et facture
 ```
 
@@ -329,7 +331,7 @@ Le détail des règles (délai de validité du lot, prorata, annulation, ré-tar
 |---|---|
 | **Compte client** | Inscription, vérification d'identité, profils (dépôt, entreprise, particulier), plafonds |
 | **Commande** | Catalogue ciment, prix, bon de commande certifié, trois options d'achat |
-| **Paiement** | Mobile money, virement, espèces via agent, séquestre, libération par jalons |
+| **Paiement** | Mobile money, virement, espèces via agent, encaissement certifié, règlement du transport sur preuve |
 | **Logistique** | Zones de livraison, barème PPC, engins, affectation, suivi, preuve de livraison |
 | **Transporteurs** | Portail transporteur, candidature, homologation, documents, score |
 | **Chauffeur** | Application mobile hors-ligne, feuille de route, preuves |
@@ -383,7 +385,7 @@ Le détail des règles (délai de validité du lot, prorata, annulation, ré-tar
 | **R-02** | Fraude au bon de commande (revente, réutilisation) | Très élevé | Moyenne | Bon nominatif à usage unique, QR signé, contrôle systématique au chargement, détection de doublons |
 | **R-03** | Litige de poids non arbitrable | Élevé | Élevée | Pesée contradictoire obligatoire, tolérance contractuelle, photos et scellés |
 | **R-04** | Rejet commercial par le réseau de dépôts | Élevé | Moyenne | Intégration des dépôts comme points de retrait, décision explicite de PPC sur les marges |
-| **R-05** | Blocage juridique du séquestre | Très élevé | Moyenne | Montage bancaire partenaire, validation par conseil juridique avant développement |
+| **R-05** | Rejet par le conseil juridique du circuit d'encaissement et de règlement | Très élevé | Moyenne | Validation écrite du circuit avant développement, convention avec la banque de PPC |
 | **R-06** | Couverture réseau insuffisante | Moyen | Élevée | Mode hors ligne, repli SMS / USSD, points de rendez-vous logistiques |
 | **R-07** | Concurrence active de Digiciment sur les comptes PPC | Élevé | Moyenne | Différenciation par la preuve, verrouillage contractuel, arguments de la note commerciale |
 | **R-08** | Dépendance à une seule banque ou un seul opérateur mobile money | Moyen | Moyenne | Abstraction technique, au moins deux fournisseurs par fonction critique |
@@ -403,7 +405,7 @@ Le détail des règles (délai de validité du lot, prorata, annulation, ré-tar
 | H-01 | PPC dispose ou peut publier un barème logistique par axe et par engin | Direction commerciale PPC |
 | H-02 | Les transporteurs partenaires acceptent un paiement après preuve de livraison | Direction logistique PPC |
 | H-03 | PPC peut mobiliser un agent d'expédition par point de chargement | Direction opérations PPC |
-| H-04 | Un partenaire bancaire accepte de porter le compte de cantonnement | Direction financière PPC / FBB |
+| H-04 | La banque de PPC accepte d'exécuter les règlements transporteurs sur instruction d'APIX | Direction financière PPC / FBB |
 | H-05 | Les paiements mobiles sont possibles sur les zones visées | Partenaires de paiement |
 | H-06 | PPC autorise l'intégration des dépôts agréés comme points de retrait | Direction commerciale PPC |
 | H-07 | Les données clients peuvent être hébergées hors du territoire national, ou à défaut localement | Conseil juridique PPC |
@@ -412,7 +414,7 @@ Le détail des règles (délai de validité du lot, prorata, annulation, ré-tar
 
 - **Interface APIX existante** (certification CIMA) : contrat d'interface documenté.
 - **Opérateurs de paiement mobile** : au moins deux opérateurs.
-- **Banque de cantonnement** : convention de séquestre.
+- **Banque partenaire** : encaissement des paiements clients et exécution des règlements.
 - **Passerelle SMS** et messagerie WhatsApp Business.
 - **Service de cartographie** : fonds de carte et géocodage des zones.
 - **Fiscalité** : format de facture normalisée en vigueur.
@@ -428,7 +430,7 @@ Le détail des règles (délai de validité du lot, prorata, annulation, ré-tar
 | **Comité de pilotage** | Mensuel | Direction PPC, direction FBB | Arbitrages de périmètre, budget, risques majeurs |
 | **Comité produit** | Hebdomadaire | Product owner, métier PPC, lead technique | Priorisation du backlog, validation des parcours |
 | **Comité logistique** | Bimensuel | Direction logistique PPC, transporteurs représentatifs | Barèmes, litiges, qualité de service |
-| **Revue de sécurité et conformité** | Trimestriel | DSI PPC, conseil juridique, FBB | Séquestre, données, audit |
+| **Revue de sécurité et conformité** | Trimestriel | DSI PPC, conseil juridique, FBB | Circuit de règlement, données, audit |
 
 ### 10.2 Jalons
 
@@ -479,6 +481,6 @@ Le vocabulaire doit être arrêté avec PPC avant tout développement. Les défi
 | **Jalon** | Étape de la chaîne de preuve produisant une preuve et conditionnant la suivante |
 | **PPC** | Cimentier client, donneur d'ouvrage du présent projet |
 | **Preuve de livraison** | Ensemble des éléments constatant la remise : QR nominatif, photo géolocalisée, horodatage, conformité, scellé |
-| **Séquestre** | Cantonnement des fonds chez un établissement habilité jusqu'à réalisation d'une condition |
+| **Règlement conditionné** | Versement du transport au transporteur, déclenché par la preuve de livraison conforme |
 | **Scellé** | Dispositif numéroté fermant le chargement, dont le numéro est relevé au départ et vérifié à l'arrivée |
 | **TTL (durée de vie)** | Délai maximal pendant lequel un lot de groupage reste ouvert avant arbitrage |
