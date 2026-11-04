@@ -48,11 +48,19 @@ PPC/
 ├── annexes/
 │   ├── regles-de-gestion.md
 │   └── questions-ouvertes-ppc.md
+├── assets/
+│   ├── images/                    photographies de la présentation (licences libres)
+│   └── credits.json               auteur, licence et page source de chaque image
 ├── outils/
 │   ├── build_docs.py              export Markdown -> Word (.docx)
 │   ├── build_xlsx.py              génération des classeurs de travail (.xlsx)
+│   ├── build_pptx.py              génération de la présentation commerciale (.pptx)
+│   ├── fetch_images.py            récupération des images libres (Wikimedia Commons)
 │   └── requirements.txt
 └── dist/                          livrables générés (créé par les scripts)
+    ├── docs/
+    ├── xlsx/
+    └── pptx/
 ```
 
 ---
@@ -62,8 +70,10 @@ PPC/
 ```powershell
 cd 'e:\DILEVE\DILEVE\BUSINESS\PROJECTS\FBB\PPC'
 python -m pip install -r outils\requirements.txt
+python outils\fetch_images.py    # -> assets/images/*.jpg (une seule fois, ou --force)
 python outils\build_docs.py      # -> dist/docs/*.docx
 python outils\build_xlsx.py      # -> dist/xlsx/*.xlsx
+python outils\build_pptx.py      # -> dist/pptx/*.pptx
 ```
 
 Options utiles :
@@ -88,8 +98,19 @@ python outils\build_docs.py --check          # vérifie les tableaux Markdown sa
 | `dist/xlsx/02-Matrice-roles-droits.xlsx` | 30 fonctions × 9 rôles | Sécurité et conception des écrans |
 | `dist/xlsx/03-Grille-tarifaire-logistique.xlsx` | Référentiel d'axes, engins, simulateur de prix | Atelier barème avec PPC |
 | `dist/xlsx/04-Simulateur-groupage.xlsx` | Répartition des frais d'une course groupée | Démonstration client |
+| `dist/pptx/APIX-All-In-One-Presentation-PPC.pptx` | 22 diapositives avec notes de présentation | Réunion avec les dirigeants de PPC |
 
 > Les valeurs numériques des classeurs (distances, coûts, seuils) sont des **propositions de travail** à remplacer par les données de PPC.
+
+### Présentation commerciale « APIX All In One »
+
+Le fichier `dist/pptx/APIX-All-In-One-Presentation-PPC.pptx` est généré intégralement par `outils/build_pptx.py` : il n'est pas destiné à être retouché à la main, sous peine de perdre la modification à la régénération suivante.
+
+- **Chaque diapositive porte des notes de présentation** : ce qu'il faut dire, et ce qu'il ne faut pas dire.
+- **Les photographies** proviennent de Wikimedia Commons, sous licence Creative Commons ou domaine public. La diapositive 22 crédite les auteurs. Le détail (auteur, licence, page source) est dans `assets/credits.json`, généré par `outils/fetch_images.py`.
+- **Aucun chiffre de marché n'est inventé** : les seules données chiffrées sont la simulation de groupage, explicitement présentée comme telle et recalculable dans `04-Simulateur-groupage.xlsx`.
+- Pour changer une photographie, modifier le titre du fichier dans `THEMES` (dans `fetch_images.py`), supprimer le fichier correspondant dans `assets/images/`, puis relancer le script.
+- Textes, couleurs et mise en page se règlent dans `build_pptx.py` ; les constantes de charte sont regroupées en tête de fichier.
 
 
 ---

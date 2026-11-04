@@ -1,0 +1,74 @@
+[
+  {
+    "theme": "couverture",
+    "usage": "Diapositive de couverture",
+    "fichier": "couverture.jpg",
+    "titre": "File:Cement bags in Douma.jpg",
+    "auteur": "Alex.Simon89",
+    "licence": "CC BY 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Cement_bags_in_Douma.jpg"
+  },
+  {
+    "theme": "douleur_attente",
+    "usage": "Douleur : files d'attente et immobilisation des camions",
+    "fichier": "douleur_attente.jpg",
+    "titre": "File:Namanga.jpg",
+    "auteur": "KeyoT",
+    "licence": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Namanga.jpg"
+  },
+  {
+    "theme": "douleur_manutention",
+    "usage": "Douleur : manutention et casse des sacs",
+    "fichier": "douleur_manutention.jpg",
+    "titre": "File:Father and son loading and unloading cement in Goma, Congo.jpg",
+    "auteur": "Michel lunanga",
+    "licence": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Father_and_son_loading_and_unloading_cement_in_Goma,_Congo.jpg"
+  },
+  {
+    "theme": "douleur_route",
+    "usage": "Douleur : Ã©tat des routes et retards",
+    "fichier": "douleur_route.jpg",
+    "titre": "File:Road to Boali.jpg",
+    "auteur": "Ueaiupcadf",
+    "licence": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Road_to_Boali.jpg"
+  },
+  {
+    "theme": "livraison",
+    "usage": "La livraison : camion et dÃ©chargement",
+    "fichier": "livraison.jpg",
+    "titre": "File:Semi truck for cement transportation.jpg",
+    "auteur": "Tontonjer",
+    "licence": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Semi_truck_for_cement_transportation.jpg"
+  },
+  {
+    "theme": "mobile",
+    "usage": "L'ubiquitÃ© : paiement mobile et smartphone",
+    "fichier": "mobile.jpg",
+    "titre": "File:Mobile Money Kiosk.jpg",
+    "auteur": "Bukulu Steven",
+    "licence": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Mobile_Money_Kiosk.jpg"
+  },
+  {
+    "theme": "usine",
+    "usage": "Le produit : usine et production",
+    "fichier": "usine.jpg",
+    "titre": "File:Rotary kilns, Sundon cement plant - geograph.org.uk - 2421111.jpg",
+    "auteur": "Dylan Moore",
+    "licence": "CC BY-SA 2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Rotary_kilns,_Sundon_cement_plant_-_geograph.org.uk_-_2421111.jpg"
+  },
+  {
+    "theme": "ville",
+    "usage": "Le marchÃ© : quartiers et points de vente",
+    "fichier": "ville.jpg",
+    "titre": "File:Construction site in Pretoria Central.jpg",
+    "auteur": "Nkosiyabo Mafu",
+    "licence": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Construction_site_in_Pretoria_Central.jpg"
+  }
+]
