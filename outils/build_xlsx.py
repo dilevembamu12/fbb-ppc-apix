@@ -180,7 +180,7 @@ RECITS = [
     ("US-M11-05", "E11", "Gestion des zones et des axes", "MVP", 8, "C2", "Coefficient de détour, points de rendez-vous, désactivation sans perte"),
     ("US-M12-01", "E12", "Proposition de groupage au client", "V1", 8, "C5", "Comparaison explicite camion dédié / groupage avec délais"),
     ("US-M12-02", "E12", "Constitution d'un lot", "V1", 14, "C5", "Compatibilité axe, produit, point de chargement, fenêtre"),
-    ("US-M12-03", "E12", "Arbitrage à l'expiration du délai", "V1", 10, "C6", "Trois issues possibles, remboursement intégral par défaut"),
+    ("US-M12-03", "E12", "Arbitrage à l'expiration du délai", "V1", 10, "C6", "Trois issues : engin plus petit, report jusqu'au remplissage, remboursement sur demande"),
     ("US-M12-04", "E12", "Répartition des frais mutualisés", "V1", 10, "C6", "Calcul au prorata poids × distance plus quote-part fixe"),
     ("US-M12-05", "E12", "Fiche de chargement ordonnée", "V1", 8, "C6", "Ordre de chargement inverse de la tournée, étiquettes par arrêt"),
     ("TR-01", "E13", "Journal d'audit en chaîne d'empreintes", "MVP", 12, "C1", "Toute action sensible journalisée, empreinte chaînée vérifiable"),

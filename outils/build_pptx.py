@@ -751,19 +751,19 @@ def d14_preuve_livraison(prs):
 def d15_bareme(prs):
     diapo = prs.slides.add_slide(prs.slide_layouts[6])
     fond(diapo, SABLE)
-    en_tete(diapo, "Le prix", "Le transport n'est plus négocié : il est publié, calculé, expliqué", 15)
+    en_tete(diapo, "Le prix", "Le transport cesse d'être un forfait : il devient un prix calculé", 15)
 
     colonnes = [
         ("Aujourd'hui", [
-            "Le prix se négocie au bord du camion.",
-            "Les frais de route s'ajoutent en cours de route.",
-            "Le client découvre le total à l'arrivée.",
-            "PPC ne maîtrise pas son prix final.",
+            "Un tarif forfaitaire, identique quel que soit le trajet.",
+            "Ni la distance réelle ni le tonnage ne sont pris en compte.",
+            "Le client connaît le total, mais le prix au sac reste approximatif.",
+            "PPC ne maîtrise pas le prix final au quartier.",
         ], GRIS, BLANC),
         ("Avec APIX", [
             "Un barème publié par PPC, versionné et daté.",
-            "Un calcul au poids et à la distance, expliqué ligne par ligne.",
-            "Un prix ferme, figé à la commande.",
+            "Un prix calculé à l'axe et au poids, jamais forfaitaire.",
+            "Le total annoncé est exactement celui qui sera payé.",
             "Aucune saisie libre, ni par le client ni par le transporteur.",
         ], NUIT, NUIT_MOYEN),
     ]
@@ -788,8 +788,9 @@ def d15_bareme(prs):
                       "C'est un acte de contrôle de la marque, pas un réglage informatique.",
                       {"couleur": GRIS, "taille": 13})]}], interligne=1.25)
     pied(diapo)
-    notes(diapo, "Question à poser : « Le barème existe-t-il déjà chez vous, ou faut-il le construire ? » "
-                 "La réponse conditionne le calendrier.")
+    notes(diapo, "Point acquis auprès de PPC : le transport est aujourd'hui facturé au forfait, sans calculateur "
+                 "intégrant le trajet et le poids. La question n'est donc pas « négociez-vous ? » mais "
+                 "« sur quelle base ce forfait est-il construit, et qui supporte l'écart quand le trajet réel diffère ? »")
 
 
 def d16_groupage(prs):
@@ -840,8 +841,9 @@ def d16_groupage(prs):
 
     texte(diapo, MARGE, Inches(6.15), Inches(11.4), Inches(0.8),
           [{"runs": [("Et si le lot ne se remplit pas ? ", {"gras": True, "couleur": ORANGE_PALE, "taille": 13}),
-                     ("Trois issues sont prévues et écrites : engin plus petit, report accepté par le client, "
-                      "ou remboursement intégral sans frais. Aucun client ne reste bloqué.",
+                     ("Trois issues sont prévues et écrites : la poursuite avec un engin plus petit, le report "
+                      "accepté par le client jusqu'au remplissage du lot, ou le remboursement à sa demande. "
+                      "Aucun client ne reste bloqué.",
                       {"couleur": RGBColor(0xC3, 0xD0, 0xDA), "taille": 13})]}], interligne=1.3)
     pied(diapo, sombre=True)
     notes(diapo, "C'est la diapositive qui répond à la concurrence sur les petits volumes. Les chiffres "

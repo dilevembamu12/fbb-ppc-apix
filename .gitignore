@@ -11,6 +11,7 @@
 
 # Fichiers temporaires de bureautique
 ~$*
+*- Copie.pptx
 *.tmp
 Thumbs.db
 desktop.ini

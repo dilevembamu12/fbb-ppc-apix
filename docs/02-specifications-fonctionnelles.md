@@ -734,9 +734,9 @@ En tant que système, je veux regrouper les commandes compatibles afin de rempli
 En tant que système, je veux traiter un lot incomplet afin qu'aucun client ne reste bloqué.
 
 *Critères d'acceptation :*
-- Trois issues possibles : *livraison par un engin plus petit*, *report accepté par le client*, *remboursement intégral sans frais*.
-- Le client est notifié et choisit, avec une option par défaut appliquée après un délai.
-- Aucun frais n'est retenu en cas de remboursement lié à un lot non complété.
+- Trois issues possibles : *poursuite avec un engin plus petit*, *report accepté par le client jusqu'au remplissage du lot*, *remboursement à la demande explicite du client*.
+- Le client est notifié et choisit ; à défaut de réponse de sa part, le report lui est appliqué et il en est informé.
+- Le remboursement reste possible à tout moment sur demande du client, sans frais.
 
 **US-M12-04 — Répartition des frais** *(V1)*
 En tant que client, je veux payer ma juste part du transport mutualisé.
