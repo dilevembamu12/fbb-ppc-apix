@@ -1,0 +1,1003 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+build_web.py — Version web de la présentation « APIX All In One ».
+
+Produit un dossier autonome, publiable tel quel sur GitHub Pages ou ouvrable
+en double-cliquant sur index.html :
+    dist/web/index.html
+    dist/web/images/*.jpg
+
+Aucune dépendance externe : pas de CDN, pas de police distante, pas de script
+tiers. La présentation fonctionne hors connexion.
+
+Mise en page : une scène fixe de 1280 × 720 pixels, mise à l'échelle par
+JavaScript. Le rendu reste donc identique sur tous les écrans, comme un
+fichier PowerPoint.
+
+Usage :
+    python outils/build_web.py
+"""
+
+from __future__ import annotations
+
+import shutil
+import sys
+from pathlib import Path
+
+RACINE = Path(__file__).resolve().parent.parent
+IMAGES = RACINE / "assets" / "images"
+SORTIE = RACINE / "dist" / "web"
+
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+except (AttributeError, ValueError):
+    pass
+
+
+# ---------------------------------------------------------------------------
+# Fragments réutilisables
+# ---------------------------------------------------------------------------
+def en_tete(surtitre: str, titre: str) -> str:
+    return f'''
+      <div class="barre-haut"></div>
+      <div class="surtitre">{surtitre}</div>
+      <h2 class="titre">{titre}</h2>
+    '''
+
+
+def image(nom: str, classe: str = "", voile: str | None = None) -> str:
+    couche = f'<div class="voile" style="background:{voile}"></div>' if voile else ""
+    return f'<div class="photo {classe}"><img src="images/{nom}.jpg" alt="">{couche}</div>'
+
+
+def carte(numero: str, titre: str, corps: str, sombre: bool = False) -> str:
+    return f'''
+        <div class="carte{' carte-sombre' if sombre else ''}">
+          <div class="carte-num">{numero}</div>
+          <div class="carte-titre">{titre}</div>
+          <p>{corps}</p>
+        </div>'''
+
+
+def telephone(titre: str, sous_titre: str, contenu: str) -> str:
+    return f'''
+        <div class="telephone">
+          <div class="tel-barre"><strong>{titre}</strong><span>{sous_titre}</span></div>
+          <div class="ecran">{contenu}</div>
+        </div>'''
+
+
+# ---------------------------------------------------------------------------
+# Diapositives
+# ---------------------------------------------------------------------------
+def s01() -> str:
+    return f'''
+      {image("couverture", "plein", "rgba(14,36,54,.70)")}
+      <div class="filet-gauche"></div>
+      <div class="contenu centre-vertical">
+        <div class="marque">F B B &nbsp;·&nbsp; A P I X</div>
+        <h1 class="titre-couverture">APIX All In One</h1>
+        <p class="accroche">Du paiement certifié au sac livré :<br>une seule chaîne, une seule preuve.</p>
+        <div class="trait"></div>
+        <p class="sous-accroche">Une plateforme ubiquitaire : smartphone, web, et hors connexion.<br>
+          Direction générale de PPC &nbsp;·&nbsp; 5 novembre 2026</p>
+      </div>'''
+
+
+def s02() -> str:
+    questions = [
+        ("01", "Où est mon camion, maintenant ?", "Le client appelle. Personne ne sait."),
+        ("02", "Combien de sacs sont réellement arrivés ?", "95, 98, 100 ? Aucun constat contradictoire."),
+        ("03", "Qui paie les sacs manquants ?", "Le transporteur accuse le client. Le client accuse l'usine."),
+        ("04", "Pourquoi le ciment paraît-il cher au quartier ?", "Le prix ex-usine n'est pas le prix payé."),
+    ]
+    lignes = "".join(
+        f'<div class="question" style="top:{340 + n * 78}px"><span class="q-num">{num}</span>'
+        f'<div><div class="q-titre">{q}</div><div class="q-prec">{p}</div></div></div>'
+        for n, (num, q, p) in enumerate(questions)
+    )
+    return f'''
+      <div class="moitie-gauche">
+        <div class="surtitre">Le problème</div>
+        <h2 class="titre-xl">Le paiement est certifié.<br>La marchandise, non.</h2>
+        <p class="intro">Quatre questions auxquelles personne, aujourd'hui, ne peut répondre :</p>
+        {lignes}
+        <p class="conclusion">Résultat : c'est votre marque qui répond de ce qu'elle ne contrôle pas.</p>
+      </div>
+      {image("douleur_route", "moitie-droite", "rgba(14,36,54,.22)")}'''
+
+
+def s03() -> str:
+    cartes = "".join([
+        carte("01", "Le camion part à moitié vide",
+              "Une course décidée dans l'urgence part à 60 %. Le transporteur partenaire perd de l'argent, "
+              "se décourage, et va travailler ailleurs. Le coût de la tonne transportée monte mécaniquement."),
+        carte("02", "Le litige se règle sans preuve",
+              "Un client reçoit moins de sacs qu'il n'en a payé. Le transporteur accuse le client, le client "
+              "accuse l'usine. Sans constat contradictoire, l'usine tranche à l'aveugle — et paie en image."),
+        carte("03", "Le prix final échappe à PPC",
+              "Le prix ex-usine est compétitif. Entre l'usine et le chantier, le prix au sac ne reflète ni le "
+              "trajet ni la charge. Le client conclut que le ciment PPC est cher."),
+    ])
+    return f'''
+      {en_tete("Ce que cela coûte", "Trois fuites qui coûtent, sans figurer dans aucun rapport")}
+      <div class="trois-colonnes">{cartes}</div>
+      <p class="note-bas"><strong>Aucune de ces trois fuites ne se voit dans un état financier.</strong>
+        Toutes les trois sortent de votre trésorerie, et toutes les trois atteignent votre image.</p>'''
+
+
+def s04() -> str:
+    profils = [
+        ("Dépôt / revendeur de quartier", "50 à 500 sacs, récurrent",
+         "Réapprovisionnement rapide, prix stable, crédit. Sa contrainte : la trésorerie et la rotation du stock."),
+        ("Entreprise / chantier", "200 à 3 000 sacs, par projet",
+         "Facture conforme, traçabilité, respect du planning. Sa contrainte : la comptabilité et les délais."),
+        ("Particulier / artisan", "5 à 50 sacs, ponctuel",
+         "Prix total connu d'avance, livraison simple, preuve d'achat. Sa contrainte : le cash et le téléphone."),
+    ]
+    cartes = "".join(
+        f'<div class="carte"><div class="carte-titre">{t}</div>'
+        f'<div class="volume">{v}</div><p>{c}</p></div>' for t, v, c in profils
+    )
+    return f'''
+      {en_tete("Le marché", "Il n'achète pas une application. Il achète une certitude.")}
+      <div class="trois-colonnes">{cartes}</div>
+      <div class="bande-sombre">
+        <div class="etiquette">Deux populations à équiper</div>
+        <div class="bande-colonnes">
+          <div><strong>Transporteurs partenaires</strong><br>homologués par PPC — ils ne sont pas PPC</div>
+          <div><strong>Administration PPC</strong><br>homologation, barème, litiges, pilotage</div>
+        </div>
+      </div>
+      <p class="source">Segmentation à confirmer avec les volumes réels de PPC : aucun chiffre de marché n'est avancé ici.</p>'''
+
+
+def s05() -> str:
+    jalons = [
+        ("J1", "Compte vérifié", "Identité et plafonds"),
+        ("J2", "Bon certifié", "Numéro unique, QR signé"),
+        ("J3", "Paiement encaissé", "Encaissé par PPC, certifié APIX"),
+        ("J4", "Chargement", "Pesée, scellé, photo"),
+        ("J5", "Transport suivi", "Positions et incidents"),
+        ("J6", "Livraison prouvée", "Validation, litige tranché"),
+    ]
+    chevrons = "".join(
+        f'<div class="chevron{" alt" if i % 2 else ""}"><span>{c}</span>'
+        f'<div class="chevron-titre">{t}</div><div class="chevron-prec">{p}</div></div>'
+        for i, (c, t, p) in enumerate(jalons)
+    )
+    return f'''
+      <div class="sombre">
+        {en_tete("La solution", "La chaîne de preuve, en six jalons")}
+        <p class="intro-sombre">Chaque jalon produit une preuve, et chaque preuve conditionne le suivant.</p>
+        <div class="chevrons">{chevrons}</div>
+        <div class="bande-sombre beige">
+          <p><strong>Ce que cela change :</strong> le jour où un contentieux arrive sur 500 sacs, vous ne produisez
+             pas une transaction — vous produisez un dossier.</p>
+        </div>
+      </div>'''
+
+
+def s06() -> str:
+    client = telephone("Ma commande", "APIX · client final", '''
+          <div class="badge orange">EN ROUTE</div>
+          <div class="tel-ref">BON N° PPC-2026-0448</div>
+          <div class="tel-montant">1 046 $</div>
+          <div class="tel-prec">100 sacs · ciment 42,5</div>
+          <div class="tel-ligne"><span>Ciment</span><span>880 $</span></div>
+          <div class="tel-ligne"><span>Transport calculé</span><span>150 $</span></div>
+          <div class="tel-ligne fort"><span>Total payé</span><span>1 046 $</span></div>
+          <div class="tel-etapes"><i class="fait"></i><i class="fait"></i><i class="actif"></i><i></i></div>
+          <div class="tel-etapes-txt"><span>Payée</span><span>Chargée</span><span>En route</span><span>Livrée</span></div>
+          <div class="tel-carte"><span class="point"></span></div>
+          <div class="tel-pos">Dernière position : il y a 4 min</div>
+          <div class="tel-bouton">Suivre le camion</div>''')
+
+    chauffeur = telephone("Course 118", "APIX · chauffeur", '''
+          <div class="badge gris">HORS LIGNE</div>
+          <div class="tel-ref">2 preuves en attente de réseau</div>
+          <div class="tel-item"><div><b>Photo géolocalisée</b><span>−4,3276 ; 15,3136</span></div><i class="pastille vert"></i></div>
+          <div class="tel-item"><div><b>Scellé 44821</b><span>Conforme au départ</span></div><i class="pastille vert"></i></div>
+          <div class="tel-item"><div><b>Poids constaté</b><span>4 960 kg · écart 1,0 %</span></div><i class="pastille orange"></i></div>
+          <div class="tel-bouton orange">Valider la livraison</div>''')
+
+    backoffice = '''
+        <div class="fenetre">
+          <div class="fenetre-barre"><i></i><i></i><i></i><span>backoffice · transporteurs homologués</span></div>
+          <div class="kpis">
+            <div><b>142</b><span>commandes</span></div>
+            <div><b>87 %</b><span>à l'heure</span></div>
+            <div><b>3</b><span>litiges</span></div>
+          </div>
+          <table class="mini">
+            <tr><th>Transporteur</th><th>Engin</th><th>Statut</th></tr>
+            <tr><td>Trans-Kongo</td><td>Porteur 15 t</td><td><span class="pill vert">Homologué</span></td></tr>
+            <tr><td>Sanga Logistique</td><td>Semi 30 t</td><td><span class="pill rouge">Assurance expirée</span></td></tr>
+            <tr><td>Mbala Transit</td><td>Porteur 10 t</td><td><span class="pill vert">Homologué</span></td></tr>
+          </table>
+        </div>'''
+
+    supports = [
+        ("Smartphone", "Android 8 et plus, 2 Go de mémoire."),
+        ("Web", "Même compte, mêmes données, depuis un poste ou un cybercafé."),
+        ("Hors connexion", "72 heures sans réseau, sans perdre une preuve."),
+        ("SMS et USSD", "Pour le client sans smartphone."),
+    ]
+    blocs = "".join(f'<div><b>{t}</b><p>{c}</p></div>' for t, c in supports)
+
+    return f'''
+      {en_tete("L'ubiquité", "Partout où le client se trouve")}
+      <p class="sous-titre">sur l'appareil qu'il possède déjà — et sans réseau quand il n'y en a pas.</p>
+      <div class="rangee-telephones">
+        <div>{client}<div class="legende">Client final — commander, payer, suivre</div></div>
+        <div>{chauffeur}<div class="legende">Chauffeur — livrer, prouver, sans réseau</div></div>
+      </div>
+      <div class="colonne-droite">
+        {backoffice}
+        <div class="legende gauche">Back-office PPC — c'est vous qui homologuez</div>
+        <div class="grille-supports">{blocs}</div>
+      </div>
+      <p class="source">Maquettes schématiques, non contractuelles.</p>'''
+
+
+def s07() -> str:
+    etapes = [
+        ("1", "Le client paie PPC",
+         "Ciment, et transport si l'offre l'inclut. Paiement par mobile money, virement ou espèces via un agent agréé."),
+        ("2", "APIX certifie et ventile",
+         "La part transport est isolée dans la commande et provisionnée. Offre sans transport : aucune provision."),
+        ("3", "Le ciment est livré",
+         "Le client valide sur son téléphone : quantité, état, scellé. La preuve est signée."),
+        ("4", "PPC règle le transporteur",
+         "Sur preuve conforme, dans le délai que PPC arrêtera. Retenue partielle en cas d'écart constaté."),
+    ]
+    cartes = "".join(
+        f'<div class="etape"><div class="etape-num">{n}</div>'
+        f'<div class="etape-titre">{t}</div><p>{c}</p></div>' for n, t, c in etapes
+    )
+    return f'''
+      <div class="sombre">
+        {en_tete("Le circuit de l'argent", "Le client paie PPC. Le transporteur est payé sur preuve.")}
+        <p class="intro-sombre">Encaissé avant le chargement. Le transport n'est réglé qu'après la livraison
+          prouvée — et seulement s'il figure dans l'offre.</p>
+        <div class="quatre-etapes">{cartes}</div>
+        <div class="bande-orange">
+          <p>« Le client paie PPC. PPC paie le transport — et seulement sur preuve. »</p>
+          <p class="second">Le client est protégé par un dossier qu'il peut produire, pas par un gel de ses fonds.</p>
+        </div>
+      </div>'''
+
+
+def s08() -> str:
+    elements = [
+        ("Photo géolocalisée",
+         "Prise à la remise, horodatée, non modifiable, avec coordonnées et identité du chauffeur.", True),
+        ("QR nominatif", "Remis au client, à usage unique, signé. Impossible à rejouer.", False),
+        ("Pesée contradictoire", "Poids au chargement confronté au poids constaté, tolérance contractuelle.", False),
+        ("Numéro de scellé", "Relevé au départ, vérifié à l'arrivée. Une rupture ouvre un litige automatique.", False),
+    ]
+    cartes = "".join(
+        f'<div class="carte{" vedette" if v else ""}">'
+        f'{"<span class=marqueur>Le cœur</span>" if v else ""}'
+        f'<div class="carte-titre">{t}</div><p>{c}</p></div>' for t, c, v in elements
+    )
+    return f'''
+      <div class="moitie-gauche">
+        <div class="surtitre">La preuve de livraison</div>
+        <h2 class="titre">Quatre éléments, un seul dossier</h2>
+        <div class="liste-cartes">{cartes}</div>
+      </div>
+      {image("livraison", "moitie-droite droite", "rgba(14,36,54,.50)")}
+      <p class="citation-photo">À la livraison, la preuve vaut mieux que la parole.</p>'''
+
+
+def s09() -> str:
+    return f'''
+      {en_tete("Le prix", "Le transport cesse d'être un forfait : il devient un prix calculé")}
+      <div class="colonnes-prix">
+        <div class="colonne-comparaison">
+          <div class="entete-colonne grise">Aujourd'hui</div>
+          <ul class="liste-claire">
+            <li>Un tarif forfaitaire, identique quel que soit le trajet.</li>
+            <li>Ni la distance réelle ni le tonnage ne sont pris en compte.</li>
+            <li>PPC ne maîtrise pas le prix final au quartier.</li>
+          </ul>
+        </div>
+        <div class="colonne-comparaison">
+          <div class="entete-colonne">Avec APIX</div>
+          <ul class="liste-sombre">
+            <li>Un barème publié par PPC, versionné et daté.</li>
+            <li>Un prix calculé à l'axe et au poids, jamais forfaitaire.</li>
+            <li>Le total annoncé est exactement celui qui sera payé.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="calculateur">
+        <div class="calc-etiquette">Calculateur de transport</div>
+        <div class="calc-titre">Kimpese → Kinshasa · 200 km · 8 tonnes</div>
+        <div class="calc-ligne"><span>Coût fixe de l'axe</span><span>180 $</span></div>
+        <div class="calc-ligne"><span>0,055 $ × 200 km × 8 t</span><span>88 $</span></div>
+        <div class="calc-ligne"><span>Coefficient de saison</span><span>× 1,00</span></div>
+        <div class="calc-total"><span>Prix calculé</span><strong>268 $</strong></div>
+        <div class="calc-note">Soit 33,50 $ la tonne — et non un forfait identique quel que soit le trajet.</div>
+      </div>
+      <div class="bande-claire">
+        <p><strong>La conséquence commerciale :</strong> le barème est le vôtre. APIX l'applique, il ne le décide pas.
+          Le prix affiché au quartier redevient celui que PPC a choisi.</p>
+      </div>'''
+
+
+def s10() -> str:
+    clients = [("Dépôt Ngaliema", "60 sacs · 3,0 t"), ("Chantier Limete", "200 sacs · 10,0 t"),
+               ("Dépôt Matete", "120 sacs · 6,0 t"), ("Artisan Kintambo", "20 sacs · 1,0 t"),
+               ("Dépôt Masina", "120 sacs · 6,0 t")]
+    lignes = "".join(f'<div class="client"><span>{n}</span><em>{d}</em></div>' for n, d in clients)
+    return f'''
+      <div class="sombre">
+        {en_tete("La démonstration", "Cinq petits acheteurs, un seul camion")}
+        <p class="intro-sombre">Simulation sur un axe de 210 km, cinq clients, cinq points de livraison.</p>
+        <div class="liste-clients">{lignes}</div>
+        <div class="fleche"></div>
+        <div class="carte-resultat">
+          <div class="resultat-titre">1 camion · 26 tonnes</div>
+          <div class="resultat-ligne"><span>Transport total</span><b>900 $ au prorata du poids × distance</b></div>
+          <div class="resultat-ligne"><span>Prix par sac</span><b>entre 1,67 $ et 1,79 $ selon la zone</b></div>
+          <div class="resultat-ligne"><span>Remplissage</span><b>86,7 % — le lot se déclenche</b></div>
+          <div class="resultat-ligne"><span>Sans groupage</span><b>5 commandes, 5 camions, 5 tournées</b></div>
+        </div>
+        <div class="bande-sombre">
+          <p><strong>Et si le lot ne se remplit pas ?</strong> Trois issues sont écrites : la poursuite avec un engin
+            plus petit, le report accepté par le client jusqu'au remplissage du lot, ou le remboursement à sa demande.
+            Aucun client ne reste bloqué.</p>
+        </div>
+      </div>'''
+
+
+def s11() -> str:
+    lignes = [
+        ("Nature", "Application de transactions", "Chaîne de preuve du paiement au sac livré"),
+        ("Unité de référence", "La transaction", "Le bon de commande certifié"),
+        ("Transporteurs", "Gestion locale, non documentée", "Homologation par PPC, datée et révocable"),
+        ("Prix du transport", "Forfaitaire", "Calculé à l'axe et au poids, barème PPC"),
+        ("Preuve de livraison", "Reçu simple", "QR, photo géolocalisée, pesée, scellé"),
+        ("Sécurité du règlement", "Paiement direct, sans preuve", "Règlement sur preuve de livraison"),
+        ("Hors connexion", "Connexion requise", "72 heures pour le chauffeur"),
+        ("Litige", "Traité au cas par cas", "Dossier de preuve, décision motivée par PPC"),
+    ]
+    corps = "".join(f'<tr><td class="critere">{a}</td><td>{b}</td><td class="force">{c}</td></tr>'
+                    for a, b, c in lignes)
+    return f'''
+      {en_tete("La concurrence", "Deux approches, deux natures différentes")}
+      <table class="comparaison">
+        <thead><tr><th>Critère</th><th>Digiciment</th><th>APIX All In One</th></tr></thead>
+        <tbody>{corps}</tbody>
+      </table>
+      <p class="source">Comparaison établie sur le périmètre fonctionnel annoncé. Toute correction de votre part
+        est bienvenue : elle sera intégrée avant la démonstration.</p>'''
+
+
+def s12() -> str:
+    decisions = [
+        ("D1", "Qui est le donneur d'ordre du transport ?", "Le client final ou PPC ?"),
+        ("D2", "Comment PPC règle-t-il le transporteur aujourd'hui ?", "À établir : délai, moyen, litiges."),
+        ("D3", "Sur quelle base construire le barème ?", "Le forfait actuel, ou un calcul à l'axe ?"),
+        ("D4", "Quel circuit pour l'encaissement en espèces ?", "Part du cash et du mobile money."),
+        ("D5", "Quel rôle pour le réseau de dépôts ?", "Points de retrait, ou vente directe."),
+    ]
+    cartes = "".join(
+        f'<div class="decision"><span>{c}</span><div><b>{q}</b><em>{p}</em></div></div>'
+        for c, q, p in decisions
+    )
+    return f'''
+      {en_tete("La suite", "PPC garde la main — cinq décisions, et nous commençons")}
+      <div class="bande-sombre haut">
+        <p><strong>Vous décidez qui transporte, à quel prix, et comment se règle un litige.</strong>
+          APIX rend chacune de ces décisions exécutable, visible et opposable.</p>
+      </div>
+      <div class="grille-decisions">{cartes}</div>
+      <p class="note-bas">Trois semaines d'ateliers suffisent à trancher ces cinq points. Elles conditionnent tout le reste.</p>'''
+
+
+# --- Annexes -----------------------------------------------------------------
+def a01() -> str:
+    sources = [
+        ("Certification", "Bons et preuves signés, vérifiables, opposables."),
+        ("Coût logistique évité", "Remplissage, litiges, impayés : trois postes qui se mesurent."),
+        ("Règlement accéléré", "Le transporteur est payé sur preuve, sans avance de trésorerie."),
+        ("Donnée de demande", "Volume par axe, produit et période — un actif pour la production."),
+    ]
+    cartes = "".join(carte(f"0{i}", t, c) for i, (t, c) in enumerate(sources, start=1))
+    return f'''
+      {en_tete("Annexe A1 · Modèle économique", "Quatre sources de valeur, trois façons de la facturer")}
+      <div class="quatre-colonnes">{cartes}</div>
+      <div class="bande-claire">
+        <p><strong>Trois modèles possibles — recommandation : le mixte.</strong>
+          Frais par course (simple, aligné sur l'usage) · Abonnement PPC (prévisible, finance l'exploitation) ·
+          Mixte (base fixe + frais dégressifs).</p>
+      </div>
+      <p class="source">Aucun prix n'est avancé : le modèle se cale sur les volumes et le barème réels de PPC.</p>'''
+
+
+def a02() -> str:
+    roles = [
+        ("Direction de projet", "Pilotage, arbitrages de périmètre, relation PPC."),
+        ("Ingénierie plateforme", "Applications mobile et web, encaissement, règlement, sécurité, hors-ligne."),
+        ("Métier logistique", "Barème, homologation, traitement des litiges."),
+    ]
+    cartes = "".join(
+        f'<div class="carte"><div class="carte-titre">{t}</div><p>{c}</p>'
+        f'<div class="a-completer">Nom et parcours à compléter</div></div>' for t, c in roles
+    )
+    return f'''
+      {en_tete("Annexe A2 · L'équipe", "Qui porte le projet")}
+      <div class="trois-colonnes">{cartes}</div>
+      <div class="bande-sombre">
+        <div class="etiquette">Pourquoi FBB</div>
+        <p>APIX est déjà en production sur les comptes de PPC : nous ne partons pas d'une page blanche.
+          Nous ne touchons ni au transport ni à la vente : nous outillons ceux qui les font.</p>
+      </div>
+      <p class="source">Cette annexe doit être complétée avec les noms et références réelles avant toute présentation.</p>'''
+
+
+def a03() -> str:
+    etapes = [
+        ("S1 – S3", "Cadrage", "Décisions D1 à D5, barème initial, référentiel transporteurs"),
+        ("S4 – S6", "Conception", "Parcours, maquettes, architecture validée"),
+        ("S7 – S18", "Développement", "Chaîne de preuve complète, back-office, application chauffeur"),
+        ("S19 – S22", "Pilote", "Un axe, un produit, cinq à dix transporteurs"),
+        ("Ensuite", "Généralisation", "Deuxième axe, puis groupage"),
+    ]
+    jalons = "".join(
+        f'<div class="jalon"><i></i><span class="periode">{p}</span>'
+        f'<div class="jalon-titre">{t}</div><p>{c}</p></div>' for p, t, c in etapes
+    )
+    return f'''
+      {en_tete("Annexe A3 · Feuille de route",
+               "Seize semaines jusqu'au pilote, deux facteurs hors de notre contrôle")}
+      <div class="frise"><div class="ligne"></div>{jalons}</div>
+      <div class="bande-sombre">
+        <p><strong>Hors de notre contrôle :</strong> la vitesse d'homologation des transporteurs et la publication
+          du barème. Ce sont les deux seuls risques de calendrier.</p>
+      </div>'''
+
+
+def a04() -> str:
+    lignes = [
+        ("Seuil de remplissage atteint", "Le lot est déclenché, la course est publiée"),
+        ("Délai écoulé, lot incomplet", "Poursuite avec un engin plus petit"),
+        ("Le client accepte d'attendre", "Report jusqu'au remplissage du lot"),
+        ("Le client refuse", "Remboursement sans frais, sur sa demande"),
+    ]
+    corps = "".join(f"<tr><td>{a}</td><td>{b}</td></tr>" for a, b in lignes)
+    return f'''
+      {en_tete("Annexe A4 · Groupage", "Règles d'arbitrage et répartition des frais")}
+      <div class="deux-colonnes">
+        <div class="colonne-texte">
+          <div class="etiquette-sombre">Arbitrage d'un lot incomplet</div>
+          <table class="simple"><tbody>{corps}</tbody></table>
+        </div>
+        <div class="colonne-texte">
+          <div class="etiquette-sombre">Répartition des frais</div>
+          <p class="formule">Part du client = coût de la course × (poids × distance)
+            ÷ somme des (poids × distance) du lot</p>
+          <p>À quoi s'ajoute une quote-part des frais fixes au prorata du poids. Sans cette composante, les gros
+            acheteurs financeraient les petits — et le mécanisme serait rejeté dès la première facture.</p>
+          <p class="italique">Le détail du calcul reste consultable par le client, avant et après paiement.</p>
+        </div>
+      </div>
+      <div class="bande-claire">
+        <p><strong>Règle tenue :</strong> aucun client ne reste bloqué, et le remboursement reste un droit,
+          jamais une sanction.</p>
+      </div>'''
+
+
+def a05() -> str:
+    return f'''
+      {en_tete("Annexe A5 · Preuve et litige", "Ce qui se passe quand la livraison ne correspond pas")}
+      <div class="deux-colonnes">
+        <div class="colonne-texte">
+          <div class="etiquette-sombre">Ouverture du litige</div>
+          <ul class="liste-puces">
+            <li><strong>Écart de poids hors tolérance</strong> : déclaré automatiquement par le système.</li>
+            <li><strong>Scellé rompu ou différent</strong> de celui du chargement : litige automatique.</li>
+            <li><strong>Refus de validation</strong> par le client : déclaration immédiate, preuves conservées.</li>
+            <li><strong>Délai de déclaration</strong> : 48 heures après livraison pour les autres motifs.</li>
+          </ul>
+        </div>
+        <div class="panneau-sombre">
+          <div class="etiquette-sombre claire">Traitement et décision</div>
+          <ul class="liste-claire-inversee">
+            <li>Gel de la part contestée, et d'elle seule</li>
+            <li>Instruction sur dossier de preuve</li>
+            <li>Décision motivée par PPC</li>
+            <li>Retenue au prorata, règlement du solde</li>
+          </ul>
+        </div>
+      </div>
+      <p class="note-bas">Le litige le plus fréquent n'est pas le retard : c'est l'écart de poids. Sans pesée
+        contradictoire et sans numéro de scellé, il se règle à la parole — et c'est l'usine qui tranche à l'aveugle.</p>'''
+
+
+def a06() -> str:
+    blocs = [
+        ("Règlement conditionnel", "Le transport est provisionné à l'encaissement, puis réglé au transporteur sur "
+                                   "preuve de livraison. FBB n'exécute aucun paiement : il instruit et certifie."),
+        ("Signature", "Bons et preuves signés cryptographiquement, vérifiables hors ligne par la console de "
+                      "chargement, sans appel serveur."),
+        ("Journal d'audit", "Écriture en ajout seul, chaînée par empreintes, conservée dix ans. Rien ne se "
+                            "supprime : une correction est un nouvel événement."),
+        ("Idempotence", "Toute opération financière porte une clé unique : un rejeu technique ne produit jamais "
+                        "de double mouvement."),
+        ("Hors connexion", "Base locale chiffrée, file d'opérations rejouables, 72 heures d'autonomie, aucune "
+                           "preuve perdue en cas de coupure."),
+        ("Réversibilité", "Données et référentiels exportables, interfaces documentées : PPC n'est pas captif."),
+    ]
+    cartes = "".join(carte("", t, c, sombre=True) for t, c in blocs)
+    return f'''
+      <div class="sombre">
+        {en_tete("Annexe A6 · Socle technique", "Ce qui protège l'argent et la preuve")}
+        <div class="six-blocs">{cartes}</div>
+      </div>'''
+
+
+# ---------------------------------------------------------------------------
+DIAPOSITIVES = [
+    ("couverture", "Couverture", s01),
+    ("probleme", "Le problème", s02),
+    ("cout", "Ce que cela coûte", s03),
+    ("marche", "Le marché", s04),
+    ("chaine", "La chaîne de preuve", s05),
+    ("ubiquite", "L'ubiquité", s06),
+    ("argent", "Le circuit de l'argent", s07),
+    ("preuve", "La preuve de livraison", s08),
+    ("prix", "Le prix", s09),
+    ("groupage", "Le groupage", s10),
+    ("concurrence", "La concurrence", s11),
+    ("decisions", "Les décisions", s12),
+    ("a1", "A1 · Modèle économique", a01),
+    ("a2", "A2 · L'équipe", a02),
+    ("a3", "A3 · Feuille de route", a03),
+    ("a4", "A4 · Groupage", a04),
+    ("a5", "A5 · Preuve et litige", a05),
+    ("a6", "A6 · Socle technique", a06),
+]
+
+
+# ---------------------------------------------------------------------------
+# Feuille de style
+# ---------------------------------------------------------------------------
+CSS = """
+:root{
+  --nuit:#0E2436; --nuit2:#1B3A57; --orange:#E06B2D; --orange-pale:#F6DFD2;
+  --sable:#F4F1EA; --gris:#5A6B7A; --gris-clair:#DFE3E6; --vert:#2E7D5B; --blanc:#fff;
+  --police:"Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:#0a1622;font-family:var(--police);color:var(--nuit);overflow:hidden}
+#scene{position:absolute;left:50%;top:50%;width:1280px;height:720px;transform-origin:center center;
+  transform:translate(-50%,-50%);background:var(--sable)}
+.slide{position:absolute;inset:0;display:none;overflow:hidden;background:var(--sable)}
+.slide.actif{display:block}
+.slide.sombre,.slide .sombre{background:var(--nuit);color:var(--blanc)}
+.slide:has(.sombre){background:var(--nuit)}
+.sombre{position:absolute;inset:0}
+
+/* --- éléments communs --- */
+.barre-haut{position:absolute;left:0;top:0;width:100%;height:7px;background:var(--orange)}
+.surtitre{position:absolute;left:70px;top:52px;font-size:12px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--orange)}
+.slide.sombre .surtitre,.sombre .surtitre{position:static;margin-bottom:8px}
+.sombre .surtitre{position:absolute;left:70px;top:52px}
+.titre{position:absolute;left:70px;top:82px;right:70px;font-size:38px;line-height:1.06;font-weight:600;
+  letter-spacing:-.5px;color:var(--nuit)}
+.sombre .titre{color:var(--blanc);font-size:36px}
+.titre-xl{position:absolute;left:70px;top:96px;font-size:50px;line-height:1.04;font-weight:600;
+  letter-spacing:-.8px}
+.sous-titre{position:absolute;left:70px;top:150px;font-size:18px;color:var(--gris);font-style:italic}
+.source{position:absolute;left:70px;bottom:22px;right:70px;font-size:11px;color:var(--gris);font-style:italic}
+.note-bas{position:absolute;left:70px;right:70px;bottom:52px;font-size:17px;color:var(--gris);line-height:1.35}
+.note-bas strong{color:var(--nuit)}
+.intro{position:absolute;left:70px;top:300px;width:560px;font-size:15px;color:var(--gris);font-style:italic}
+.intro-sombre{position:absolute;left:70px;top:150px;right:70px;font-size:17px;color:#B6C6D4;font-style:italic}
+
+/* --- photos --- */
+.photo{position:absolute;overflow:hidden}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.photo .voile{position:absolute;inset:0}
+.photo.plein{inset:0}
+.photo.moitie-droite{right:0;top:0;width:48.5%;height:100%}
+.filet-gauche{position:absolute;left:0;top:0;width:14px;height:100%;background:var(--orange);z-index:3}
+
+/* --- 1. couverture --- */
+.centre-vertical{position:absolute;left:70px;top:96px;right:70px;z-index:2;color:var(--blanc)}
+.marque{font-size:14px;font-weight:700;letter-spacing:.18em;color:var(--orange-pale)}
+.titre-couverture{font-size:74px;font-weight:600;letter-spacing:-1.5px;margin-top:14px;line-height:1}
+.accroche{font-size:30px;line-height:1.22;margin-top:26px;font-weight:400}
+.trait{width:96px;height:3px;background:var(--orange);margin:34px 0}
+.sous-accroche{font-size:16px;line-height:1.7;color:#C3D0DA}
+
+/* --- 2. problème --- */
+.moitie-gauche{position:absolute;left:0;top:0;width:52%;height:100%;padding:0}
+.question{position:absolute;left:70px;display:flex;gap:14px;width:560px}
+.q-num{font-size:15px;font-weight:700;color:var(--orange);padding-top:2px}
+.q-titre{font-size:16px;font-weight:600}
+.q-prec{font-size:12.5px;color:var(--gris);margin-top:3px}
+.question:nth-of-type(1){top:356px}.question:nth-of-type(2){top:442px}
+.question:nth-of-type(3){top:528px}.question:nth-of-type(4){top:614px}
+.conclusion{position:absolute;left:70px;top:660px;width:560px;font-size:15px;font-weight:600;
+  font-style:italic;color:var(--nuit)}
+
+/* --- cartes --- */
+.trois-colonnes{position:absolute;left:70px;right:70px;top:200px;display:grid;
+  grid-template-columns:repeat(3,1fr);gap:26px}
+.quatre-colonnes{position:absolute;left:70px;right:70px;top:200px;display:grid;
+  grid-template-columns:repeat(4,1fr);gap:22px}
+.carte{background:var(--blanc);border-radius:10px;padding:26px 24px;overflow:hidden;position:relative}
+.carte-sombre{background:var(--nuit2);color:var(--blanc)}
+.carte-num{font-size:12px;font-weight:700;color:var(--orange);letter-spacing:.1em}
+.carte-titre{font-size:17px;font-weight:600;line-height:1.15;margin-top:8px}
+.carte p{font-size:13px;color:var(--gris);line-height:1.5;margin-top:12px}
+.carte-sombre p{color:#A8BAC8}
+.volume{font-size:12px;color:var(--orange);font-weight:700;margin-top:8px}
+.bande-sombre{position:absolute;left:70px;right:70px;bottom:56px;background:var(--nuit);
+  border-radius:10px;padding:22px 28px;color:var(--blanc)}
+.sombre .bande-sombre{background:var(--nuit2)}
+.bande-sombre p{font-size:15px;line-height:1.45}
+.etiquette{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--orange);margin-bottom:10px}
+.bande-colonnes{display:grid;grid-template-columns:1fr 1fr;gap:40px;font-size:14px;line-height:1.5}
+.bande-colonnes strong{font-size:15px}
+
+/* --- 5. chaîne de preuve --- */
+.chevrons{position:absolute;left:70px;right:70px;top:250px;display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.chevron{position:relative;background:var(--orange);border-radius:4px;padding:16px 10px 10px;
+  color:var(--blanc);min-height:44px}
+.chevron.alt{background:#C9571F}
+.chevron span{font-size:15px;font-weight:700;display:block;text-align:center}
+.chevron-titre{position:absolute;top:66px;font-size:12.5px;font-weight:600;color:var(--blanc);line-height:1.25}
+.chevron-prec{position:absolute;top:108px;font-size:10.5px;color:#9FB2C2;line-height:1.3}
+.bande-sombre.beige p{font-size:16px}
+.bande-sombre.beige strong{color:var(--orange-pale)}
+
+/* --- 6. ubiquité --- */
+.rangee-telephones{position:absolute;left:80px;top:196px;display:flex;gap:42px}
+.legende{font-size:11px;color:var(--gris);text-align:center;margin-top:10px}
+.legende.gauche{text-align:left;margin:8px 0 16px}
+.telephone{width:230px;border-radius:26px;background:var(--nuit);padding:9px;position:relative}
+.telephone::after{content:"";display:block}
+.tel-barre{background:var(--nuit);color:var(--blanc);border-radius:18px 18px 0 0;padding:10px 12px}
+.tel-barre strong{display:block;font-size:11px}
+.tel-barre span{font-size:8px;color:var(--gris-clair)}
+.telephone .badge{margin:12px 12px 0}
+.badge{display:inline-block;font-size:8px;font-weight:700;color:var(--blanc);
+  padding:3px 9px;border-radius:20px;letter-spacing:.06em}
+.badge.orange{background:var(--orange)}.badge.gris{background:var(--gris)}
+.tel-ref{font-size:8px;font-weight:700;color:var(--gris);margin:10px 12px 0;letter-spacing:.04em}
+.tel-montant{font-size:26px;font-weight:600;margin:6px 12px 0;color:var(--nuit);background:var(--blanc);
+  padding:0 0 0 0}
+.telephone{background:var(--nuit)}
+.telephone .tel-montant,.telephone .tel-prec,.telephone .tel-ligne,.telephone .tel-etapes,
+.telephone .tel-etapes-txt,.telephone .tel-pos{background:var(--blanc)}
+.tel-montant{margin:0 0 0 0;padding:0 12px}
+.tel-prec{font-size:9px;color:var(--gris);padding:2px 12px 10px}
+.tel-ligne{display:flex;justify-content:space-between;font-size:9px;color:var(--gris);
+  padding:6px 12px;border-top:1px solid var(--gris-clair)}
+.tel-ligne.fort{color:var(--nuit);font-weight:700}
+.tel-etapes{display:flex;justify-content:space-between;padding:14px 16px 0}
+.tel-etapes i{width:9px;height:9px;border-radius:50%;background:var(--gris-clair);display:block}
+.tel-etapes i.fait{background:var(--vert)}.tel-etapes i.actif{background:var(--orange)}
+.tel-etapes-txt{display:flex;justify-content:space-between;font-size:7px;color:var(--gris);padding:5px 12px 0}
+.tel-carte{position:relative;height:66px;margin:12px;background:#ECF0EE;border-radius:8px}
+.tel-carte .point{position:absolute;left:52%;top:58%;width:10px;height:10px;border-radius:50%;
+  background:var(--orange);display:block}
+.tel-carte::before{content:"";position:absolute;left:14px;top:26px;width:96px;height:2px;background:#B9C6CC;
+  transform:rotate(8deg)}
+.tel-pos{font-size:7.5px;color:var(--gris);font-style:italic;padding:0 12px 10px}
+.tel-bouton{margin:8px 12px 12px;background:var(--nuit);color:var(--blanc);text-align:center;
+  font-size:10px;font-weight:700;padding:10px;border-radius:8px}
+.tel-bouton.orange{background:var(--orange)}
+.tel-item{display:flex;justify-content:space-between;align-items:center;background:var(--sable);
+  border-radius:8px;margin:8px 12px;padding:9px 10px}
+.tel-item b{display:block;font-size:8px;color:var(--gris);font-weight:700}
+.tel-item span{font-size:9.5px;font-weight:600;color:var(--nuit)}
+.pastille{width:9px;height:9px;border-radius:50%;display:block}
+.pastille.vert{background:var(--vert)}.pastille.orange{background:var(--orange)}
+.colonne-droite{position:absolute;right:70px;top:196px;width:400px}
+.fenetre{background:var(--blanc);border:1px solid var(--gris-clair);border-radius:10px;overflow:hidden}
+.fenetre-barre{display:flex;align-items:center;gap:6px;background:#EAEEF1;padding:7px 10px}
+.fenetre-barre i{width:8px;height:8px;border-radius:50%;background:#C9B46A;display:block}
+.fenetre-barre i:first-child{background:var(--orange)}
+.fenetre-barre span{font-size:8px;color:var(--gris);margin-left:6px}
+.kpis{display:flex;gap:8px;padding:10px}
+.kpis div{flex:1;background:var(--sable);border-radius:7px;padding:7px;text-align:center}
+.kpis b{display:block;font-size:14px;color:var(--nuit)}
+.kpis span{font-size:7.5px;color:var(--gris)}
+table.mini{width:100%;border-collapse:collapse;font-size:8.5px}
+table.mini th{text-align:left;color:var(--gris);font-weight:600;padding:4px 10px;font-size:8px}
+table.mini td{padding:6px 10px;border-top:1px solid var(--gris-clair);color:var(--nuit)}
+.pill{font-size:7px;font-weight:700;color:var(--blanc);padding:2px 7px;border-radius:20px}
+.pill.vert{background:var(--vert)}.pill.rouge{background:#C0392B}
+.grille-supports{display:grid;grid-template-columns:1fr 1fr;gap:12px 18px}
+.grille-supports b{font-size:12px;display:block;margin-bottom:3px}
+.grille-supports p{font-size:10.5px;color:var(--gris);line-height:1.35}
+
+/* --- 7. circuit de l'argent --- */
+.quatre-etapes{position:absolute;left:70px;right:70px;top:250px;display:grid;
+  grid-template-columns:repeat(4,1fr);gap:26px}
+.etape{background:var(--nuit2);border-radius:10px;padding:20px 18px;min-height:190px;position:relative}
+.etape-num{font-size:32px;font-weight:700;color:var(--orange)}
+.etape-titre{font-size:14px;font-weight:600;color:var(--blanc);line-height:1.25;margin-top:8px}
+.etape p{font-size:11px;color:#A8BAC8;line-height:1.45;margin-top:10px}
+.bande-orange{position:absolute;left:70px;right:70px;bottom:56px;background:var(--orange);
+  border-radius:10px;padding:20px 28px;color:var(--blanc)}
+.bande-orange p{font-size:17px;font-weight:700;line-height:1.3}
+.bande-orange .second{font-size:15px;font-weight:400;margin-top:6px}
+
+/* --- 8. preuve --- */
+.liste-cartes{position:absolute;left:70px;top:206px;width:540px;display:flex;flex-direction:column;gap:14px}
+.liste-cartes .carte{display:flex;flex-direction:column;gap:0;padding:18px 22px}
+.liste-cartes .carte p{margin-top:6px}
+.carte.vedette{background:var(--orange-pale);box-shadow:inset 0 0 0 2px var(--orange)}
+.marqueur{position:absolute;right:20px;top:14px;font-size:9px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--orange)}
+.photo.droite{z-index:0}
+.citation-photo{position:absolute;left:calc(51.5% + 30px);bottom:56px;right:70px;font-size:24px;
+  font-weight:600;color:var(--blanc);line-height:1.25;z-index:2}
+
+/* --- 9. prix --- */
+.deux-colonnes{position:absolute;left:70px;right:70px;top:210px;display:grid;
+  grid-template-columns:1fr 1fr;gap:26px}
+.entete-colonne{background:var(--nuit);color:var(--blanc);text-align:center;font-size:14px;font-weight:600;
+  padding:10px;border-radius:8px 8px 0 0}
+.entete-colonne.grise{background:var(--gris)}
+.liste-claire,.liste-sombre{list-style:none;border-radius:0 0 8px 8px;padding:18px 20px;min-height:150px}
+.liste-claire{background:var(--blanc)}
+.liste-sombre{background:var(--nuit2)}
+.liste-claire li,.liste-sombre li{font-size:13px;line-height:1.45;padding-left:18px;position:relative;
+  margin-bottom:12px;color:var(--nuit)}
+.liste-sombre li{color:var(--blanc)}
+.liste-claire li::before,.liste-sombre li::before{content:"—";position:absolute;left:0;color:var(--orange);
+  font-weight:700}
+.calculateur{position:absolute;right:70px;top:210px;width:420px;background:var(--nuit);border-radius:10px;
+  padding:20px 22px;color:var(--blanc)}
+.calc-etiquette{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--orange)}
+.calc-titre{font-size:13px;font-weight:600;margin:8px 0 14px}
+.calc-ligne{display:flex;justify-content:space-between;font-size:11px;color:#A8BAC8;padding:4px 0}
+.calc-total{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid #3A5670;
+  margin-top:12px;padding-top:12px;font-size:12px}
+.calc-total strong{font-size:24px;color:var(--orange)}
+.calc-note{font-size:10px;color:#A8BAC8;font-style:italic;margin-top:10px;line-height:1.35}
+.deux-colonnes{width:calc(100% - 140px)}
+.slide:nth-child(9) .deux-colonnes{grid-template-columns:1fr 1fr;width:560px;left:70px;right:auto}
+.bande-claire{position:absolute;left:70px;right:70px;bottom:52px;background:var(--blanc);
+  border:1px solid var(--gris-clair);border-radius:10px;padding:18px 26px}
+.bande-claire p{font-size:14px;line-height:1.45;color:var(--gris)}
+.bande-claire strong{color:var(--nuit)}
+
+/* --- 10. groupage --- */
+.liste-clients{position:absolute;left:70px;top:210px;width:470px;display:flex;flex-direction:column;gap:9px}
+.client{display:flex;justify-content:space-between;align-items:center;background:var(--nuit2);
+  border-radius:8px;padding:11px 18px;color:var(--blanc);font-size:13px;font-weight:600}
+.client em{font-style:normal;font-size:11px;color:#A8BAC8;font-weight:400}
+.fleche{position:absolute;left:566px;top:352px;width:70px;height:16px;background:var(--orange);border-radius:3px}
+.fleche::after{content:"";position:absolute;right:-12px;top:-6px;border-left:14px solid var(--orange);
+  border-top:14px solid transparent;border-bottom:14px solid transparent}
+.carte-resultat{position:absolute;left:660px;top:210px;right:70px;background:var(--orange);
+  border-radius:10px;padding:24px 26px;color:var(--blanc)}
+.carte-resultat.petit{position:absolute;right:70px;top:210px;left:auto;width:470px}
+.resultat-titre{font-size:22px;font-weight:700;margin-bottom:16px}
+.resultat-ligne{display:flex;justify-content:space-between;gap:16px;font-size:12px;padding:6px 0;
+  border-top:1px solid rgba(255,255,255,.25)}
+.resultat-ligne span{color:#FFE7D9}
+.resultat-ligne b{font-weight:600;text-align:right}
+
+/* --- 11. concurrence --- */
+table.comparaison{position:absolute;left:70px;right:70px;top:206px;border-collapse:collapse;width:calc(100% - 140px)}
+table.comparaison th{background:var(--nuit);color:var(--blanc);font-size:12.5px;font-weight:600;
+  text-align:left;padding:11px 14px}
+table.comparaison th:first-child{width:22%}
+table.comparaison td{font-size:12.5px;padding:10px 14px;border-bottom:1px solid var(--gris-clair);
+  color:var(--gris)}
+table.comparaison tr:nth-child(even) td{background:rgba(0,0,0,.022)}
+table.comparaison td.critere{font-weight:600;color:var(--nuit)}
+table.comparaison td.force{font-weight:600;color:var(--nuit)}
+
+/* --- 12. décisions --- */
+.grille-decisions{position:absolute;left:70px;right:70px;top:330px;display:grid;
+  grid-template-columns:1fr 1fr;gap:14px}
+.decision{display:flex;gap:14px;background:var(--blanc);border-radius:9px;padding:16px 18px}
+.decision span{font-size:12px;font-weight:700;color:var(--orange)}
+.decision b{display:block;font-size:13px;line-height:1.25}
+.decision em{font-style:normal;font-size:11px;color:var(--gris);display:block;margin-top:4px}
+
+/* --- annexes --- */
+.six-blocs{position:absolute;left:70px;right:70px;top:200px;display:grid;
+  grid-template-columns:repeat(3,1fr);gap:20px}
+.six-blocs .carte{min-height:150px}
+.a-completer{font-size:10.5px;color:#8E9BA5;font-style:italic;margin-top:14px}
+.frise{position:absolute;left:70px;right:70px;top:250px;display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.frise .ligne{position:absolute;left:0;right:0;top:6px;height:2px;background:#CFD6DB}
+.jalon{position:relative;padding-top:26px}
+.jalon i{position:absolute;left:50%;top:0;width:13px;height:13px;border-radius:50%;background:var(--orange);
+  display:block;transform:translateX(-50%)}
+.periode{font-size:11.5px;font-weight:700;color:var(--orange);display:block;text-align:center}
+.jalon-titre{font-size:14px;font-weight:600;text-align:center;margin-top:6px}
+.jalon p{font-size:10.5px;color:var(--gris);text-align:center;margin-top:6px;line-height:1.35}
+.colonne-texte{background:transparent}
+.colonne-texte p{font-size:12.5px;color:var(--gris);line-height:1.5;margin-bottom:12px}
+.etiquette-sombre{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--orange);margin-bottom:12px}
+.etiquette-sombre.claire{color:var(--orange-pale)}
+table.simple{border-collapse:collapse;width:100%}
+table.simple td{font-size:12px;padding:10px 12px;border-bottom:1px solid var(--gris-clair);color:var(--gris)}
+table.simple td:first-child{font-weight:600;color:var(--nuit);width:46%}
+.formule{font-weight:600;color:var(--nuit)!important;font-size:13px!important}
+.italique{font-style:italic}
+.liste-puces{list-style:none}
+.liste-puces li{font-size:12.5px;color:var(--gris);line-height:1.45;padding-left:16px;position:relative;
+  margin-bottom:14px}
+.liste-puces li::before{content:"—";position:absolute;left:0;color:var(--orange);font-weight:700}
+.liste-claire-inversee{list-style:none;margin-top:6px}
+.liste-claire-inversee li{font-size:12px;color:var(--blanc);padding-left:16px;position:relative;
+  margin-bottom:10px}
+.liste-claire-inversee li::before{content:"—";position:absolute;left:0;color:var(--orange);font-weight:700}
+
+/* --- interface --- */
+#compteur{position:fixed;right:18px;bottom:16px;font:600 12px var(--police);color:#7C8B99;
+  letter-spacing:.08em;z-index:20}
+#progression{position:fixed;left:0;bottom:0;height:3px;background:var(--orange);width:0;
+  transition:width .25s ease;z-index:20}
+#aide{position:fixed;left:18px;bottom:14px;font:11px var(--police);color:#5B6B79;z-index:20}
+#aide b{color:#8FA1B0}
+#menu{position:fixed;inset:0;background:rgba(10,22,34,.96);z-index:30;display:none;overflow:auto;
+  padding:48px 60px}
+#menu.ouvert{display:block}
+#menu h3{font:600 13px var(--police);letter-spacing:.14em;text-transform:uppercase;color:var(--orange);
+  margin:26px 0 12px}
+#menu ol{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px}
+#menu button{width:100%;text-align:left;background:#152A3E;border:0;color:#C3D0DA;font:13px var(--police);
+  padding:11px 14px;border-radius:7px;cursor:pointer}
+#menu button:hover{background:#1E3B54;color:#fff}
+#menu button span{color:var(--orange);font-weight:700;margin-right:10px}
+#fermer{position:fixed;right:26px;top:22px;background:none;border:0;color:#8FA1B0;font:20px var(--police);
+  cursor:pointer}
+
+/* --- correctifs de mise en page (écran et impression) --- */
+.ecran{background:#fff;border-radius:0 0 20px 20px;padding:12px 12px 16px;min-height:330px}
+.ecran .badge{margin:0}
+.ecran .tel-ref{margin:10px 0 0}
+.ecran .tel-montant{margin:6px 0 0;padding:0;background:none}
+.ecran .tel-prec{margin:2px 0 0;padding:0}
+.ecran .tel-ligne{padding:7px 0}
+.ecran .tel-etapes{margin-top:16px;padding:0}
+.ecran .tel-etapes-txt{padding:5px 0 0}
+.ecran .tel-carte{margin:12px 0 0;height:64px}
+.ecran .tel-pos{margin:6px 0 0;padding:0}
+.ecran .tel-bouton{margin:12px 0 0}
+.ecran .tel-item{margin:8px 0 0}
+.telephone{padding:10px}
+
+.colonnes-prix{position:absolute;left:70px;top:210px;width:560px;display:grid;
+  grid-template-columns:1fr 1fr;gap:22px}
+.panneau-sombre{background:var(--nuit);border-radius:10px;padding:22px 24px;color:var(--blanc)}
+.bande-sombre.haut{top:206px;bottom:auto}
+.slide .moitie-gauche{width:51.5%}
+
+/* --- impression --- */
+@page{size:13.333in 7.5in;margin:0}
+@media print{
+  body{overflow:visible;background:#fff}
+  #scene{position:static;transform:none!important;width:1280px;height:auto}
+  .slide{display:block!important;position:relative;width:1280px;height:720px;page-break-after:always;
+    break-after:page}
+  #compteur,#progression,#aide,#menu{display:none!important}
+}
+"""
+
+JS = """
+(function(){
+  const slides=[...document.querySelectorAll('.slide')];
+  const compteur=document.getElementById('compteur');
+  const barre=document.getElementById('progression');
+  const menu=document.getElementById('menu');
+  let i=Math.max(0,Math.min(slides.length-1,(parseInt(location.hash.slice(1),10)||1)-1));
+
+  function afficher(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('actif',k===i));
+    compteur.textContent=String(i+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+    barre.style.width=((i+1)/slides.length*100)+'%';
+    history.replaceState(null,'','#'+(i+1));
+  }
+  function mettreAEchelle(){
+    const s=Math.min(window.innerWidth/1280,window.innerHeight/720);
+    document.getElementById('scene').style.transform='translate(-50%,-50%) scale('+s+')';
+  }
+  document.addEventListener('keydown',e=>{
+    if(['ArrowRight','ArrowDown','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();afficher(i+1);}
+    else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();afficher(i-1);}
+    else if(e.key==='Home'){afficher(0);}
+    else if(e.key==='End'){afficher(slides.length-1);}
+    else if(e.key==='m'||e.key==='M'){menu.classList.toggle('ouvert');}
+    else if(e.key==='Escape'){menu.classList.remove('ouvert');}
+    else if(e.key==='f'||e.key==='F'){
+      document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();
+    }
+  });
+  document.getElementById('scene').addEventListener('click',e=>{
+    afficher(i+(e.clientX<window.innerWidth/2?-1:1));
+  });
+  document.getElementById('fermer').addEventListener('click',()=>menu.classList.remove('ouvert'));
+  menu.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    afficher(parseInt(b.dataset.n,10)-1); menu.classList.remove('ouvert');
+  }));
+  window.addEventListener('resize',mettreAEchelle);
+  mettreAEchelle(); afficher(i);
+})();
+"""
+
+
+def construire() -> int:
+    SORTIE.mkdir(parents=True, exist_ok=True)
+    dossier_images = SORTIE / "images"
+    dossier_images.mkdir(exist_ok=True)
+    copies = 0
+    for fichier in IMAGES.glob("*.jpg"):
+        shutil.copy2(fichier, dossier_images / fichier.name)
+        copies += 1
+
+    sections = []
+    for index, (identifiant, libelle, fonction) in enumerate(DIAPOSITIVES, start=1):
+        sections.append(
+            f'<section class="slide{" sombre" if fonction in (s05, s07, s10, a06) else ""}" '
+            f'id="{identifiant}" data-n="{index}">{fonction()}</section>'
+        )
+
+    entrees = "".join(
+        f'<li><button data-n="{i}"><span>{i:02d}</span>{libelle}</button></li>'
+        for i, (_, libelle, _) in enumerate(DIAPOSITIVES, start=1)
+    )
+
+    html = f"""<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>APIX All In One — présentation PPC</title>
+<meta name="description" content="Extension APIX : du paiement certifié au sac livré. Présentation à la direction générale de PPC.">
+<style>{CSS}</style>
+</head>
+<body>
+<div id="scene">
+{''.join(sections)}
+</div>
+
+<div id="compteur"></div>
+<div id="progression"></div>
+<div id="aide"><b>←</b> <b>→</b> naviguer · <b>M</b> sommaire · <b>F</b> plein écran</div>
+
+<div id="menu">
+  <button id="fermer" aria-label="Fermer">✕</button>
+  <h3>Sommaire</h3>
+  <ol>{entrees}</ol>
+</div>
+
+<script>{JS}</script>
+</body>
+</html>
+"""
+    (SORTIE / "index.html").write_text(html, encoding="utf-8")
+    return copies
+
+
+def main() -> int:
+    copies = construire()
+    taille = (SORTIE / "index.html").stat().st_size / 1024
+    print(f"[OK] {SORTIE.relative_to(RACINE)} — index.html ({taille:.0f} Ko) + {copies} images")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
