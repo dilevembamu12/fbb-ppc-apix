@@ -266,9 +266,14 @@ En tant que client, je veux être remboursé lorsqu'une commande n'est pas honor
 | RF-M4-02 | Réconciliation automatique des paiements (rapprochement opérateur / commande) | MVP |
 | RF-M4-03 | Journal financier en partie double pour tout encaissement et tout règlement de transport | MVP |
 | RF-M4-04 | Blocage anti-blanchiment : seuils et alertes sur dépôts en espèces | MVP |
-| RF-M4-05 | Paiement par carte bancaire | V1 |
-| RF-M4-06 | Échelonnement du paiement (acompte / solde) | V2 |
-| RF-M4-07 | Avance de carburant au transporteur, déduite du règlement final | V1 |
+| RF-M4-05 | Table des plafonds par canal, par opérateur et par palier de vérification, paramétrable en back-office | MVP |
+| RF-M4-06 | Pré-contrôle du montant : seuls les canaux capables d'encaisser la commande sont proposés | MVP |
+| RF-M4-07 | Routage automatique vers le virement au-delà du seuil, avec référence de commande unique | MVP |
+| RF-M4-08 | Échéancier de paiement (acompte puis solde) pour les commandes au-dessus des plafonds | V1 |
+| RF-M4-09 | Rapprochement manuel assisté des virements, avec file de contrôle dédiée | MVP |
+| RF-M4-10 | Paiement par carte bancaire | V1 |
+| RF-M4-11 | Échelonnement du paiement (acompte / solde) | V2 |
+| RF-M4-12 | Avance de carburant au transporteur, déduite du règlement final | V1 |
 
 ---
 

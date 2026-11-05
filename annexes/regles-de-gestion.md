@@ -77,6 +77,14 @@ FBB pour PPC · version 1.0 · 4 novembre 2026
 | **RG-PAY-10** | Un paiement confirmé deux fois pour le même bon est remboursé automatiquement ou signalé sous 24 heures | — | Erreur fréquente des opérateurs |
 | **RG-PAY-11** | Les dépôts en espèces sont plafonnés par client et par période, et déclenchent une alerte au-delà du seuil | Seuil : `[À VALIDER PPC]` | Conformité anti-blanchiment |
 | **RG-PAY-12** | Une libération supérieure à un seuil exige une double validation | Seuil : `[À VALIDER PPC]` | Lutte contre la fraude interne |
+| **RG-PAY-13** | Chaque canal de paiement porte des plafonds connus — par transaction, par jour et par mois — saisis dans le back-office et jamais codés en dur | Valeurs : `[À VALIDER PAR OPÉRATEUR]` | Un plafond ignoré produit un refus au pire moment |
+| **RG-PAY-14** | L'application n'affiche que les canaux capables d'encaisser le montant de la commande, et ce dès la création du bon | — | Un client ne doit jamais découvrir l'impossibilité sur l'écran de paiement |
+| **RG-PAY-15** | Au-delà du plafond d'un canal, la commande est routée vers un canal autorisé : virement bancaire, collecte marchand, ou encaissement en agence | — | Le plafond d'un canal n'est pas un plafond du produit |
+| **RG-PAY-16** | Le fractionnement d'une même commande sur un même portefeuille, dans le but de passer sous un plafond, est interdit, sauf accord écrit de l'opérateur | — | Contourner un plafond expose à la suspension du compte marchand de PPC |
+| **RG-PAY-17** | Une commande au-dessus du seuil haut exige une référence de virement unique et un rapprochement sous contrôle humain | Seuil haut : `[À VALIDER PPC]` | Le rapprochement bancaire n'est pas instantané et ne doit pas être deviné |
+| **RG-PAY-18** | Un échéancier — acompte puis solde — peut remplacer un paiement unique lorsque le montant dépasse les plafonds ; la commande reste bloquée jusqu'à encaissement intégral | Nombre de versements : `[À VALIDER PPC]` | Épouse les plafonds dans le temps, sans les contourner |
+| **RG-PAY-19** | Le plafond applicable dépend du palier de vérification du compte ; une montée de palier s'obtient par vérification, jamais par dérogation orale | Paliers : `[À VALIDER PPC]` | Le niveau de connaissance du client détermine son plafond réglementaire |
+| **RG-PAY-20** | Tout refus d'un opérateur est journalisé avec son motif, et présenté au client comme une alternative de canal — jamais comme une erreur technique | — | Un refus mal expliqué fait perdre le client, pas la transaction |
 
 ### Tableau 3.1 — Matrice du règlement du transport
 
@@ -90,6 +98,18 @@ FBB pour PPC · version 1.0 · 4 novembre 2026
 | Livraison prouvée avec écart hors tolérance | Retenue calculée au prorata, solde réglé |
 | Non-livraison constatée | Aucun règlement ; remboursement ou avoir au client par PPC |
 | Annulation avant chargement | Aucun règlement ; remboursement ou avoir au client |
+
+### Tableau 3.2 — Routage du paiement selon le montant
+
+Les seuils ci-dessous sont des propositions de travail. Ils dépendent des plafonds réellement négociés avec chaque opérateur et avec la banque de PPC.
+
+| Tranche de montant | Canal privilégié | Contrôle associé |
+|---|---|---|
+| Jusqu'à 1 000 $ | Mobile money, portefeuille du client | Aucun contrôle supplémentaire si le compte est vérifié |
+| De 1 000 $ à 5 000 $ | Compte marchand, ou virement si le plafond du portefeuille est atteint | Vérification du palier du client |
+| Au-delà de 5 000 $ | Virement bancaire avec référence de commande unique, ou échéancier | Rapprochement sous contrôle humain avant déblocage du bon |
+
+> **Point de vigilance contractuel :** le fractionnement d'un paiement pour rester sous un plafond est très souvent interdit par les conditions des opérateurs. Il doit être expressément autorisé par écrit, sinon il expose le compte marchand de PPC à une suspension — c'est-à-dire à l'arrêt de toute la plateforme.
 
 ---
 
