@@ -218,13 +218,8 @@ def s06() -> str:
           </table>
         </div>'''
 
-    supports = [
-        ("Smartphone", "Android 8 et plus, 2 Go de mémoire."),
-        ("Web", "Même compte, mêmes données, depuis un poste ou un cybercafé."),
-        ("Hors connexion", "72 heures sans réseau, sans perdre une preuve."),
-        ("SMS et USSD", "Pour le client sans smartphone."),
-    ]
-    blocs = "".join(f'<div><b>{t}</b><p>{c}</p></div>' for t, c in supports)
+    supports = ["Android 8 et plus", "Web", "Hors connexion 72 h", "SMS et USSD"]
+    chips = "".join(f"<span>{s}</span>" for s in supports)
 
     return f'''
       {en_tete("L'ubiquité", "Partout où le client se trouve")}
@@ -233,11 +228,16 @@ def s06() -> str:
         <div>{client}<div class="legende">Client final — commander, payer, suivre</div></div>
         <div>{chauffeur}<div class="legende">Chauffeur — livrer, prouver, sans réseau</div></div>
       </div>
-      <div class="colonne-droite">
+      <div class="photo-kiosque">
+        <img src="images/mobile.jpg" alt="">
+        <div class="voile"></div>
+        <p class="legende-photo">Le paiement mobile n'est pas une option à créer : il est déjà dans la rue.</p>
+      </div>
+      <div class="backoffice-large">
         {backoffice}
         <div class="legende gauche">Back-office PPC — c'est vous qui homologuez</div>
-        <div class="grille-supports">{blocs}</div>
       </div>
+      <div class="chips">{chips}</div>
       <p class="source">Maquettes schématiques, non contractuelles.</p>'''
 
 
@@ -884,6 +884,17 @@ table.simple td:first-child{font-weight:600;color:var(--nuit);width:46%}
 .panneau-sombre{background:var(--nuit);border-radius:10px;padding:22px 24px;color:var(--blanc)}
 .bande-sombre.haut{top:206px;bottom:auto}
 .slide .moitie-gauche{width:51.5%}
+
+.photo-kiosque{position:absolute;left:630px;top:196px;width:580px;height:184px;border-radius:10px;
+  overflow:hidden}
+.photo-kiosque img{width:100%;height:100%;object-fit:cover;display:block}
+.photo-kiosque .voile{position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(14,36,54,.88) 0%,rgba(14,36,54,.45) 55%,rgba(14,36,54,.05) 100%)}
+.legende-photo{position:absolute;left:22px;bottom:16px;width:330px;font-size:14px;font-weight:600;
+  color:#fff;line-height:1.3}
+.backoffice-large{position:absolute;left:630px;top:398px;width:580px}
+.chips{position:absolute;left:630px;top:634px;display:flex;gap:8px;flex-wrap:wrap}
+.chips span{font-size:11px;background:var(--nuit);color:#fff;padding:6px 13px;border-radius:20px}
 
 /* --- impression --- */
 @page{size:13.333in 7.5in;margin:0}
