@@ -78,6 +78,7 @@ python outils\build_xlsx.py      # -> dist/xlsx/*.xlsx
 python outils\build_pptx_reunion.py   # -> dist/pptx/*12-slides*.pptx
 python outils\build_pptx.py      # -> dist/pptx/*Presentation*.pptx
 python outils\build_fiche.py     # -> dist/docs/F1-Fiche-cadrage-reglement-PPC.docx
+python outils\build_web.py       # -> dist/web/index.html (+ images)
 ```
 
 Options utiles :
@@ -179,4 +180,43 @@ git push --force-with-lease
 ```
 
 Les fichiers de `dist/` sont versionnés volontairement, car ils constituent le livrable présenté à PPC. Pour alléger le dépôt, décommenter la ligne `# dist/` dans `.gitignore`.
+
+---
+
+## 8. Version web publiée
+
+**URL :** <https://dilevembamu12.github.io/fbb-ppc-apix/>
+
+Le site est servi depuis la branche `gh-pages` (racine : `index.html`, `images/`, `.nojekyll`), activée dans *Settings → Pages*.
+
+### Mise à jour du site
+
+```powershell
+python outils\build_web.py
+# puis recopier dist/web vers la branche gh-pages
+```
+
+La branche `gh-pages` est régénérée à partir de `dist/web` ; elle ne contient que le site, jamais les sources.
+
+### Basculer public / privé
+
+Points à connaître :
+
+- **Un site GitHub Pages est toujours public.** L'accès restreint aux collaborateurs n'existe qu'en offre Enterprise.
+- **Sur un compte gratuit, Pages n'est pas disponible pour un dépôt privé.** Le dépôt est donc `public` tant que le site doit être accessible.
+- Conséquence utile : repasser le dépôt en privé **désactive le site automatiquement** (il renvoie 404). Une seule commande protège donc à la fois le code et la présentation.
+
+```powershell
+# Publier (repo public, site accessible)
+gh repo edit dilevembamu12/fbb-ppc-apix --visibility public --accept-visibility-change-consequences
+
+# Repasser en privé (le site passe hors ligne)
+gh repo edit dilevembamu12/fbb-ppc-apix --visibility private --accept-visibility-change-consequences
+
+# Vérifier
+gh repo view dilevembamu12/fbb-ppc-apix --json visibility
+gh api repos/dilevembamu12/fbb-ppc-apix/pages --jq '.html_url'
+```
+
+> **Attention :** rendre le dépôt public expose **tout son historique**, y compris les documents internes (note de cadrage, argumentaire, questions ouvertes, simulations). Pas seulement la présentation.
 
