@@ -97,6 +97,7 @@ python outils\build_docs.py --check          # vérifie les tableaux Markdown sa
 | `dist/docs/02-Specifications-fonctionnelles.docx` | 12 modules, récits, critères de recette | Équipe produit et développement |
 | `dist/docs/03-Architecture-technique.docx` | Architecture, données, sécurité | Direction technique |
 | `dist/docs/04-Argumentaire-commercial.docx` | Positionnement et objections | Direction commerciale |
+| `dist/docs/05-Presentation-MVP-interfaces.docx` | 8 interfaces, 53 écrans, 4 parcours, recette du MVP | Conception, développement, recette |
 | `dist/docs/A1-Regles-de-gestion.docx` | Règles numérotées et paramètres | Métier, développement, juridique |
 | `dist/docs/A2-Questions-ouvertes-PPC.docx` | Questions et décisions attendues | Chef de projet |
 | `dist/xlsx/01-Backlog-APIX-Logistique.xlsx` | 13 épopées, 60 récits estimés, charge par cycle | Planification |

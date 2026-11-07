@@ -66,6 +66,12 @@ DOCUMENTS = [
         "sous_titre": "APIX étendu face à Digiciment — dossier de conviction pour PPC",
     },
     {
+        "source": "docs/05-presentation-mvp-interfaces.md",
+        "sortie": "05-Presentation-MVP-interfaces.docx",
+        "titre": "Présentation du MVP et de ses interfaces",
+        "sous_titre": "53 écrans, 8 interfaces, 4 parcours de bout en bout",
+    },
+    {
         "source": "annexes/regles-de-gestion.md",
         "sortie": "A1-Regles-de-gestion.docx",
         "titre": "Annexe A1 — Règles de gestion",
