@@ -13,7 +13,7 @@ FBB pour PPC · version 1.0 · 4 novembre 2026
 |---|---|---|
 | M1 | Compte client final et vérification d'identité | MVP |
 | M2 | Catalogue, prix et disponibilité | MVP |
-| M3 | Bon de commande certifié | MVP |
+| M3 | Cotation certifiée et bon de commande | MVP |
 | M4 | Paiement, encaissement et règlement du transport | MVP |
 | M5 | Option A — Enlèvement et chargement | MVP |
 | M6 | Option B — Transport, barème et affectation | MVP |
@@ -99,6 +99,7 @@ En tant que client, je veux voir les produits disponibles avec leur prix afin de
 
 *Critères d'acceptation :*
 - Le catalogue affiche : désignation du produit, conditionnement (sacs de 50 kg, vrac), prix unitaire, unité de vente.
+- **Aucun prix n'est affiché à un visiteur non identifié** : la grille n'est visible qu'après vérification du numéro de téléphone. Un concurrent peut sinon sonder les tarifs depuis un chatbot.
 - Le prix affiché dépend du **profil de compte** et de la **zone de livraison** du client.
 - Un prix est toujours accompagné de sa **date d'entrée en vigueur** ; un prix expiré n'est jamais affiché.
 - Un produit indisponible est affiché comme tel, avec une date de retour si elle est connue.
@@ -124,52 +125,67 @@ En tant qu'administrateur PPC, je veux publier et retirer des produits afin de g
 |---|---|---|
 | RF-M2-01 | Grille de prix par produit, profil et zone, versionnée et horodatée | MVP |
 | RF-M2-02 | Devise de référence unique, montants arrondis selon une règle paramétrée | MVP |
-| RF-M2-03 | Simulation de prix sans engagement, accessible avant création de compte | V1 |
-| RF-M2-04 | Affichage des promotions et remises volume, si PPC en dispose | V1 |
+| RF-M2-03 | Affichage des prix conditionné à un compte identifié et vérifié ; aucune grille exposée publiquement | MVP |
+| RF-M2-04 | Simulation de prix sans engagement, bornée en nombre d'essais et journalisée par compte | V1 |
+| RF-M2-05 | Affichage des promotions et remises volume, si PPC en dispose | V1 |
 
 ---
 
-## M3 — Bon de commande certifié
+## M3 — Cotation certifiée et bon de commande
 
 ### Objectif
 
-Produire un document numérique unique, nominatif, infalsifiable et non réutilisable, qui matérialise l'engagement réciproque.
+Fixer un prix ferme et identifiable **avant** l'argent, puis transformer la cotation encaissée en un bon nominatif, unique et non réutilisable.
+
+> Le bon de commande n'est pas la première pièce du dossier : il est le **résultat** du paiement, pas sa condition. Chez PPC, les comptes d'encaissement dédiés refusent les fonds qui ne sont pas accompagnés d'une cotation valide — l'ordre du parcours n'est donc pas une préférence d'ergonomie, c'est une contrainte bancaire.
 
 ### Références croisées
 
-Règles : `RG-CMD-01` à `RG-CMD-08`.
+Règles : `RG-COT-01` à `RG-COT-08`, `RG-CMD-01` à `RG-CMD-08`.
 
 ### Récits utilisateurs
 
-**US-M3-01 — Création d'un bon de commande** *(MVP)*
-En tant que client, je veux créer un bon de commande en choisissant produit, quantité, option d'achat et zone de livraison.
+**US-M3-01 — Demande de cotation** *(MVP)*
+En tant que client identifié, je veux demander le prix de ce que je veux acheter afin de savoir exactement ce que je vais payer.
 
 *Critères d'acceptation :*
 - Les champs obligatoires sont : produit, quantité, option d'achat, zone de livraison (sauf option A).
 - La quantité est saisie en sacs ou en tonnes, avec conversion automatique affichée.
-- Pour l'option B, le prix du transport est calculé **avant** validation et reste figé à la création.
-- Le bon reçoit un numéro unique lisible et un identifiant technique.
-- Un bon non payé expire au bout d'un délai paramétrable (proposition : 2 heures) et libère la réservation de stock.
+- Pour l'option B, le prix du transport est calculé par le barème en vigueur et détaillé ligne par ligne avant validation.
+- **Aucune cotation n'est produite pour un visiteur non identifié** : le numéro de téléphone doit au minimum être vérifié.
+- Une cotation non convertie expire à l'échéance de sa validité et libère la réservation de stock (proposition : 48 heures).
 
-**US-M3-02 — Certification du bon** *(MVP)*
-En tant que client, je veux recevoir un bon de commande certifié APIX afin de pouvoir le présenter au chargement.
+**US-M3-02 — Cotation certifiée** *(MVP)*
+En tant que client, je veux recevoir une cotation numérotée et datée afin de pouvoir payer en la référençant.
 
 *Critères d'acceptation :*
-- Le bon est **nominatif** : il porte le nom du titulaire du compte et son numéro de compte.
+- La cotation porte un **numéro unique**, la date d'émission, la durée de validité, le nom du client et le détail des prix.
+- Elle est consultable et téléchargeable en PDF dans l'application.
+- **Son numéro est la référence de paiement** : il est repris dans l'ordre de paiement transmis à l'opérateur ou à la banque.
+- Le prix est ferme pendant la durée de validité ; au-delà, une nouvelle cotation est exigée et recalculée au prix en vigueur.
+- Toute modification avant paiement émet une nouvelle version numérotée ; l'ancienne est conservée et marquée « remplacée ».
+
+**US-M3-03 — Émission du bon de commande** *(MVP)*
+En tant que client, je veux recevoir mon bon de commande dès que mon paiement est confirmé afin de me présenter au chargement.
+
+*Critères d'acceptation :*
+- Le bon est émis **automatiquement** à l'encaissement effectif de la cotation, et une seule fois.
+- Il est **nominatif** : il porte le nom du titulaire du compte et son numéro de compte.
 - Il porte un **QR code signé** cryptographiquement, vérifiable hors ligne par la console d'expédition.
 - Il porte un **code de contrôle à 8 caractères** lisible à voix haute, utilisable en cas de panne de scanner.
 - Il est **à usage unique** : après premier usage au chargement, tout nouvel usage est refusé.
-- Il est consultable et téléchargeable (PDF) dans l'application.
+- Il conserve la cotation d'origine, le barème appliqué et le paiement qui l'a produit.
 
-**US-M3-03 — Modification d'un bon** *(MVP)*
-En tant que client, je veux corriger une commande non encore payée afin de ne pas recommencer la saisie.
+**US-M3-04 — Paiement reçu sans cotation** *(MVP)*
+En tant qu'administrateur PPC, je veux pouvoir rattacher un paiement arrivé sans cotation afin de ne pas bloquer un client de bonne foi.
 
 *Critères d'acceptation :*
-- Modification possible uniquement à l'état **brouillon** ou **en attente de paiement**.
-- Toute modification recalcule le prix et réémet le numéro de version.
-- Après paiement, aucune modification n'est possible : seule une **annulation avec remboursement** ou une **nouvelle commande** est admise.
+- Le paiement non rattaché apparaît dans une **file de rattrapage** dédiée : montant, émetteur, date, référence bancaire.
+- L'administrateur peut le rattacher à une cotation du même client, avec motif obligatoire.
+- Aucun rattachement automatique sur simple correspondance de montant : la décision est humaine et tracée.
+- Le rattachement manuel est signalé dans l'audit et visible dans le dossier de la commande.
 
-**US-M3-04 — Options d'achat** *(MVP)*
+**US-M3-05 — Options d'achat** *(MVP)*
 En tant que client, je veux choisir entre *sans transporteur*, *avec transporteur* et *autre* afin de commander selon ma situation réelle.
 
 *Critères d'acceptation :*
@@ -178,7 +194,7 @@ En tant que client, je veux choisir entre *sans transporteur*, *avec transporteu
 - **Option C — Autre** : propose une **liste de cas paramétrés par PPC** ; le motif est obligatoire ; le bon est placé en **validation manuelle** avant paiement.
 - Le changement d'option après paiement est impossible.
 
-**US-M3-05 — Mandataire pour l'enlèvement (option A)** *(MVP)*
+**US-M3-06 — Mandataire pour l'enlèvement (option A)** *(MVP)*
 En tant que client, je veux désigner une personne pour retirer ma marchandise afin de pouvoir mandater mon propre transporteur.
 
 *Critères d'acceptation :*
@@ -191,13 +207,15 @@ En tant que client, je veux désigner une personne pour retirer ma marchandise a
 
 | Réf. | Exigence | Priorité |
 |---|---|---|
-| RF-M3-01 | Réservation de stock à la création du bon, libérée à expiration ou annulation | MVP |
-| RF-M3-02 | Numérotation séquentielle par exercice, non modifiable | MVP |
+| RF-M3-01 | Réservation de stock à l'émission de la cotation, libérée à expiration ou annulation | MVP |
+| RF-M3-02 | Numérotation séquentielle des cotations et des bons par exercice, non modifiable | MVP |
 | RF-M3-03 | Signature cryptographique du bon et du QR code | MVP |
 | RF-M3-04 | Vérification du bon hors ligne par la console d'expédition | MVP |
-| RF-M3-05 | Duplication d'un bon antérieur en brouillon (commande récurrente) | V1 |
-| RF-M3-06 | Commande récurrente programmée (abonnement d'approvisionnement) | V1 |
-| RF-M3-07 | Devis sans engagement transformable en bon de commande | V2 |
+| RF-M3-05 | Conversion cotation → bon conditionnée à un encaissement confirmé, idempotente | MVP |
+| RF-M3-06 | File de rattrapage des paiements sans cotation, avec décision humaine tracée | MVP |
+| RF-M3-07 | Duplication d'une cotation antérieure en brouillon (commande récurrente) | V1 |
+| RF-M3-08 | Commande récurrente programmée (abonnement d'approvisionnement) | V1 |
+| RF-M3-09 | Devis sans engagement transformable en cotation | V2 |
 
 ---
 
@@ -209,7 +227,7 @@ Encaisser de façon certaine, ventiler la part transport, et ne régler le trans
 
 ### Références croisées
 
-Règles : `RG-PAY-01` à `RG-PAY-12`.
+Règles : `RG-PAY-01` à `RG-PAY-21`, `RG-COT-04` et `RG-COT-07`.
 
 ### Récits utilisateurs
 
@@ -218,7 +236,8 @@ En tant que client, je veux payer par mobile money afin de commander depuis mon 
 
 *Critères d'acceptation :*
 - Au moins deux opérateurs pris en charge.
-- Le bon reste **en attente de paiement** jusqu'à confirmation effective par l'opérateur, jamais sur simple promesse.
+- **L'ordre de paiement porte le numéro de cotation** ; l'application refuse de le générer sans lui.
+- Le **bon de commande n'est émis qu'après confirmation effective** du paiement par l'opérateur, jamais sur simple promesse.
 - En cas de délai supérieur à 2 minutes, un écran d'attente explique la situation et permet de reprendre la main.
 - Un paiement confirmé en double est remboursé automatiquement ou signalé au service financier sous 24 heures.
 
@@ -274,6 +293,8 @@ En tant que client, je veux être remboursé lorsqu'une commande n'est pas honor
 | RF-M4-10 | Paiement par carte bancaire | V1 |
 | RF-M4-11 | Échelonnement du paiement (acompte / solde) | V2 |
 | RF-M4-12 | Avance de carburant au transporteur, déduite du règlement final | V1 |
+| RF-M4-13 | Tout ordre de paiement généré porte le numéro de la cotation qu'il règle ; génération refusée sans référence | MVP |
+| RF-M4-14 | Virement bancaire opérationnel dès le MVP : au-delà de 2 500 $ par transaction, c'est le seul canal disponible | MVP |
 
 ---
 
@@ -426,8 +447,8 @@ En tant que client, je veux suivre l'avancement de ma commande afin de savoir qu
 En tant que client, je veux être informé par le canal qui fonctionne chez moi.
 
 *Critères d'acceptation :*
-- Canaux disponibles : notification dans l'application, SMS, WhatsApp.
-- Événements notifiés : bon certifié, paiement confirmé, transporteur affecté, chargement effectué, départ, approche (moins de 30 km), livraison, incident.
+- Canaux disponibles : notification dans l'application, SMS, **WhatsApp Business**.
+- Événements notifiés : cotation émise, paiement confirmé, bon de commande émis, transporteur affecté, chargement effectué, départ, approche (moins de 30 km), livraison, incident.
 - Le client choisit son canal préféré ; le SMS reste le canal de repli.
 - Chaque notification est tracée (envoyée, reçue, échec).
 
@@ -439,12 +460,22 @@ En tant que client, je veux signaler un problème pendant le transport afin qu'i
 - La déclaration est horodatée et notifiée à PPC et au transporteur.
 - Un incident ouvert bloque la libération automatique des fonds jusqu'à décision.
 
-**US-M7-04 — Repli SMS / USSD** *(V2)*
+**US-M7-04 — Repli SMS / USSD** *(V1)*
 En tant que client sans smartphone, je veux commander et suivre par SMS afin de ne pas être exclu.
 
 *Critères d'acceptation :*
 - Un menu USSD permet : consulter le solde de commande, l'état d'une livraison, demander un rappel.
 - Le format SMS respecte la limite de caractères et reste lisible sur un téléphone à clavier.
+
+**US-M7-05 — Commander par WhatsApp Business** *(V1)*
+En tant que client, je veux commander depuis la messagerie que j'utilise déjà afin de ne pas installer une application supplémentaire.
+
+*Critères d'acceptation :*
+- Le numéro d'entreprise de PPC propose un parcours en **menus numérotés** : produit, quantité, zone, cotation.
+- Le client reçoit sa cotation en PDF dans la conversation, puis la consigne de paiement portant son numéro.
+- Après encaissement, le bon de commande lui est envoyé dans la même conversation.
+- Le parcours fonctionne **sans intelligence artificielle** ; une couche de langage naturel peut s'y ajouter, jamais s'y substituer.
+- **Aucun prix n'est communiqué avant identification du client.**
 
 ### Exigences fonctionnelles
 
@@ -455,6 +486,8 @@ En tant que client sans smartphone, je veux commander et suivre par SMS afin de 
 | RF-M7-03 | Journal d'événements par commande, immuable | MVP |
 | RF-M7-04 | Tableau de bord des incidents en cours pour PPC | MVP |
 | RF-M7-05 | Lien de suivi partageable avec un tiers (destinataire final) | V1 |
+| RF-M7-06 | Canal WhatsApp Business bidirectionnel : cotation, paiement, bon de commande et suivi | V1 |
+| RF-M7-07 | Fonctionnement du canal WhatsApp en **menus numérotés**, sans dépendance à un modèle de langage | V1 |
 
 ---
 
@@ -687,13 +720,21 @@ En tant qu'administrateur, je veux traiter les litiges dans une file dédiée.
 - Vue du dossier de preuve complet dans un seul écran.
 - Décision, motif, notification automatique aux parties.
 
-**US-M11-05 — Gestion des zones et axes** *(MVP)*
-En tant qu'administrateur, je veux définir les zones de livraison et les axes afin que le calcul tarifaire soit juste.
+**US-M11-05 — Gestion des zones et axes** *(MVP)*En tant qu'administrateur, je veux définir les zones de livraison et les axes afin que le calcul tarifaire soit juste.
 
 *Critères d'acceptation :*
 - Création d'axes avec distance, points d'étape, points de rendez-vous logistiques.
 - Rattachement des zones aux axes, avec coefficient de détour.
 - Désactivation d'une zone sans perte d'historique.
+
+**US-M11-06 — Accès des utilisateurs PPC par annuaire d'entreprise** *(MVP)*
+En tant qu'administrateur PPC, je veux que mes collaborateurs se connectent avec leur compte habituel afin de ne pas multiplier les identifiants.
+
+*Critères d'acceptation :*
+- Connexion par **SSO** adossée à l'annuaire d'entreprise de PPC (compatible Active Directory / OpenID Connect).
+- Les rôles et périmètres restent gérés dans l'application, pas dans l'annuaire : l'annuaire atteste l'identité, l'application décide des droits.
+- Un utilisateur retiré de l'annuaire perd immédiatement l'accès à l'application.
+- Un compte local de secours reste possible, nominatif, réservé aux cas de panne de l'annuaire, et journalisé.
 
 ### Exigences fonctionnelles
 
@@ -704,6 +745,7 @@ En tant qu'administrateur, je veux définir les zones de livraison et les axes a
 | RF-M11-03 | Workflow d'approbation à deux niveaux pour les dérogations tarifaires | V1 |
 | RF-M11-04 | Simulation d'impact avant modification d'un paramètre structurant | V1 |
 | RF-M11-05 | Alertes automatiques sur dérive d'indicateurs (taux de litige, délai) | V1 |
+| RF-M11-06 | Connexion des utilisateurs PPC par annuaire d'entreprise (SSO / Active Directory), sans compte local | MVP |
 
 ---
 
@@ -776,10 +818,10 @@ En tant qu'agent d'expédition, je veux connaître l'ordre de chargement afin qu
 | Jalon de la chaîne de preuve | Modules requis | Modules optionnels |
 |---|---|---|
 | J1 — Compte et KYC | M1 | — |
-| J2 — Bon de commande certifié | M2, M3 | — |
+| J2 — Cotation certifiée | M2, M3 | — |
 | J3 — Paiement encaissé | M4 | — |
-| J4 — Chargement certifié | M5, M10 | — |
-| J5 — Transport suivi | M6, M7 | — |
+| J4 — Bon de commande émis | M3 | — |
+| J5 — Chargement et transport | M5, M6, M7, M10 | — |
 | J6 — Livraison prouvée | M8 | — |
 | J7 — Reçu et historique | M9 | — |
 | Pilotage | M11 | — |

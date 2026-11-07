@@ -320,9 +320,12 @@ def s02_probleme(prs):
               taille=9.5, couleur=GRIS)
         y += Inches(0.86)
 
-    texte(diapo, MARGE, Inches(6.35), Inches(5.6), Inches(0.5),
-          "Résultat : c'est votre marque qui répond de ce qu'elle ne contrôle pas.",
-          taille=12, couleur=NUIT, gras=True, italique=True, interligne=1.2)
+    texte(diapo, MARGE, Inches(6.16), Inches(5.7), Inches(0.3),
+          "15 à 20 % des encaissements passent par le digital.",
+          taille=13, couleur=ORANGE, gras=True)
+    texte(diapo, MARGE, Inches(6.52), Inches(5.9), Inches(0.4),
+          "Résultat : c'est votre marque qui répond des 80 % restants.",
+          taille=13, couleur=NUIT, gras=True, italique=True, interligne=1.2)
     pied(diapo)
     notes(diapo, "Poser ces quatre questions à voix haute, puis laisser un silence. Personne dans la salle ne "
                  "peut y répondre avec une preuve. Ne pas accuser les transporteurs : ils sont partenaires tiers.")
@@ -376,28 +379,39 @@ def s04_marche(prs):
     largeur = (LARGEUR_UTILE - Inches(0.6)) / 3
     x = MARGE
     for titre, volume, attente in profils:
-        rectangle(diapo, x, Inches(2.3), largeur, Inches(2.15), BLANC, arrondi=True)
-        texte(diapo, x + Inches(0.26), Inches(2.5), largeur - Inches(0.5), Inches(0.55),
-              titre, taille=13, couleur=NUIT, gras=True, interligne=1.05)
-        texte(diapo, x + Inches(0.26), Inches(3.02), largeur - Inches(0.5), Inches(0.25),
+        rectangle(diapo, x, Inches(2.12), largeur, Inches(1.72), BLANC, arrondi=True)
+        texte(diapo, x + Inches(0.26), Inches(2.28), largeur - Inches(0.5), Inches(0.5),
+              titre, taille=12.5, couleur=NUIT, gras=True, interligne=1.05)
+        texte(diapo, x + Inches(0.26), Inches(2.78), largeur - Inches(0.5), Inches(0.24),
               volume, taille=9.5, couleur=ORANGE, gras=True)
-        texte(diapo, x + Inches(0.26), Inches(3.36), largeur - Inches(0.5), Inches(0.95),
-              attente, taille=10.5, couleur=GRIS, interligne=1.22)
+        texte(diapo, x + Inches(0.26), Inches(3.08), largeur - Inches(0.5), Inches(0.68),
+              attente, taille=10, couleur=GRIS, interligne=1.2)
         x += largeur + Inches(0.3)
 
-    rectangle(diapo, MARGE, Inches(4.75), LARGEUR_UTILE, Inches(1.35), NUIT, arrondi=True)
-    texte(diapo, MARGE + Inches(0.35), Inches(4.95), Inches(4.2), Inches(0.28),
-          "DEUX POPULATIONS À ÉQUIPER", taille=9, couleur=ORANGE, gras=True)
-    texte(diapo, MARGE + Inches(0.35), Inches(5.26), Inches(4.9), Inches(0.7),
-          ["Transporteurs partenaires", "homologués par PPC — ils ne sont pas PPC"],
-          taille=12, couleur=BLANC, gras=True, interligne=1.2)
-    texte(diapo, MARGE + Inches(5.75), Inches(5.26), Inches(4.9), Inches(0.7),
-          ["Administration PPC", "homologation, barème, litiges, pilotage"],
-          taille=12, couleur=BLANC, gras=True, interligne=1.2)
+    chiffres = [
+        ("15\u00a0à\u00a020\u00a0%", "des encaissements passent aujourd'hui par le digital"),
+        ("3", "banques seulement sont connectées à l'encaissement"),
+        ("2\u00a0500\u00a0$", "plafond par transaction sur mobile money et carte"),
+    ]
+    x = MARGE
+    for valeur, libelle in chiffres:
+        rectangle(diapo, x, Inches(4.0), largeur, Inches(1.05), NUIT, arrondi=True)
+        texte(diapo, x + Inches(0.24), Inches(4.12), largeur - Inches(0.48), Inches(0.4),
+              valeur, taille=19, couleur=ORANGE_PALE, gras=True)
+        texte(diapo, x + Inches(0.24), Inches(4.58), largeur - Inches(0.48), Inches(0.44),
+              libelle, taille=9, couleur=RGBColor(0xB6, 0xC6, 0xD4), interligne=1.15)
+        x += largeur + Inches(0.3)
 
-    source(diapo, "Segmentation à confirmer avec les volumes réels de PPC : aucun chiffre de marché n'est avancé ici.")
-    notes(diapo, "Assumer l'absence de chiffre : proposer de remplir cette diapositive avec leurs volumes pendant "
-                 "l'atelier de cadrage. C'est plus crédible qu'une taille de marché inventée.")
+    texte(diapo, MARGE, Inches(5.28), LARGEUR_UTILE, Inches(0.8),
+          [{"runs": [("Ce n'est pas un marché à créer : ", {"gras": True, "couleur": NUIT, "taille": 13}),
+                     ("c'est une couverture à compléter sur des clients qui existent déjà. Quatre cinquièmes des flux "
+                      "restent hors de toute traçabilité automatique.", {"couleur": GRIS, "taille": 13})]}],
+          interligne=1.22)
+
+    source(diapo, "Chiffres communiqués par PPC en entretien — à confirmer sur un exercice complet avant diffusion.")
+    notes(diapo, "Ces trois chiffres viennent de PPC, pas de nous : c'est ce qui les rend difficiles à contester. "
+                 "Les laisser commenter. Ne jamais nommer les banques non connectées : c'est leur affaire interne, "
+                 "et le document circule.")
 
 
 def s05_chaine(prs):
@@ -405,15 +419,15 @@ def s05_chaine(prs):
     fond(diapo, NUIT)
     en_tete(diapo, "La solution", "La chaîne de preuve, en six jalons", 5, sombre=True)
     texte(diapo, MARGE, Inches(1.85), Inches(11.4), Inches(0.4),
-          "Chaque jalon produit une preuve, et chaque preuve conditionne le suivant.",
-          taille=14, couleur=RGBColor(0xB6, 0xC6, 0xD4), italique=True)
+          "Chaque jalon produit une preuve, et chaque preuve conditionne le suivant — la cotation d'abord, le bon de commande ensuite.",
+          taille=13.5, couleur=RGBColor(0xB6, 0xC6, 0xD4), italique=True)
 
     jalons = [
         ("J1", "Compte vérifié", "Identité et plafonds"),
-        ("J2", "Bon certifié", "Numéro unique, QR signé"),
-        ("J3", "Paiement encaissé", "Encaissé par PPC, certifié APIX"),
-        ("J4", "Chargement", "Pesée, scellé, photo"),
-        ("J5", "Transport suivi", "Positions et incidents"),
+        ("J2", "Cotation certifiée", "Prix ferme, référence de paiement"),
+        ("J3", "Paiement encaissé", "Rattaché à la cotation"),
+        ("J4", "Bon émis", "Nominatif, QR signé"),
+        ("J5", "Chargement et route", "Pesée, scellé, positions"),
         ("J6", "Livraison prouvée", "Validation, litige tranché"),
     ]
     largeur = Inches(2.02)
@@ -445,8 +459,9 @@ def s05_chaine(prs):
                      ("le jour où un contentieux arrive sur 500 sacs, vous ne produisez pas une transaction — "
                       "vous produisez un dossier.", {"couleur": BLANC, "taille": 14})]}], interligne=1.25)
     pied(diapo, sombre=True)
-    notes(diapo, "Ne pas détailler les six jalons un par un. Insister sur la dépendance : sans la preuve du jalon "
-                 "précédent, le suivant ne s'ouvre pas.")
+    notes(diapo, "Ne pas détailler les six jalons un par un. Insister sur deux choses : la dépendance — sans la "
+                 "preuve du jalon précédent, le suivant ne s'ouvre pas — et l'ordre — la cotation précède le "
+                 "paiement, le bon de commande le suit. C'est le circuit de PPC, pas le nôtre.")
 
 
 def s06_ubiquite(prs):
@@ -496,12 +511,12 @@ def s07_sequestre(prs):
     fond(diapo, NUIT)
     en_tete(diapo, "Le circuit de l'argent", "Le client paie PPC. Le transporteur est payé sur preuve.", 7, sombre=True)
     texte(diapo, MARGE, Inches(1.88), Inches(11.4), Inches(0.4),
-          "Encaissé avant le chargement. Le transport n'est réglé qu'après la livraison prouvée — et seulement s'il figure dans l'offre.",
-          taille=14, couleur=RGBColor(0xB6, 0xC6, 0xD4), italique=True)
+          "Sur la référence d'une cotation, encaissée avant le chargement. Le transport n'est réglé qu'après la livraison prouvée — et seulement s'il figure dans l'offre.",
+          taille=13.5, couleur=RGBColor(0xB6, 0xC6, 0xD4), italique=True)
 
     etapes = [
-        ("1", "Le client paie PPC", "Ciment, et transport si l'offre l'inclut. Paiement par mobile money, virement ou espèces via un agent agréé."),
-        ("2", "APIX certifie et ventile", "La part transport est isolée dans la commande et provisionnée. Offre sans transport : aucune provision."),
+        ("1", "Cotation, puis paiement", "Le client reçoit une cotation ferme, puis paie en la référençant. Mobile money, virement ou espèces via un agent agréé."),
+        ("2", "APIX certifie et ventile", "La cotation encaissée devient le bon de commande. La part transport est isolée et provisionnée."),
         ("3", "Le ciment est livré", "Le client valide sur son téléphone : quantité, état, scellé. La preuve est signée."),
         ("4", "PPC règle le transporteur", "Sur preuve conforme, dans le délai que PPC arrêtera. Retenue partielle en cas d'écart constaté."),
     ]
@@ -528,6 +543,10 @@ def s07_sequestre(prs):
           ["« Le client paie PPC. PPC paie le transport — et seulement sur preuve. »",
            "Le client est protégé par un dossier qu'il peut produire, pas par un gel de ses fonds."],
           taille=13, couleur=BLANC, gras=True, interligne=1.35)
+    texte(diapo, MARGE, Inches(6.6), LARGEUR_UTILE, Inches(0.3),
+          "Trois banques seulement sont connectées au dispositif d'encaissement : le reste des flux est "
+          "rapproché à la main — d'où l'intérêt d'un registre de preuve plutôt que d'un formulaire de plus.",
+          taille=10, couleur=RGBColor(0x9F, 0xB2, 0xC2), italique=True)
     pied(diapo, sombre=True)
     notes(diapo, "Correction de fond : l'argent quitte le compte du client vers PPC avant même que le transporteur "
                  "voie la commande. Il n'y a donc pas de séquestre des fonds du client. Ce qu'APIX garantit, c'est "
@@ -678,7 +697,7 @@ def s11_concurrence(prs):
     donnees = [
         ["Critère", "Digiciment", "APIX All In One"],
         ["Nature", "Application de transactions", "Chaîne de preuve du paiement au sac livré"],
-        ["Unité de référence", "La transaction", "Le bon de commande certifié"],
+        ["Unité de référence", "La transaction", "La cotation certifiée et son bon"],
         ["Transporteurs", "Gestion locale, non documentée", "Homologation par PPC, datée et révocable"],
         ["Prix du transport", "Forfaitaire", "Calculé à l'axe et au poids, barème PPC"],
         ["Preuve de livraison", "Reçu simple", "QR, photo géolocalisée, pesée, scellé"],

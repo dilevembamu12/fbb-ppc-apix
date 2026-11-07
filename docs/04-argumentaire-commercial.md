@@ -59,7 +59,7 @@ Trois mots à répéter : **continuité**, **preuve**, **contrôle**.
 |---|---|---|---|
 | Nature du produit | Application de petites transactions avec module logistique léger | Plateforme de certification financière **étendue** à la chaîne logistique | Un module léger devient un point de rupture dès que les volumes montent |
 | Couverture du parcours | Paiement, et une partie de la logistique, séparément | Commande → paiement → chargement → transport → livraison → facture, **en un seul flux** | Une chaîne discontinue crée des zones où plus personne n'est responsable |
-| Unité de référence | La transaction | Le **bon de commande certifié**, du paiement jusqu'à la preuve de livraison | Sans unité de référence commune, la réconciliation est manuelle |
+| Unité de référence | La transaction | La **cotation certifiée**, du prix jusqu'à la preuve de livraison | Sans unité de référence commune, la réconciliation est manuelle |
 | Homologation des transporteurs | Gestion locale, non documentée | **Décision administrative de PPC**, pièces contrôlées, validité datée, révocation possible | La marque PPC est engagée par le transporteur qu'elle laisse opérer |
 | Prix du transport | Négocié | **Barème publié par PPC**, calculé au poids et à la distance | Tant que le prix se négocie, PPC ne maîtrise pas son prix final |
 | Preuve de livraison | Reçu simple | **QR nominatif + photo géolocalisée + pesée contradictoire + numéro de scellé** | En contentieux, un reçu simple ne prouve pas la remise |
@@ -85,6 +85,20 @@ Trois mots à répéter : **continuité**, **preuve**, **contrôle**.
 ## 3. Les douleurs de PPC et la réponse APIX
 
 Cette section est la plus importante du dossier. Elle parle du **client**, pas du produit.
+
+### 3.0 Le chiffre qui commande tout le reste
+
+> **15 à 20 %.** C'est la part des encaissements de PPC qui passent aujourd'hui par le digital.
+> Autrement dit : quatre cinquièmes des flux échappent encore à toute traçabilité automatique.
+
+Deux causes se cumulent, et aucune n'est un défaut d'application :
+
+1. **Le plafond des canaux.** Au-delà de **2 500 $ par transaction**, ni un portefeuille mobile money ni une carte ne passe. Or c'est exactement la tranche des distributeurs et des grands comptes — le segment que PPC veut capter. Le virement n'est donc pas un canal de secours : c'est le canal principal du B2B.
+2. **La couverture bancaire.** Trois banques seulement sont connectées au dispositif d'encaissement. Le reste des flux est rapproché à la main, ou pas du tout.
+
+Ce n'est donc pas un marché à créer : c'est une **couverture à compléter** sur des clients qui existent déjà, avec des commandes qui existent déjà.
+
+---
 
 ### 3.1 Douleur n° 1 — L'engorgement des points de chargement
 
@@ -293,6 +307,14 @@ Parce que le paiement seul est déjà couvert par APIX, et ne change rien à la 
 
 Voir la section 7. Trois modèles sont possibles ; le plus solide pour PPC est un investissement amorti par les gains logistiques mesurés sur trois indicateurs (remplissage, litiges, impayés), avec une part variable indexée sur le volume traité.
 
+### O-13 — « Pourquoi passer par une cotation ? Nos clients commandent déjà par bon. »
+
+Parce que c'est le circuit qui existe déjà chez vous, et qu'il protège le paiement. Aujourd'hui, quand un client vire sans cotation, le compte d'encaissement refuse les fonds : il faut soit demander à la banque de rediriger l'opération, soit établir une cotation à la main pour le montant reçu. L'application inverse cet ordre : elle produit la cotation **avant** l'argent, en fait la référence du paiement, et transforme automatiquement la cotation encaissée en bon de commande. Résultat : chaque franc reçu est rattachable à une commande, sans intervention manuelle.
+
+### O-14 — « Nos clients ne dépassent jamais 2 500 $. »
+
+Ceux qui commandent au détail, peut-être. Ceux que vous voulez convaincre — distributeurs, grands comptes, chantiers — non. Et c'est précisément au-dessus de 2 500 $ qu'aucun canal mobile ne passe : le virement doit être prêt dès le premier jour, sinon la plateforme ne sert qu'aux petits paniers.
+
 ---
 
 ## 7. Modèle économique
@@ -346,7 +368,7 @@ La démonstration doit être faite avec **leurs** chiffres, sur trois lignes seu
 |---|---|---|
 | 0 – 2 min | **Le constat** : APIX certifie le paiement, mais rien ne certifie la livraison | On ne remet pas en cause l'existant, on pointe le trou |
 | 2 – 5 min | **Les trois douleurs qui coûtent cher** : camions à moitié vides, litiges non arbitrables, prix final non maîtrisé | Parler en coûts, pas en fonctionnalités |
-| 5 – 8 min | **La chaîne de preuve** : les six jalons, du compte à la facture | Montrer la continuité, pas des écrans |
+| 5 – 8 min | **La chaîne de preuve** : les sept jalons, de la cotation à la facture | Montrer la continuité, pas des écrans |
 | 8 – 10 min | **Le circuit de l'argent** : « le client paie PPC, PPC paie le transport sur preuve » | C'est l'argument qui reste en mémoire |
 | 10 – 12 min | **Le groupage** : 30 petits acheteurs deviennent une commande de 30 tonnes | Réponse directe à Digiciment |
 | 12 – 14 min | **Le contrôle reste chez PPC** : homologation, barème, litiges | Lever la crainte de la perte de souveraineté |
@@ -360,7 +382,7 @@ La démonstration doit être faite avec **leurs** chiffres, sur trois lignes seu
 
 ### Support visuel recommandé
 
-Un seul schéma : la chaîne de preuve en six jalons, avec, sous chaque jalon, la preuve produite. Pas de capture d'écran d'application avant que le périmètre ne soit validé — cela déclenche des débats sur des détails d'interface au lieu des décisions structurantes.
+Un seul schéma : la chaîne de preuve en sept jalons, avec, sous chaque jalon, la preuve produite. Pas de capture d'écran d'application avant que le périmètre ne soit validé — cela déclenche des débats sur des détails d'interface au lieu des décisions structurantes.
 
 ---
 
@@ -399,7 +421,7 @@ La crédibilité se gagne par la démonstration, pas par le discours.
 
 **À emporter**
 
-- [ ] Schéma unique de la chaîne de preuve en six jalons
+- [ ] Schéma unique de la chaîne de preuve en sept jalons
 - [ ] Tableau des huit douleurs de PPC (section 3.9)
 - [ ] Grille comparative Digiciment / APIX (section 2.1)
 - [ ] Les cinq décisions à obtenir (document 00, section 7)

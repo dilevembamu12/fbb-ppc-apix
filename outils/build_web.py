@@ -103,7 +103,8 @@ def s02() -> str:
         <h2 class="titre-xl">Le paiement est certifié.<br>La marchandise, non.</h2>
         <p class="intro">Quatre questions auxquelles personne, aujourd'hui, ne peut répondre :</p>
         {lignes}
-        <p class="conclusion">Résultat : c'est votre marque qui répond de ce qu'elle ne contrôle pas.</p>
+        <p class="stat-fort">15 à 20 % des encaissements passent par le digital.</p>
+        <p class="conclusion">Résultat : c'est votre marque qui répond des 80 % restants.</p>
       </div>
       {image("douleur_route", "moitie-droite", "rgba(14,36,54,.22)")}'''
 
@@ -144,22 +145,24 @@ def s04() -> str:
       {en_tete("Le marché", "Il n'achète pas une application. Il achète une certitude.")}
       <div class="trois-colonnes">{cartes}</div>
       <div class="bande-sombre">
-        <div class="etiquette">Deux populations à équiper</div>
-        <div class="bande-colonnes">
-          <div><strong>Transporteurs partenaires</strong><br>homologués par PPC — ils ne sont pas PPC</div>
-          <div><strong>Administration PPC</strong><br>homologation, barème, litiges, pilotage</div>
+        <div class="etiquette">Trois chiffres, tous communiqués par PPC</div>
+        <div class="bande-colonnes trois">
+          <div><strong>15&nbsp;à&nbsp;20&nbsp;%</strong>des encaissements passent par le digital</div>
+          <div><strong>3</strong>banques seulement sont connectées à l'encaissement</div>
+          <div><strong>2&nbsp;500&nbsp;$</strong>plafond par transaction sur mobile money et carte</div>
         </div>
       </div>
-      <p class="source">Segmentation à confirmer avec les volumes réels de PPC : aucun chiffre de marché n'est avancé ici.</p>'''
+      <p class="source">Chiffres communiqués par PPC en entretien, à confirmer sur un exercice complet. Ce n'est pas
+        un marché à créer : c'est une couverture à compléter sur des clients qui existent déjà.</p>'''
 
 
 def s05() -> str:
     jalons = [
         ("J1", "Compte vérifié", "Identité et plafonds"),
-        ("J2", "Bon certifié", "Numéro unique, QR signé"),
-        ("J3", "Paiement encaissé", "Encaissé par PPC, certifié APIX"),
-        ("J4", "Chargement", "Pesée, scellé, photo"),
-        ("J5", "Transport suivi", "Positions et incidents"),
+        ("J2", "Cotation certifiée", "Prix ferme, référence de paiement"),
+        ("J3", "Paiement encaissé", "Rattaché à la cotation"),
+        ("J4", "Bon émis", "Nominatif, QR signé"),
+        ("J5", "Chargement et route", "Pesée, scellé, positions"),
         ("J6", "Livraison prouvée", "Validation, litige tranché"),
     ]
     chevrons = "".join(
@@ -170,7 +173,8 @@ def s05() -> str:
     return f'''
       <div class="sombre">
         {en_tete("La solution", "La chaîne de preuve, en six jalons")}
-        <p class="intro-sombre">Chaque jalon produit une preuve, et chaque preuve conditionne le suivant.</p>
+        <p class="intro-sombre">Chaque jalon produit une preuve, et chaque preuve conditionne le suivant —
+          la cotation d'abord, le bon de commande ensuite.</p>
         <div class="chevrons">{chevrons}</div>
         <div class="bande-sombre beige">
           <p><strong>Ce que cela change :</strong> le jour où un contentieux arrive sur 500 sacs, vous ne produisez
@@ -243,10 +247,10 @@ def s06() -> str:
 
 def s07() -> str:
     etapes = [
-        ("1", "Le client paie PPC",
-         "Ciment, et transport si l'offre l'inclut. Paiement par mobile money, virement ou espèces via un agent agréé."),
+        ("1", "Cotation, puis paiement",
+         "Le client reçoit une cotation ferme, puis paie en la référençant. Mobile money, virement ou espèces via un agent agréé."),
         ("2", "APIX certifie et ventile",
-         "La part transport est isolée dans la commande et provisionnée. Offre sans transport : aucune provision."),
+         "La cotation encaissée devient le bon de commande. La part transport est isolée et provisionnée."),
         ("3", "Le ciment est livré",
          "Le client valide sur son téléphone : quantité, état, scellé. La preuve est signée."),
         ("4", "PPC règle le transporteur",
@@ -259,13 +263,14 @@ def s07() -> str:
     return f'''
       <div class="sombre">
         {en_tete("Le circuit de l'argent", "Le client paie PPC. Le transporteur est payé sur preuve.")}
-        <p class="intro-sombre">Encaissé avant le chargement. Le transport n'est réglé qu'après la livraison
-          prouvée — et seulement s'il figure dans l'offre.</p>
+        <p class="intro-sombre">Chaque paiement porte la référence d'une cotation, encaissée avant le chargement.
+          Le transport n'est réglé qu'après la livraison prouvée — et seulement s'il figure dans l'offre.</p>
         <div class="quatre-etapes">{cartes}</div>
         <div class="bande-orange">
           <p>« Le client paie PPC. PPC paie le transport — et seulement sur preuve. »</p>
           <p class="second">Le client est protégé par un dossier qu'il peut produire, pas par un gel de ses fonds.</p>
         </div>
+        <p class="note-sombre">Trois banques seulement sont connectées au dispositif d'encaissement : le reste des flux est rapproché à la main.</p>
       </div>'''
 
 
@@ -357,7 +362,7 @@ def s10() -> str:
 def s11() -> str:
     lignes = [
         ("Nature", "Application de transactions", "Chaîne de preuve du paiement au sac livré"),
-        ("Unité de référence", "La transaction", "Le bon de commande certifié"),
+        ("Unité de référence", "La transaction", "La cotation certifiée et son bon"),
         ("Transporteurs", "Gestion locale, non documentée", "Homologation par PPC, datée et révocable"),
         ("Prix du transport", "Forfaitaire", "Calculé à l'axe et au poids, barème PPC"),
         ("Preuve de livraison", "Reçu simple", "QR, photo géolocalisée, pesée, scellé"),
@@ -628,6 +633,10 @@ body{background:#0a1622;font-family:var(--police);color:var(--nuit);overflow:hid
 .question:nth-of-type(3){top:528px}.question:nth-of-type(4){top:614px}
 .conclusion{position:absolute;left:70px;top:660px;width:560px;font-size:15px;font-weight:600;
   font-style:italic;color:var(--nuit)}
+.stat-fort{position:absolute;left:70px;top:632px;width:560px;font-size:13px;font-weight:700;
+  color:var(--orange)}
+.note-sombre{position:absolute;left:70px;right:70px;bottom:24px;font-size:11.5px;
+  color:#9FB2C2;font-style:italic}
 
 /* --- cartes --- */
 .trois-colonnes{position:absolute;left:70px;right:70px;top:200px;display:grid;
@@ -649,6 +658,8 @@ body{background:#0a1622;font-family:var(--police);color:var(--nuit);overflow:hid
   color:var(--orange);margin-bottom:10px}
 .bande-colonnes{display:grid;grid-template-columns:1fr 1fr;gap:40px;font-size:14px;line-height:1.5}
 .bande-colonnes strong{font-size:15px}
+.bande-colonnes.trois{grid-template-columns:repeat(3,1fr);gap:26px;font-size:12px;line-height:1.4;color:#B6C6D4}
+.bande-colonnes.trois strong{display:block;font-size:27px;color:var(--orange-pale);line-height:1.1;margin-bottom:6px}
 
 /* --- 5. chaîne de preuve --- */
 .chevrons{position:absolute;left:70px;right:70px;top:250px;display:grid;grid-template-columns:repeat(6,1fr);gap:6px}

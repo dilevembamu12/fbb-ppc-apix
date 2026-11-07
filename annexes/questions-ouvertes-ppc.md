@@ -106,6 +106,23 @@ Ces questions sont sensibles et doivent être posées avec tact. Elles visent à
 
 ---
 
+## 6 bis. Questions issues des entretiens des 5 et 6 novembre 2026
+
+Ces points ont été soulevés en entretien et n'ont pas encore de réponse arrêtée. Ils sont plus précis que les précédents : ils portent sur des mécanismes déjà observés, pas sur des principes.
+
+| N° | Question | Ce qui est déjà acquis | Ce qu'il reste à trancher |
+|---|---|---|---|
+| **Q-50** | Le plafond de 2 500 $ s'applique-t-il par transaction, par jour ou par mois ? | Un plafond de **2 500 $ par transaction** est constaté sur les canaux mobiles et carte | La périodicité exacte, et le plafond applicable aux comptes marchands |
+| **Q-51** | Combien de temps une cotation reste-t-elle valide ? | La cotation est la référence exigée pour accepter un paiement | La durée : 48 heures proposées, à confirmer |
+| **Q-52** | Quel traitement PPC applique-t-il aujourd'hui à un virement reçu sans cotation ? | Le compte d'encaissement refuse les fonds sans cotation valide ; une cotation manuelle est alors établie | Le délai de régularisation acceptable, et qui en porte la responsabilité |
+| **Q-53** | Quelles banques doivent être connectées en priorité pour couvrir le B2B ? | Trois banques seulement sont connectées aujourd'hui | La liste des banques à intégrer, et l'ordre de priorité |
+| **Q-54** | PPC veut-il négocier un agrégateur unique pour tous les mobile money, ou conserver plusieurs contrats ? | La question du coût des frais est ouverte | Le choix de l'agrégateur, et la comparaison de coût à instruire |
+| **Q-55** | Quel annuaire d'entreprise PPC utilise-t-il pour ses collaborateurs ? | Le SSO est souhaité pour les utilisateurs internes | La technologie (Active Directory, OpenID Connect) et les règles de rôle |
+| **Q-56** | Le canal WhatsApp doit-il être un canal de commande complet, ou seulement de notification et de suivi ? | La demande est explicite côté PPC | Le périmètre : notification seule, ou parcours de cotation et de paiement complet |
+| **Q-57** | Une intelligence artificielle locale est-elle une exigence, ou une préférence ? | La préférence pour une IA souveraine est exprimée ; le fonctionnement sans IA est exigé | Le caractère contractuel ou non de cette préférence |
+
+---
+
 ## 7. Synthèse des décisions à obtenir
 
 | N° | Décision | Instance décisionnaire | Date cible |

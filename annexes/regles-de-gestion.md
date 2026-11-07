@@ -10,7 +10,7 @@ FBB pour PPC · version 1.0 · 4 novembre 2026
 ## Sommaire
 
 1. [Règles de compte et de vérification d'identité](#1-règles-de-compte-et-de-vérification-didentité)
-2. [Règles de bon de commande](#2-règles-de-bon-de-commande)
+2. [Règles de cotation et de bon de commande](#2-règles-de-cotation-et-de-bon-de-commande)
 3. [Règles de paiement, d'encaissement et de règlement](#3-règles-de-paiement-dencaissement-et-de-règlement)
 4. [Règles de tarification du transport](#4-règles-de-tarification-du-transport)
 5. [Règles d'affectation des courses](#5-règles-daffectation-des-courses)
@@ -44,16 +44,36 @@ FBB pour PPC · version 1.0 · 4 novembre 2026
 
 ---
 
-## 2. Règles de bon de commande
+## 2. Règles de cotation et de bon de commande
+
+> **L'ordre du circuit, tel qu'observé chez PPC :** le client demande un prix, reçoit une **cotation**, paie en
+> référençant cette cotation, et la cotation encaissée est transformée en **bon de commande**. Le bon n'est donc
+> pas la première pièce du dossier : c'est la **dernière pièce avant le chargement**. Les comptes d'encaissement
+> dédiés de PPC n'acceptent d'ailleurs des fonds que si une cotation valide les accompagne.
+
+### 2.1 La cotation — référence du paiement
 
 | Code | Règle | Paramètre | Justification |
 |---|---|---|---|
-| **RG-CMD-01** | Un bon de commande est créé à l'état « brouillon » ; il n'engage personne | — | Permet la reprise sans réservation de stock |
-| **RG-CMD-02** | La certification intervient après paiement confirmé et produit un numéro unique séquentiel par exercice | — | Traçabilité comptable |
+| **RG-COT-01** | Une cotation ne peut être établie que pour un **client identifié** : aucun prix n'est produit ni affiché à un visiteur anonyme | Niveau minimal : numéro de téléphone vérifié | Empêche un concurrent de sonder la grille tarifaire depuis un chatbot |
+| **RG-COT-02** | La cotation porte un **numéro unique**, la date, une durée de validité et l'identité du client | Validité : 48 heures `[À VALIDER PPC]` | Le prix est ferme pendant un temps borné, puis ne peut être révisé que par PPC |
+| **RG-COT-03** | La cotation fige le prix du ciment, le prix du transport, les frais annexes et le total. Aucune ligne ne peut être ajoutée après son émission | — | Le client sait exactement ce qu'il paiera |
+| **RG-COT-04** | **La cotation est la référence de paiement** : tout ordre de paiement porte son numéro, et aucun paiement n'est enregistré sans lui | — | Condition d'acceptation des fonds par la banque de PPC |
+| **RG-COT-05** | Une cotation expirée ne peut plus être payée ; le client en demande une nouvelle, recalculée au prix en vigueur, et la réservation de stock attachée est libérée | — | Évite l'encaissement à un prix périmé |
+| **RG-COT-06** | Une cotation est transformée en bon de commande **à l'encaissement effectif**, et une seule fois | — | Empêche la production de deux bons pour un même paiement |
+| **RG-COT-07** | Un paiement reçu **sans cotation** n'est jamais affecté d'office : il ouvre un dossier de rattrapage soumis à décision explicite de PPC, avec trace complète | Délai de rattrapage : `[À VALIDER PPC]` | Cas déjà rencontré ; la correction manuelle non tracée est la source des incidents |
+| **RG-COT-08** | Une cotation annulée, remplacée ou expirée est conservée et reste consultable ; elle n'est jamais supprimée | — | Historique opposable en cas de contestation |
+
+### 2.2 Le bon de commande
+
+| Code | Règle | Paramètre | Justification |
+|---|---|---|---|
+| **RG-CMD-01** | Le bon de commande naît de la transformation d'une cotation encaissée ; il ne peut pas être créé directement | — | Reproduit l'ordre réel du circuit de PPC |
+| **RG-CMD-02** | La transformation attribue un numéro unique séquentiel par exercice et matérialise la certification du bon | — | Traçabilité comptable |
 | **RG-CMD-03** | Le contenu signé du bon comprend : identification du titulaire, produit, quantité, poids, option d'achat, prix total, zone de livraison, version | — | Toute altération invalide la signature |
 | **RG-CMD-04** | Le bon est nominatif : il ne peut être utilisé que par le titulaire du compte ou par un mandataire déclaré | — | Empêche la revente de bons |
 | **RG-CMD-05** | Le bon est à usage unique : le premier chargement validé le clôture définitivement | — | Empêche le double enlèvement |
-| **RG-CMD-06** | Un bon non payé expire et libère la réservation de stock | Expiration : 2 heures `[À VALIDER PPC]` | Évite l'immobilisation de stock par des paniers abandonnés |
+| **RG-CMD-06** | Un bon émis mais jamais chargé dans le délai paramétré est signalé à PPC et libère la réservation de stock | Délai : 7 jours `[À VALIDER PPC]` | Le stock ne doit pas rester immobilisé par une commande payée que personne ne vient chercher |
 | **RG-CMD-07** | Après paiement, aucune modification n'est possible : seules l'annulation avec remboursement ou la création d'un nouveau bon sont admises | — | Intégrité comptable |
 | **RG-CMD-08** | Un bon ne peut être exécuté que sur le point de chargement prévu lors de sa certification | — | Empêche les sorties non contrôlées |
 
@@ -85,6 +105,7 @@ FBB pour PPC · version 1.0 · 4 novembre 2026
 | **RG-PAY-18** | Un échéancier — acompte puis solde — peut remplacer un paiement unique lorsque le montant dépasse les plafonds ; la commande reste bloquée jusqu'à encaissement intégral | Nombre de versements : `[À VALIDER PPC]` | Épouse les plafonds dans le temps, sans les contourner |
 | **RG-PAY-19** | Le plafond applicable dépend du palier de vérification du compte ; une montée de palier s'obtient par vérification, jamais par dérogation orale | Paliers : `[À VALIDER PPC]` | Le niveau de connaissance du client détermine son plafond réglementaire |
 | **RG-PAY-20** | Tout refus d'un opérateur est journalisé avec son motif, et présenté au client comme une alternative de canal — jamais comme une erreur technique | — | Un refus mal expliqué fait perdre le client, pas la transaction |
+| **RG-PAY-21** | L'application refuse de générer un ordre de paiement dépourvu de cotation valide ; elle ne compte jamais sur une régularisation manuelle ultérieure | — | Un compte d'encaissement dédié rejette les fonds sans cotation : le contourner produit un incident |
 
 ### Tableau 3.1 — Matrice du règlement du transport
 
@@ -101,13 +122,15 @@ FBB pour PPC · version 1.0 · 4 novembre 2026
 
 ### Tableau 3.2 — Routage du paiement selon le montant
 
-Les seuils ci-dessous sont des propositions de travail. Ils dépendent des plafonds réellement négociés avec chaque opérateur et avec la banque de PPC.
+Les seuils partent du plafond réellement constaté sur les canaux mobiles : **2 500 $ par transaction**. Au-delà, ni un portefeuille mobile money ni une carte ne passe, quel que soit le client.
 
 | Tranche de montant | Canal privilégié | Contrôle associé |
 |---|---|---|
 | Jusqu'à 1 000 $ | Mobile money, portefeuille du client | Aucun contrôle supplémentaire si le compte est vérifié |
-| De 1 000 $ à 5 000 $ | Compte marchand, ou virement si le plafond du portefeuille est atteint | Vérification du palier du client |
-| Au-delà de 5 000 $ | Virement bancaire avec référence de commande unique, ou échéancier | Rapprochement sous contrôle humain avant déblocage du bon |
+| De 1 000 $ à 2 500 $ | Mobile money ou carte, dans la limite du plafond du canal ; compte marchand si le client en dispose | Vérification du palier du client |
+| Au-delà de 2 500 $ | **Virement bancaire obligatoire**, avec référence de cotation unique, ou échéancier | Rapprochement sous contrôle humain avant émission du bon |
+
+> **Ce que cela implique :** la tranche « au-delà de 2 500 $ » n'est pas un cas marginal — c'est précisément le segment que PPC veut capter, distributeurs et grands comptes compris. Le virement n'est donc pas une option de repli : c'est le **canal principal du B2B**, et il doit fonctionner dès le MVP.
 
 > **Point de vigilance contractuel :** le fractionnement d'un paiement pour rester sous un plafond est très souvent interdit par les conditions des opérateurs. Il doit être expressément autorisé par écrit, sinon il expose le compte marchand de PPC à une suspension — c'est-à-dire à l'arrêt de toute la plateforme.
 
@@ -264,7 +287,9 @@ Tous les paramètres ci-dessous doivent être fixés au cadrage, consignés dans
 | Validité du code à usage unique | RG-KYC-01 | 5 minutes | |
 | Nombre de tentatives de code | RG-KYC-01 | 3 | |
 | Préavis d'expiration de pièce | RG-KYC-06 | 30 jours | |
-| Expiration d'un bon non payé | RG-CMD-06 | 2 heures | |
+| Durée de validité d'une cotation | RG-COT-02 | 48 heures |
+| Délai de rattrapage d'un paiement sans cotation | RG-COT-07 | À définir |
+| Délai de signalement d'un bon non chargé | RG-CMD-06 | 7 jours |
 | Délai d'attente d'une confirmation de paiement | RG-PAY-01 | 15 minutes | |
 | Délai de rétention avant règlement | RG-PAY-04 | À définir avec PPC | |
 | Seuil d'alerte sur dépôt en espèces | RG-PAY-11 | À définir | |

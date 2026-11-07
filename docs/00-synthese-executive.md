@@ -11,7 +11,11 @@ APIX certifie aujourd'hui les **transactions de paiement CIMA** sur les comptes 
 
 Or la valeur perçue par le client final de PPC ne se joue pas au moment du paiement. Elle se joue au moment où **le camion arrive** — ou n'arrive pas, ou arrive incomplet.
 
-**La proposition :** transformer APIX en chaîne de preuve unique qui relie quatre étapes aujourd'hui séparées — **commande → paiement → chargement → livraison** — dans une seule application, pour Android, iOS et Web.
+**La proposition :** transformer APIX en chaîne de preuve unique qui relie cinq étapes aujourd'hui séparées — **cotation → paiement → bon de commande → chargement → livraison** — dans une seule application, pour Android, iOS et Web.
+
+> **Précision de circuit, vérifiée sur le terrain :** le client demande d'abord un prix, reçoit une **cotation**, paie en la référençant, et la cotation encaissée devient le **bon de commande**. Les comptes d'encaissement de PPC refusent les fonds sans cotation valide. Ce n'est pas un détail de parcours : c'est la condition pour que chaque franc reçu soit rattachable à une commande.
+
+> **Le chiffre qui commande tout le reste :** **15 à 20 %** seulement des encaissements de PPC passent aujourd'hui par le digital — quatre cinquièmes des flux échappent donc à toute traçabilité automatique. Deux causes se cumulent : le **plafond de 2 500 $ par transaction** sur mobile money et carte (or c'est la tranche des distributeurs et des grands comptes), et la **couverture bancaire** — trois banques seulement sont connectées au dispositif d'encaissement, le reste est rapproché à la main.
 
 | Aujourd'hui (constat) | Avec APIX étendu (cible) |
 |---|---|
@@ -77,18 +81,20 @@ La bonne réponse n'est pas « nous gérons aussi les petites transactions ». L
 
 ## 6. Périmètre proposé pour le MVP
 
-Faire les quatre premiers jalons de la chaîne de preuve très bien, plutôt que six approximativement.
+Faire les quatre premiers jalons de la chaîne de preuve très bien, plutôt que sept approximativement.
 
 **Dans le MVP (12 à 16 semaines après cadrage) :**
 
-- Application client final (Android, iOS, Web) : inscription, KYC léger, création de bon de commande, trois options d'achat, historique.
+- Application client final (Android, iOS, Web) : inscription, KYC léger, **demande de cotation**, paiement, réception du bon de commande, historique.
 - Trois options d'achat : **sans transport**, **avec transport**, **autre**.
 - Barème logistique publié par PPC, appliqué automatiquement.
 - Application chauffeur / transporteur avec mode hors-ligne.
 - Homologation des transporteurs dans le back-office PPC.
 - Preuve de livraison : QR nominatif, photo géolocalisée, horodatage, validation de conformité.
 - Encaissement certifié, ventilation de la part transport, règlement du transporteur sur preuve.
-- Back-office PPC : transporteurs, barèmes, litiges, tableau de bord.
+- **Virement bancaire dès le MVP** : au-delà de 2 500 $ par transaction, c'est le seul canal possible — et c'est le segment B2B que PPC veut capter.
+- **Commande et suivi par WhatsApp Business**, avec menus numérotés : le canal fonctionne même sans intelligence artificielle.
+- Back-office PPC : transporteurs, barèmes, litiges, tableau de bord, comptes internes par annuaire d'entreprise.
 
 **Hors MVP, en V1 :**
 
@@ -96,7 +102,7 @@ Faire les quatre premiers jalons de la chaîne de preuve très bien, plutôt que
 - Multi-enlèvements sur un même trajet (itinéraire multi-arrêts).
 - Score de fiabilité transporteur et arbitrage des courses.
 - Intégration facturation normalisée DGI.
-- Repli USSD et agent de proximité pour les clients sans smartphone.
+- Menu USSD complet et agent de proximité pour les clients sans smartphone.
 
 **Hors périmètre (assumé) :**
 

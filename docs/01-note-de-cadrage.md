@@ -188,30 +188,32 @@ Digiciment est déjà présent sur les **petites transactions**. Attaquer fronta
 ### 3.1 Énoncé de vision
 
 > **APIX : la chaîne de preuve du ciment, du paiement à la livraison.**
-> Un identifiant client, un bon de commande certifié, un paiement encaissé et certifié, un chargement documenté, une livraison prouvée — et la certitude, pour chacun, de savoir où se trouve sa responsabilité.
+> Un identifiant client, une cotation certifiée, un paiement encaissé et certifié, un bon de commande émis, un chargement documenté, une livraison prouvée — et la certitude, pour chacun, de savoir où se trouve sa responsabilité.
 
-### 3.2 La chaîne de preuve en six jalons
+### 3.2 La chaîne de preuve en sept jalons
 
 C'est le squelette fonctionnel de tout le produit. Chaque jalon produit une preuve, et chaque preuve conditionne le jalon suivant.
 
+> **L'ordre n'est pas neutre.** Il a été corrigé après observation du circuit réel de PPC : le client demande un prix, reçoit une **cotation**, paie **en référençant cette cotation**, et c'est seulement alors que le **bon de commande** est émis. Les comptes d'encaissement dédiés de PPC n'acceptent d'ailleurs des fonds que si une cotation valide les accompagne. La cotation est donc la **référence de paiement** ; le bon en est le **résultat**, jamais le préalable.
+
 ```mermaid
 flowchart LR
-    J1["J1<br/>Compte<br/>et KYC"] --> J2["J2<br/>Bon de<br/>commande certifié"]
+    J1["J1<br/>Compte<br/>et KYC"] --> J2["J2<br/>Cotation<br/>certifiée"]
     J2 --> J3["J3<br/>Paiement<br/>encaissé"]
-    J3 --> J4["J4<br/>Chargement<br/>certifié"]
-    J4 --> J5["J5<br/>Transport<br/>suivi"]
+    J3 --> J4["J4<br/>Bon de<br/>commande émis"]
+    J4 --> J5["J5<br/>Chargement<br/>et transport"]
     J5 --> J6["J6<br/>Livraison<br/>prouvée"]
-    J6 --> J7["Libération<br/>des fonds<br/>et facture"]
+    J6 --> J7["J7<br/>Facture<br/>et historique"]
 ```
 
 | Jalon | Preuve produite | Ce que cela débloque |
 |---|---|---|
 | **J1 — Compte et KYC** | Identité vérifiée, profil de compte, plafonds | Accès aux prix, plafonds de commande, conformité |
-| **J2 — Bon de commande certifié** | Bon signé, numéro unique, QR nominatif | Réservation du stock, engagement réciproque |
-| **J3 — Paiement encaissé** | Transaction certifiée APIX, part transport identifiée | La course peut être engagée : PPC est solvable, le règlement est conditionné |
-| **J4 — Chargement certifié** | Ticket de pesée, numéro de scellé, photo | Le poids de départ devient une référence opposable |
-| **J5 — Transport suivi** | Positions, événements, incidents | Le client sait où est son ciment ; PPC sait où est son camion |
-| **J6 — Livraison prouvée** | QR flashé, photo géolocalisée, conformité signée | Libération des fonds, clôture du litige potentiel |
+| **J2 — Cotation certifiée** | Cotation numérotée, datée, prix ferme, durée de validité | Le client sait ce qu'il va payer ; c'est la pièce que la banque exigera pour accepter les fonds |
+| **J3 — Paiement encaissé** | Transaction certifiée APIX, **rattachée à la cotation**, part transport identifiée | Le paiement devient réconciliable ; PPC est solvable et le règlement du transport est conditionné |
+| **J4 — Bon de commande émis** | Bon nominatif, numéro unique, QR signé, issu de la cotation encaissée | Réservation de stock tenue, accès au chargement, usage unique |
+| **J5 — Chargement et transport** | Ticket de pesée, numéro de scellé, photo, positions successives | Le poids de départ devient une référence opposable ; le client sait où est son ciment |
+| **J6 — Livraison prouvée** | QR flashé, photo géolocalisée, conformité signée | Déclenchement du règlement du transport, clôture du litige potentiel |
 | **J7 — Facture et historique** | Reçu certifié, facture, historique | Comptabilité, fiscalité, fidélisation |
 
 ### 3.3 Les trois options d'achat
@@ -229,9 +231,11 @@ flowchart LR
 Ces refus sont des arguments de crédibilité devant PPC.
 
 1. **Ne jamais afficher un prix de transport non validé par PPC.**
-2. **Ne jamais libérer des fonds sans preuve de livraison ou décision explicite de PPC.**
-3. **Ne jamais homologuer un transporteur sans pièces justificatives complètes et valides.**
-4. **Ne jamais supprimer une preuve** : toute correction est un nouvel événement, jamais un effacement.
+2. **Ne jamais produire de prix ni de cotation pour un visiteur non identifié** : un concurrent peut sonder la grille depuis un chatbot.
+3. **Ne jamais encaisser un paiement qui ne porte pas la référence d'une cotation valide.**
+4. **Ne jamais libérer des fonds sans preuve de livraison ou décision explicite de PPC.**
+5. **Ne jamais homologuer un transporteur sans pièces justificatives complètes et valides.**
+6. **Ne jamais supprimer une preuve** : toute correction est un nouvel événement, jamais un effacement.
 
 ---
 
@@ -330,7 +334,7 @@ Le détail des règles (délai de validité du lot, prorata, annulation, ré-tar
 | Domaine | Contenu |
 |---|---|
 | **Compte client** | Inscription, vérification d'identité, profils (dépôt, entreprise, particulier), plafonds |
-| **Commande** | Catalogue ciment, prix, bon de commande certifié, trois options d'achat |
+| **Commande** | Cotation, prix, bon de commande certifié, trois options d'achat |
 | **Paiement** | Mobile money, virement, espèces via agent, encaissement certifié, règlement du transport sur preuve |
 | **Logistique** | Zones de livraison, barème PPC, engins, affectation, suivi, preuve de livraison |
 | **Transporteurs** | Portail transporteur, candidature, homologation, documents, score |

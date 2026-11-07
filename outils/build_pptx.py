@@ -354,8 +354,9 @@ def d02_probleme(prs):
           taille=15, couleur=GRIS, interligne=1.35)
     rectangle(diapo, MARGE, Inches(5.9), Inches(5.4), Inches(0.9), BLANC, arrondi=True)
     texte(diapo, MARGE + Inches(0.3), Inches(6.05), Inches(4.9), Inches(0.6),
-          [{"runs": [("Résultat : ", {"gras": True, "couleur": NUIT, "taille": 13}),
-                     ("c'est votre marque qui répond de ce qu'elle ne contrôle pas.",
+          [{"runs": [("15 à 20 % seulement des encaissements sont traçables. ",
+                      {"gras": True, "couleur": ORANGE, "taille": 13}),
+                     ("Le reste tient à la réputation de votre marque.",
                       {"couleur": GRIS, "taille": 13})]}], interligne=1.2)
     pied(diapo)
     notes(diapo, "Ne pas accuser les transporteurs : ils sont partenaires. Le problème est l'absence de preuve "
@@ -592,15 +593,15 @@ def d11_chaine_preuve(prs):
     fond(diapo, NUIT)
     en_tete(diapo, "Le cœur du produit", "La chaîne de preuve, en six jalons", 11, sombre=True)
     texte(diapo, MARGE, Inches(1.85), Inches(11.4), Inches(0.4),
-          "Chaque jalon produit une preuve, et chaque preuve conditionne le suivant.",
-          taille=14, couleur=RGBColor(0xB6, 0xC6, 0xD4), italique=True)
+          "Chaque jalon produit une preuve, et chaque preuve conditionne le suivant — la cotation d'abord, le bon de commande ensuite.",
+          taille=13.5, couleur=RGBColor(0xB6, 0xC6, 0xD4), italique=True)
 
     jalons = [
         ("J1", "Compte vérifié", "Identité et plafonds"),
-        ("J2", "Bon certifié", "Numéro unique, QR signé"),
-        ("J3", "Paiement encaissé", "Encaissé par PPC, certifié"),
-        ("J4", "Chargement", "Pesée, scellé, photo"),
-        ("J5", "Transport suivi", "Positions et incidents"),
+        ("J2", "Cotation certifiée", "Prix ferme, référence de paiement"),
+        ("J3", "Paiement encaissé", "Rattaché à la cotation"),
+        ("J4", "Bon émis", "Nominatif, QR signé"),
+        ("J5", "Chargement et route", "Pesée, scellé, positions"),
         ("J6", "Livraison prouvée", "Validation, litige tranché"),
     ]
     largeur = Inches(2.02)
@@ -635,7 +636,8 @@ def d11_chaine_preuve(prs):
                       "vous produisez un dossier.", {"couleur": BLANC, "taille": 14})]}], interligne=1.25)
     pied(diapo, sombre=True)
     notes(diapo, "Ne pas détailler les six jalons un par un. Insister sur la logique : sans la preuve "
-                 "du jalon précédent, le suivant ne s'ouvre pas.")
+                 "du jalon précédent, le suivant ne s'ouvre pas — et sur l'ordre : la cotation précède le "
+                 "paiement, le bon de commande le suit.")
 
 
 def d12_ubiquite(prs):
@@ -676,20 +678,21 @@ def d13_sequestre(prs):
     diapo = prs.slides.add_slide(prs.slide_layouts[6])
     fond(diapo, NUIT)
     en_tete(diapo, "Le circuit de l'argent", "Le client paie PPC. Le transporteur est payé sur preuve.", 13, sombre=True)
-    texte(diapo, MARGE, Inches(1.9), Inches(11.4), Inches(0.4),
-          "Encaissé avant le chargement. Le transport n'est réglé qu'après la livraison prouvée — et seulement s'il figure dans l'offre.",
-          taille=14, couleur=RGBColor(0xB6, 0xC6, 0xD4), italique=True)
+    texte(diapo, MARGE, Inches(1.80), Inches(11.4), Inches(0.62),
+          "Encaissé avant le chargement, sur la référence d'une cotation. Or 15\u00a0à\u00a020\u00a0% seulement des encaissements "
+          "passent par le digital, et au-delà de 2\u00a0500\u00a0$ aucun canal mobile ne passe.",
+          taille=13, couleur=RGBColor(0xB6, 0xC6, 0xD4), italique=True, interligne=1.2)
 
     etapes = [
-        ("1", "Le client paie PPC", "Ciment, et transport si l'offre l'inclut. Paiement par mobile money, virement ou espèces via un agent agréé."),
-        ("2", "APIX certifie et ventile", "La part transport est isolée dans la commande et provisionnée. Offre sans transport : aucune provision."),
+        ("1", "Cotation, puis paiement", "Le client reçoit une cotation ferme, puis paie en la référençant. Mobile money, virement ou espèces via un agent agréé."),
+        ("2", "APIX certifie et ventile", "La cotation encaissée devient le bon de commande. La part transport est isolée et provisionnée."),
         ("3", "Le ciment est livré", "Le client valide sur son téléphone : quantité, état, scellé. La preuve est signée."),
         ("4", "PPC règle le transporteur", "Sur preuve conforme, dans le délai que PPC arrêtera. Retenue partielle en cas d'écart constaté."),
     ]
     largeur = Inches(2.72)
     x = MARGE
     for index, (numero, titre, corps) in enumerate(etapes):
-        rectangle(diapo, x, Inches(2.55), largeur, Inches(2.5), NUIT_MOYEN, arrondi=True)
+        rectangle(diapo, x, Inches(2.5), largeur, Inches(2.5), NUIT_MOYEN, arrondi=True)
         texte(diapo, x + Inches(0.26), Inches(2.75), Inches(0.6), Inches(0.4),
               numero, taille=26, couleur=ORANGE, gras=True)
         texte(diapo, x + Inches(0.26), Inches(3.28), largeur - Inches(0.52), Inches(0.6),
@@ -709,6 +712,10 @@ def d13_sequestre(prs):
           ["« Le client paie PPC. PPC paie le transport — et seulement sur preuve. »",
            "Le client est protégé par un dossier de preuve, pas par un gel de ses fonds."],
           taille=13, couleur=BLANC, gras=True, interligne=1.3)
+    texte(diapo, MARGE, Inches(6.6), LARGEUR_UTILE, Inches(0.3),
+          "Trois banques seulement sont connectées au dispositif d'encaissement : le reste des flux est "
+          "rapproché à la main.",
+          taille=10, couleur=RGBColor(0x9F, 0xB2, 0xC2), italique=True)
     pied(diapo, sombre=True)
     notes(diapo, "Correction de fond : l'argent quitte le compte du client vers PPC avant même que le transporteur "
                  "voie la commande. Il n'y a pas de séquestre des fonds du client. Ce qu'APIX garantit, c'est un "
@@ -860,7 +867,7 @@ def d17_comparaison(prs):
     donnees = [
         ["Critère", "Digiciment", "APIX All In One"],
         ["Nature", "Application de transactions", "Chaîne de preuve du paiement au sac livré"],
-        ["Unité de référence", "La transaction", "Le bon de commande certifié"],
+        ["Unité de référence", "La transaction", "La cotation certifiée et son bon"],
         ["Transporteurs", "Gestion locale, non documentée", "Homologation administrative par PPC, datée et révocable"],
         ["Prix du transport", "Négocié", "Barème PPC appliqué automatiquement"],
         ["Preuve de livraison", "Reçu simple", "QR nominatif, photo géolocalisée, pesée, scellé"],

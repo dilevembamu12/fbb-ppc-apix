@@ -58,7 +58,7 @@ flowchart TB
 
     subgraph COEUR["Coeur APIX Logistique"]
         GW["Passerelle applicative<br/>authentification, quotas, journaux"]
-        CMD["Domaine Commande<br/>bon certifié"]
+        CMD["Domaine Commande<br/>cotation, bon émis"]
         PAY["Domaine Paiement<br/>encaissement, règlement"]
         LOG["Domaine Logistique<br/>barème, affectation, groupage"]
         PRE["Domaine Preuve<br/>chargement, livraison, litige"]
@@ -119,8 +119,8 @@ flowchart TB
 
 ```mermaid
 flowchart LR
-    A["Bon créé<br/>brouillon"] --> B["Bon certifié<br/>en attente de paiement"]
-    B --> C["Paiement confirmé<br/>encaissé par PPC"]
+    A["Cotation émise<br/>prix ferme, numéro unique"] --> B["Paiement encaissé<br/>référencé à la cotation"]
+    B --> C["Bon de commande émis<br/>nominatif, QR signé"]
     C --> D{"Option d'achat"}
     D -->|A — sans transport| E["Bon de sortie<br/>prêt pour enlèvement"]
     D -->|B — avec transport| F["Course publiée<br/>aux transporteurs"]
@@ -180,7 +180,7 @@ Le socle APIX existant (certification CIMA) impose des contraintes non connues �
 |---|---|---|
 | **Référentiels** | Produits, prix, zones, axes, engins, transporteurs, points de chargement, plafonds | Ne connaît aucune commande |
 | **Comptes** | Identités, profils, vérifications, appareils, rôles | Ne calcule aucun prix |
-| **Commande** | Bon de commande, versions, réservation de stock, certification, expiration | Ne touche pas à l'argent |
+| **Commande** | Cotation, bon de commande, versions, réservation de stock, expiration | Ne touche pas à l'argent |
 | **Paiement** | Encaissement, ventilation de la part transport, réconciliation, règlement sur preuve, remboursement | Ne décide pas de la conformité d'une livraison |
 | **Logistique** | Barème, calcul de prix, compatibilité engin, affectation, tournées, groupage | Ne signe aucune preuve de livraison |
 | **Preuve** | Chargement, scellés, livraison, litiges, dossiers de preuve | N'exécute aucun mouvement financier, seulement l'instruction |
@@ -220,9 +220,11 @@ flowchart LR
 
 | Événement | Émis par | Consommé par | Effet |
 |---|---|---|---|
-| `commande.certifiee` | Commande | Notification, Audit | Envoi du bon au client |
-| `paiement.confirme` | Paiement | Commande, Logistique, Notification | Passage à l'état payé, déclenchement de la course |
-| `paiement.encaisse` | Paiement | Audit, Logistique | Encaissement confirmé, part transport provisionnée |
+| `cotation.emise` | Commande | Notification, Audit | Envoi de la cotation au client ; numéro utilisé comme référence de paiement |
+| `cotation.expiree` | Commande | Notification, Stock | Réservation de stock libérée, client invité à redemander un prix |
+| `paiement.confirme` | Paiement | Commande, Notification | Encaissement effectif rattaché à une cotation |
+| `bon.emmis` | Commande | Notification, Audit | Transformation de la cotation encaissée en bon nominatif |
+| `paiement.encaisse` | Paiement | Audit, Logistique | Part transport provisionnée, course autorisée |
 | `course.affectee` | Logistique | Notification, Audit | Information du client |
 | `chargement.certifie` | Preuve | Commande, Logistique, Notification | Bon clôturé, suivi activé |
 | `livraison.prouvee` | Preuve | Paiement, Notification, Pilotage | Libération des fonds |
@@ -252,10 +254,11 @@ flowchart LR
 | Transporteurs | `document_transporteur` | Pièce justificative | `id`, `transporteur_id`, `type`, `reference`, `expire_le`, `statut` |
 | Transporteurs | `chauffeur` | Conducteur | `id`, `transporteur_id`, `nom`, `permis`, `telephone`, `actif` |
 | Transporteurs | `vehicule` | Véhicule réel | `id`, `transporteur_id`, `engin_id`, `immatriculation`, `charge_utile_kg`, `statut` |
-| Commande | `commande` | Bon de commande | `id`, `numero`, `compte_id`, `option_achat`, `statut`, `version`, `expire_le`, `empreinte` |
+| Commande | `cotation` | Prix ferme proposé au client, **référence de paiement** | `id`, `numero`, `compte_id`, `produit_id`, `quantite`, `prix_ciment`, `prix_transport`, `total`, `devise`, `valide_jusqu_au`, `statut`, `version`, `empreinte` |
+| Commande | `commande` | Bon de commande, issu d'une cotation encaissée | `id`, `numero`, `cotation_id`, `compte_id`, `option_achat`, `statut`, `version`, `expire_le`, `empreinte` |
 | Commande | `ligne_commande` | Détail produit | `id`, `commande_id`, `produit_id`, `quantite`, `poids_kg`, `prix_unitaire` |
 | Commande | `reservation_stock` | Réservation liée | `id`, `commande_id`, `point_chargement_id`, `quantite`, `statut` |
-| Paiement | `paiement` | Encaissement | `id`, `commande_id`, `moyen`, `montant`, `devise`, `statut`, `reference_externe` |
+| Paiement | `paiement` | Encaissement | `id`, `commande_id`, `cotation_id`, `moyen`, `montant`, `devise`, `statut`, `reference_externe` |
 | Paiement | `provision_transport` | Écriture de provision et de règlement | `id`, `paiement_id`, `sens`, `montant`, `fait_generateur`, `cle_idempotence` |
 | Paiement | `beneficiaire` | Bénéficiaire d'une libération | `id`, `type` (PPC / transporteur / client), `reference` |
 | Logistique | `course` | Ordre de transport | `id`, `axe_id`, `engin_requis_id`, `poids_total_kg`, `prix_transport`, `statut`, `transporteur_id`, `vehicule_id` |
@@ -310,7 +313,8 @@ La répartition des frais est **calculée et figée** au moment du verrouillage 
 |---|---|---|
 | Comptes | `/comptes`, `/comptes/{id}/verifications`, `/sessions` | Créer, vérifier, authentifier |
 | Référentiels | `/produits`, `/prix`, `/zones`, `/axes`, `/engins`, `/baremes` | Lire (client), gérer (back-office) |
-| Commande | `/commandes`, `/commandes/{id}/certification`, `/commandes/{id}/annulation` | Créer, modifier, certifier, annuler |
+| Commande | `/cotations`, `/cotations/{id}`, `/cotations/{id}/paiement` | Créer, consulter, engager le paiement |
+| Commande | `/commandes`, `/commandes/{id}/annulation` | Consulter le bon émis, annuler avec remboursement |
 | Devis de transport | `/tarifs/simulation` | Simuler un prix sans créer de commande |
 | Paiement | `/paiements`, `/paiements/{id}/confirmation`, `/mouvements-sequestre` | Initier, confirmer, consulter |
 | Logistique | `/courses`, `/courses/{id}/affectation`, `/courses/disponibles`, `/lots-groupage` | Publier, accepter, suivre |
@@ -566,7 +570,7 @@ Ces décisions doivent être arbitrées formellement et consignées. Chacune a u
 | Besoin exprimé | Module fonctionnel | Composant technique |
 |---|---|---|
 | S'enregistrer | M1 | Comptes, passerelle applicative |
-| Créer un bon de commande | M3 | Domaine Commande |
+| Demander un prix | M2, M3 | Domaine Commande + Référentiels (barème) |
 | Payer le ciment | M4 | Domaine Paiement + adaptateurs opérateurs |
 | Voir l'historique des achats | M9 | Pilotage + stockage documentaire |
 | Choisir sans / avec / autre transporteur | M3, M6 | Domaine Commande + Référentiels |
