@@ -439,7 +439,48 @@ Légende : **L** lecture, **C** création ou saisie, **V** validation ou décisi
 
 ---
 
-## Annexe — Glossaire des préfixes d'écran
+## Annexe A — Wireframes des écrans
+
+> **Comment lire ces planches.** Les traits gris donnent la structure, les barres grises représentent le contenu textuel, les croix en pointillés les emplacements d'image. **L'orange est réservé à l'action principale de l'écran** : s'il y en a deux, c'est que l'écran est mal découpé. Chaque écran porte son code et son nom en pied de planche.
+
+| Planche | Interface et écrans représentés | Support |
+|---|---|---|
+| A.1 | IF-01 — CLI-04 catalogue et prix, CLI-07 demande de cotation | Téléphone |
+| A.2 | IF-01 — CLI-08 cotation certifiée, CLI-09 choix du moyen de paiement | Téléphone |
+| A.3 | IF-01 — CLI-11 bon de commande, CLI-13 validation de réception | Téléphone |
+| A.4 | IF-03 — CHF-02 mes courses, CHF-04 chargement, CHF-06 livraison | Téléphone |
+| A.5 | IF-05 — CHG-02 contrôle du bon, cas d'un bon refusé | Tablette |
+| A.6 | IF-04 — TRP-03 course proposée | Bureau |
+| A.7 | IF-06 — BKO-01 tableau de bord de pilotage | Bureau |
+| A.8 | IF-06 — BKO-05 paiements reçus sans cotation | Bureau |
+| A.9 | IF-06 — BKO-07 instruction d'un litige | Bureau |
+| A.10 | IF-07 — DEP-01 réception d'un bon au dépôt | Tablette |
+
+:::paysage
+
+![Planche A.1 — IF-01 Application client : catalogue et demande de cotation|24](assets/wireframes/p01-client-catalogue-cotation.png)
+
+![Planche A.2 — IF-01 Application client : cotation certifiée et choix du paiement|24](assets/wireframes/p02-client-cotation-paiement.png)
+
+![Planche A.3 — IF-01 Application client : bon de commande et validation de réception|24](assets/wireframes/p03-client-bon-reception.png)
+
+![Planche A.4 — IF-03 Application chauffeur : courses, chargement, livraison|24](assets/wireframes/p04-chauffeur.png)
+
+![Planche A.5 — IF-05 Console de chargement : contrôle du bon, cas d'un bon déjà chargé|23](assets/wireframes/p05-chargement-controle.png)
+
+![Planche A.6 — IF-04 Portail transporteur : course proposée et compatibilité de flotte|25](assets/wireframes/p06-transporteur-course.png)
+
+![Planche A.7 — IF-06 Back-office PPC : tableau de bord de pilotage|25](assets/wireframes/p07-backoffice-pilotage.png)
+
+![Planche A.8 — IF-06 Back-office PPC : paiements reçus sans cotation|25](assets/wireframes/p08-backoffice-sans-cotation.png)
+
+![Planche A.9 — IF-06 Back-office PPC : instruction d'un litige|25](assets/wireframes/p09-backoffice-litige.png)
+
+![Planche A.10 — IF-07 Console dépôt : réception d'un bon|23](assets/wireframes/p10-depot-reception.png)
+
+:::portrait
+
+## Annexe B — Glossaire des préfixes d'écran
 
 | Préfixe | Interface | Acteur |
 |---|---|---|

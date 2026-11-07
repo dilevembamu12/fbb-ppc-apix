@@ -22,11 +22,12 @@ import sys
 from pathlib import Path
 
 from docx import Document
+from docx.enum.section import WD_ORIENT, WD_SECTION
 from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_BREAK
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
-from docx.shared import Cm, Pt, RGBColor
+from docx.shared import Cm, Mm, Pt, RGBColor
 
 RACINE = Path(__file__).resolve().parent.parent
 DOSSIER_SORTIE = RACINE / "dist" / "docs"
@@ -290,6 +291,42 @@ def cellules(ligne: str) -> list[str]:
     return [c.strip() for c in ligne.split("|")]
 
 
+def changer_orientation(doc: Document, paysage: bool) -> None:
+    """Ouvre une nouvelle section en changeant l'orientation de la page."""
+    section = doc.add_section(WD_SECTION.NEW_PAGE)
+    if paysage:
+        section.orientation = WD_ORIENT.LANDSCAPE
+        section.page_width, section.page_height = Mm(297), Mm(210)
+    else:
+        section.orientation = WD_ORIENT.PORTRAIT
+        section.page_width, section.page_height = Mm(210), Mm(297)
+    section.top_margin = Cm(1.8)
+    section.bottom_margin = Cm(1.8)
+    section.left_margin = Cm(2.0)
+    section.right_margin = Cm(2.0)
+
+
+def rendre_image(doc: Document, legende: str, chemin: str,
+                 largeur_cm: float | None = None) -> None:
+    """Insère une image centrée, suivie de sa légende en petits caractères."""
+    fichier = (RACINE / chemin).resolve()
+    if not fichier.exists():
+        raise FileNotFoundError(f"Image introuvable : {chemin}")
+    paragraphe = doc.add_paragraph()
+    paragraphe.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    paragraphe.paragraph_format.space_before = Pt(4)
+    paragraphe.paragraph_format.space_after = Pt(2)
+    paragraphe.add_run().add_picture(str(fichier), width=Cm(largeur_cm or 16.0))
+    if legende:
+        texte_legende = doc.add_paragraph()
+        texte_legende.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        texte_legende.paragraph_format.space_after = Pt(10)
+        run = texte_legende.add_run(legende)
+        run.italic = True
+        run.font.size = Pt(8.5)
+        run.font.color.rgb = COULEUR_GRIS
+
+
 def rendre_tableau(doc: Document, entetes: list[str], lignes: list[list[str]]) -> None:
     colonnes = max(len(entetes), max((len(l) for l in lignes), default=0))
     tableau = doc.add_table(rows=1, cols=colonnes)
@@ -354,7 +391,7 @@ def rendre_formule(doc: Document, contenu: str) -> None:
 def convertir(chemin: Path, doc: Document) -> dict:
     """Convertit un fichier Markdown dans le document Word fourni. Retourne des statistiques."""
     lignes = decouper_lignes(chemin.read_text(encoding="utf-8"))
-    stats = {"titres": 0, "tableaux": 0, "listes": 0, "paragraphes": 0, "blocs_code": 0}
+    stats = {"titres": 0, "tableaux": 0, "listes": 0, "paragraphes": 0, "blocs_code": 0, "images": 0}
 
     index = 0
     premier_titre_ignore = False
@@ -411,6 +448,28 @@ def convertir(chemin: Path, doc: Document) -> dict:
             p.paragraph_format.space_before = Pt(2)
             p.paragraph_format.space_after = Pt(8)
             _bordure_bas(p)
+            index += 1
+            continue
+
+        # Changement d'orientation de page
+        if depouillee in (":::paysage", ":::portrait"):
+            changer_orientation(doc, paysage=depouillee == ":::paysage")
+            index += 1
+            continue
+
+        # Image avec légende : ![légende](chemin) ou ![légende|largeur_cm](chemin)
+        correspondance = re.match(r"^!\[(.*?)\]\((.+?)\)\s*$", depouillee)
+        if correspondance:
+            legende, cible = correspondance.group(1), correspondance.group(2)
+            largeur = None
+            if "|" in legende:
+                legende, _, valeur = legende.rpartition("|")
+                try:
+                    largeur = float(valeur)
+                except ValueError:
+                    legende, largeur = correspondance.group(1), None
+            rendre_image(doc, legende.strip(), cible.strip(), largeur)
+            stats["images"] += 1
             index += 1
             continue
 
@@ -571,7 +630,8 @@ def main() -> int:
         doc.save(destination)
         print(f"[OK] {destination.relative_to(RACINE)} — "
               f"{stats['titres']} titres, {stats['tableaux']} tableaux, "
-              f"{stats['listes']} puces, {stats['paragraphes']} paragraphes")
+              f"{stats['listes']} puces, {stats['paragraphes']} paragraphes, "
+              f"{stats['images']} images")
 
     if total_erreurs:
         print(f"\n{total_erreurs} erreur(s).", file=sys.stderr)
