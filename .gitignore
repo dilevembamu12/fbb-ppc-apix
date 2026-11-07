@@ -9,6 +9,11 @@
 # ---------------------------------------------------------------------------
 # dist/
 
+# Notes internes — comptes rendus de réunion, transcriptions.
+# Jamais versionnées : le dépôt est public et contient des informations sur PPC
+# et sur des tiers. Décommenter pour les publier volontairement.
+/prive/
+
 # Fichiers temporaires de bureautique
 ~$*
 *- Copie.pptx
