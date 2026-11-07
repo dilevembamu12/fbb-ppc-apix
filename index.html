@@ -66,6 +66,10 @@ body{background:#0a1622;font-family:var(--police);color:var(--nuit);overflow:hid
 .question:nth-of-type(3){top:528px}.question:nth-of-type(4){top:614px}
 .conclusion{position:absolute;left:70px;top:660px;width:560px;font-size:15px;font-weight:600;
   font-style:italic;color:var(--nuit)}
+.stat-fort{position:absolute;left:70px;top:632px;width:560px;font-size:13px;font-weight:700;
+  color:var(--orange)}
+.note-sombre{position:absolute;left:70px;right:70px;bottom:24px;font-size:11.5px;
+  color:#9FB2C2;font-style:italic}
 
 /* --- cartes --- */
 .trois-colonnes{position:absolute;left:70px;right:70px;top:200px;display:grid;
@@ -87,6 +91,8 @@ body{background:#0a1622;font-family:var(--police);color:var(--nuit);overflow:hid
   color:var(--orange);margin-bottom:10px}
 .bande-colonnes{display:grid;grid-template-columns:1fr 1fr;gap:40px;font-size:14px;line-height:1.5}
 .bande-colonnes strong{font-size:15px}
+.bande-colonnes.trois{grid-template-columns:repeat(3,1fr);gap:26px;font-size:12px;line-height:1.4;color:#B6C6D4}
+.bande-colonnes.trois strong{display:block;font-size:27px;color:var(--orange-pale);line-height:1.1;margin-bottom:6px}
 
 /* --- 5. chaîne de preuve --- */
 .chevrons{position:absolute;left:70px;right:70px;top:250px;display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
@@ -363,7 +369,8 @@ table.simple td:first-child{font-weight:600;color:var(--nuit);width:46%}
         <h2 class="titre-xl">Le paiement est certifié.<br>La marchandise, non.</h2>
         <p class="intro">Quatre questions auxquelles personne, aujourd'hui, ne peut répondre :</p>
         <div class="question" style="top:340px"><span class="q-num">01</span><div><div class="q-titre">Où est mon camion, maintenant ?</div><div class="q-prec">Le client appelle. Personne ne sait.</div></div></div><div class="question" style="top:418px"><span class="q-num">02</span><div><div class="q-titre">Combien de sacs sont réellement arrivés ?</div><div class="q-prec">95, 98, 100 ? Aucun constat contradictoire.</div></div></div><div class="question" style="top:496px"><span class="q-num">03</span><div><div class="q-titre">Qui paie les sacs manquants ?</div><div class="q-prec">Le transporteur accuse le client. Le client accuse l'usine.</div></div></div><div class="question" style="top:574px"><span class="q-num">04</span><div><div class="q-titre">Pourquoi le ciment paraît-il cher au quartier ?</div><div class="q-prec">Le prix ex-usine n'est pas le prix payé.</div></div></div>
-        <p class="conclusion">Résultat : c'est votre marque qui répond de ce qu'elle ne contrôle pas.</p>
+        <p class="stat-fort">15 à 20 % des encaissements passent par le digital.</p>
+        <p class="conclusion">Résultat : c'est votre marque qui répond des 80 % restants.</p>
       </div>
       <div class="photo moitie-droite"><img src="images/douleur_route.jpg" alt=""><div class="voile" style="background:rgba(14,36,54,.22)"></div></div></section><section class="slide" id="cout" data-n="3">
       
@@ -396,21 +403,24 @@ table.simple td:first-child{font-weight:600;color:var(--nuit);width:46%}
     
       <div class="trois-colonnes"><div class="carte"><div class="carte-titre">Dépôt / revendeur de quartier</div><div class="volume">50 à 500 sacs, récurrent</div><p>Réapprovisionnement rapide, prix stable, crédit. Sa contrainte : la trésorerie et la rotation du stock.</p></div><div class="carte"><div class="carte-titre">Entreprise / chantier</div><div class="volume">200 à 3 000 sacs, par projet</div><p>Facture conforme, traçabilité, respect du planning. Sa contrainte : la comptabilité et les délais.</p></div><div class="carte"><div class="carte-titre">Particulier / artisan</div><div class="volume">5 à 50 sacs, ponctuel</div><p>Prix total connu d'avance, livraison simple, preuve d'achat. Sa contrainte : le cash et le téléphone.</p></div></div>
       <div class="bande-sombre">
-        <div class="etiquette">Deux populations à équiper</div>
-        <div class="bande-colonnes">
-          <div><strong>Transporteurs partenaires</strong><br>homologués par PPC — ils ne sont pas PPC</div>
-          <div><strong>Administration PPC</strong><br>homologation, barème, litiges, pilotage</div>
+        <div class="etiquette">Trois chiffres, tous communiqués par PPC</div>
+        <div class="bande-colonnes trois">
+          <div><strong>15&nbsp;à&nbsp;20&nbsp;%</strong>des encaissements passent par le digital</div>
+          <div><strong>3</strong>banques seulement sont connectées à l'encaissement</div>
+          <div><strong>2&nbsp;500&nbsp;$</strong>plafond par transaction sur mobile money et carte</div>
         </div>
       </div>
-      <p class="source">Segmentation à confirmer avec les volumes réels de PPC : aucun chiffre de marché n'est avancé ici.</p></section><section class="slide sombre" id="chaine" data-n="5">
+      <p class="source">Chiffres communiqués par PPC en entretien, à confirmer sur un exercice complet. Ce n'est pas
+        un marché à créer : c'est une couverture à compléter sur des clients qui existent déjà.</p></section><section class="slide sombre" id="chaine" data-n="5">
       <div class="sombre">
         
       <div class="barre-haut"></div>
       <div class="surtitre">La solution</div>
       <h2 class="titre">La chaîne de preuve, en six jalons</h2>
     
-        <p class="intro-sombre">Chaque jalon produit une preuve, et chaque preuve conditionne le suivant.</p>
-        <div class="chevrons"><div class="chevron"><span>J1</span><div class="chevron-titre">Compte vérifié</div><div class="chevron-prec">Identité et plafonds</div></div><div class="chevron alt"><span>J2</span><div class="chevron-titre">Bon certifié</div><div class="chevron-prec">Numéro unique, QR signé</div></div><div class="chevron"><span>J3</span><div class="chevron-titre">Paiement encaissé</div><div class="chevron-prec">Encaissé par PPC, certifié APIX</div></div><div class="chevron alt"><span>J4</span><div class="chevron-titre">Chargement</div><div class="chevron-prec">Pesée, scellé, photo</div></div><div class="chevron"><span>J5</span><div class="chevron-titre">Transport suivi</div><div class="chevron-prec">Positions et incidents</div></div><div class="chevron alt"><span>J6</span><div class="chevron-titre">Livraison prouvée</div><div class="chevron-prec">Validation, litige tranché</div></div></div>
+        <p class="intro-sombre">Chaque jalon produit une preuve, et chaque preuve conditionne le suivant —
+          la cotation d'abord, le bon de commande ensuite.</p>
+        <div class="chevrons"><div class="chevron"><span>J1</span><div class="chevron-titre">Compte vérifié</div><div class="chevron-prec">Identité et plafonds</div></div><div class="chevron alt"><span>J2</span><div class="chevron-titre">Cotation certifiée</div><div class="chevron-prec">Prix ferme, référence de paiement</div></div><div class="chevron"><span>J3</span><div class="chevron-titre">Paiement encaissé</div><div class="chevron-prec">Rattaché à la cotation</div></div><div class="chevron alt"><span>J4</span><div class="chevron-titre">Bon émis</div><div class="chevron-prec">Nominatif, QR signé</div></div><div class="chevron"><span>J5</span><div class="chevron-titre">Chargement et route</div><div class="chevron-prec">Pesée, scellé, positions</div></div><div class="chevron alt"><span>J6</span><div class="chevron-titre">Livraison prouvée</div><div class="chevron-prec">Validation, litige tranché</div></div></div>
         <div class="bande-sombre beige">
           <p><strong>Ce que cela change :</strong> le jour où un contentieux arrive sur 500 sacs, vous ne produisez
              pas une transaction — vous produisez un dossier.</p>
@@ -483,13 +493,14 @@ table.simple td:first-child{font-weight:600;color:var(--nuit);width:46%}
       <div class="surtitre">Le circuit de l'argent</div>
       <h2 class="titre">Le client paie PPC. Le transporteur est payé sur preuve.</h2>
     
-        <p class="intro-sombre">Encaissé avant le chargement. Le transport n'est réglé qu'après la livraison
-          prouvée — et seulement s'il figure dans l'offre.</p>
-        <div class="quatre-etapes"><div class="etape"><div class="etape-num">1</div><div class="etape-titre">Le client paie PPC</div><p>Ciment, et transport si l'offre l'inclut. Paiement par mobile money, virement ou espèces via un agent agréé.</p></div><div class="etape"><div class="etape-num">2</div><div class="etape-titre">APIX certifie et ventile</div><p>La part transport est isolée dans la commande et provisionnée. Offre sans transport : aucune provision.</p></div><div class="etape"><div class="etape-num">3</div><div class="etape-titre">Le ciment est livré</div><p>Le client valide sur son téléphone : quantité, état, scellé. La preuve est signée.</p></div><div class="etape"><div class="etape-num">4</div><div class="etape-titre">PPC règle le transporteur</div><p>Sur preuve conforme, dans le délai que PPC arrêtera. Retenue partielle en cas d'écart constaté.</p></div></div>
+        <p class="intro-sombre">Chaque paiement porte la référence d'une cotation, encaissée avant le chargement.
+          Le transport n'est réglé qu'après la livraison prouvée — et seulement s'il figure dans l'offre.</p>
+        <div class="quatre-etapes"><div class="etape"><div class="etape-num">1</div><div class="etape-titre">Cotation, puis paiement</div><p>Le client reçoit une cotation ferme, puis paie en la référençant. Mobile money, virement ou espèces via un agent agréé.</p></div><div class="etape"><div class="etape-num">2</div><div class="etape-titre">APIX certifie et ventile</div><p>La cotation encaissée devient le bon de commande. La part transport est isolée et provisionnée.</p></div><div class="etape"><div class="etape-num">3</div><div class="etape-titre">Le ciment est livré</div><p>Le client valide sur son téléphone : quantité, état, scellé. La preuve est signée.</p></div><div class="etape"><div class="etape-num">4</div><div class="etape-titre">PPC règle le transporteur</div><p>Sur preuve conforme, dans le délai que PPC arrêtera. Retenue partielle en cas d'écart constaté.</p></div></div>
         <div class="bande-orange">
           <p>« Le client paie PPC. PPC paie le transport — et seulement sur preuve. »</p>
           <p class="second">Le client est protégé par un dossier qu'il peut produire, pas par un gel de ses fonds.</p>
         </div>
+        <p class="note-sombre">Trois banques seulement sont connectées au dispositif d'encaissement : le reste des flux est rapproché à la main.</p>
       </div></section><section class="slide" id="preuve" data-n="8">
       <div class="moitie-gauche">
         <div class="surtitre">La preuve de livraison</div>
@@ -563,7 +574,7 @@ table.simple td:first-child{font-weight:600;color:var(--nuit);width:46%}
     
       <table class="comparaison">
         <thead><tr><th>Critère</th><th>Digiciment</th><th>APIX All In One</th></tr></thead>
-        <tbody><tr><td class="critere">Nature</td><td>Application de transactions</td><td class="force">Chaîne de preuve du paiement au sac livré</td></tr><tr><td class="critere">Unité de référence</td><td>La transaction</td><td class="force">Le bon de commande certifié</td></tr><tr><td class="critere">Transporteurs</td><td>Gestion locale, non documentée</td><td class="force">Homologation par PPC, datée et révocable</td></tr><tr><td class="critere">Prix du transport</td><td>Forfaitaire</td><td class="force">Calculé à l'axe et au poids, barème PPC</td></tr><tr><td class="critere">Preuve de livraison</td><td>Reçu simple</td><td class="force">QR, photo géolocalisée, pesée, scellé</td></tr><tr><td class="critere">Sécurité du règlement</td><td>Paiement direct, sans preuve</td><td class="force">Règlement sur preuve de livraison</td></tr><tr><td class="critere">Hors connexion</td><td>Connexion requise</td><td class="force">72 heures pour le chauffeur</td></tr><tr><td class="critere">Litige</td><td>Traité au cas par cas</td><td class="force">Dossier de preuve, décision motivée par PPC</td></tr></tbody>
+        <tbody><tr><td class="critere">Nature</td><td>Application de transactions</td><td class="force">Chaîne de preuve du paiement au sac livré</td></tr><tr><td class="critere">Unité de référence</td><td>La transaction</td><td class="force">La cotation certifiée et son bon</td></tr><tr><td class="critere">Transporteurs</td><td>Gestion locale, non documentée</td><td class="force">Homologation par PPC, datée et révocable</td></tr><tr><td class="critere">Prix du transport</td><td>Forfaitaire</td><td class="force">Calculé à l'axe et au poids, barème PPC</td></tr><tr><td class="critere">Preuve de livraison</td><td>Reçu simple</td><td class="force">QR, photo géolocalisée, pesée, scellé</td></tr><tr><td class="critere">Sécurité du règlement</td><td>Paiement direct, sans preuve</td><td class="force">Règlement sur preuve de livraison</td></tr><tr><td class="critere">Hors connexion</td><td>Connexion requise</td><td class="force">72 heures pour le chauffeur</td></tr><tr><td class="critere">Litige</td><td>Traité au cas par cas</td><td class="force">Dossier de preuve, décision motivée par PPC</td></tr></tbody>
       </table>
       <p class="source">Comparaison établie sur le périmètre fonctionnel annoncé. Toute correction de votre part
         est bienvenue : elle sera intégrée avant la démonstration.</p></section><section class="slide" id="decisions" data-n="12">
