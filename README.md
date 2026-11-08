@@ -4,7 +4,6 @@
 > **Client cible :** PPC (cimentier, République Démocratique du Congo)
 > **Concurrent identifié :** **Digiciment** (application de petites transactions + module logistique léger)
 > **Statut :** Cadrage — version 1.0
-> **Date :** 4 novembre 2026
 
 ---
 

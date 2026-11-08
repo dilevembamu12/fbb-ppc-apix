@@ -1,7 +1,7 @@
 # Annexe A2 — Questions ouvertes à trancher avec PPC
 
 **Extension APIX — Liste de cadrage**
-FBB pour PPC · version 1.0 · 4 novembre 2026
+FBB pour PPC · version 1.0
 
 > Chaque question porte un identifiant, un statut et un caractère bloquant ou non. **Bloquant** signifie qu'aucune ligne de code ne doit être écrite avant réponse. Les réponses doivent être consignées par écrit et signées par le référent PPC désigné.
 
@@ -106,7 +106,7 @@ Ces questions sont sensibles et doivent être posées avec tact. Elles visent à
 
 ---
 
-## 6 bis. Questions issues des entretiens des 5 et 6 novembre 2026
+## 6 bis. Questions issues des entretiens avec PPC
 
 Ces points ont été soulevés en entretien et n'ont pas encore de réponse arrêtée. Ils sont plus précis que les précédents : ils portent sur des mécanismes déjà observés, pas sur des principes.
 

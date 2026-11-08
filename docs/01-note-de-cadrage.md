@@ -1,7 +1,7 @@
 # 01 — Note de cadrage
 
 **Extension APIX — Plateforme Clients Finaux & Logistique Ciment**
-FBB pour PPC · version 1.0 · 4 novembre 2026
+FBB pour PPC · version 1.0
 
 ---
 

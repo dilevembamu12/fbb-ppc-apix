@@ -235,7 +235,7 @@ def en_tete(diapo, surtitre: str, titre: str, numero: int, sombre: bool = False)
           f"{numero:02d} / {SUJET_TOTAL}", taille=10, couleur=GRIS, alignement=PP_ALIGN.RIGHT)
 
 
-def pied(diapo, mention: str = "APIX All In One  ·  FBB  ·  Novembre 2026", sombre: bool = False):
+def pied(diapo, mention: str = "APIX All In One  ·  FBB", sombre: bool = False):
     texte(diapo, MARGE, HAUTEUR - Inches(0.48), LARGEUR_UTILE, Inches(0.22), mention,
           taille=9, couleur=GRIS if not sombre else RGBColor(0x9A, 0xA8, 0xB4))
 
@@ -330,7 +330,7 @@ def d01_couverture(prs):
     rectangle(diapo, MARGE, Inches(4.55), Inches(1.5), Inches(0.045), ORANGE)
     texte(diapo, MARGE, Inches(4.85), Inches(10.8), Inches(0.9),
           ["Une plateforme ubiquitaire : smartphone, web, et hors connexion.",
-           "Dossier de présentation aux dirigeants de PPC — 4 novembre 2026."],
+           "Dossier de présentation aux dirigeants de PPC."],
           taille=14, couleur=RGBColor(0xC3, 0xD0, 0xDA), interligne=1.5)
     notes(diapo, "Ouvrir sans commenter le produit. Une seule phrase : « Nous venons parler de ce qui se passe "
                  "après le paiement, parce que c'est là que vos clients vous jugent. » Puis enchaîner sur la diapositive 2.")

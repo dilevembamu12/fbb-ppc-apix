@@ -1,7 +1,7 @@
 # 00 — Synthèse exécutive
 
 **Extension APIX : du paiement certifié à la logistique certifiée du ciment**
-FBB · 4 novembre 2026 · version 1.0
+FBB · version 1.0
 
 ---
 

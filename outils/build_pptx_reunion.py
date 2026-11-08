@@ -284,7 +284,7 @@ def s01_titre(prs):
     rectangle(diapo, MARGE, Inches(4.8), Inches(1.5), Inches(0.045), ORANGE)
     texte(diapo, MARGE, Inches(5.1), Inches(10.6), Inches(0.8),
           ["Une plateforme ubiquitaire : smartphone, web, et hors connexion.",
-           "Direction générale de PPC  ·  4 novembre 2026"],
+           "Direction générale de PPC"],
           taille=14, couleur=RGBColor(0xC3, 0xD0, 0xDA), interligne=1.5)
     notes(diapo, "Ouvrir sans commenter le produit. Une seule phrase : « Nous venons parler de ce qui se passe "
                  "après le paiement, parce que c'est là que vos clients vous jugent. » Puis enchaîner.")

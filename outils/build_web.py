@@ -81,7 +81,7 @@ def s01() -> str:
         <p class="accroche">Du paiement certifié au sac livré :<br>une seule chaîne, une seule preuve.</p>
         <div class="trait"></div>
         <p class="sous-accroche">Une plateforme ubiquitaire : smartphone, web, et hors connexion.<br>
-          Direction générale de PPC &nbsp;·&nbsp; 5 novembre 2026</p>
+          Direction générale de PPC</p>
       </div>'''
 
 

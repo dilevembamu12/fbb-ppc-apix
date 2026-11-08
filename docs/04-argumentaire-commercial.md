@@ -1,7 +1,7 @@
 # 04 — Argumentaire commercial
 
 **APIX étendu face à Digiciment — dossier de conviction pour PPC**
-FBB · version 1.0 · 4 novembre 2026
+FBB · version 1.0
 
 > **Note de lecture :** ce document est destiné à être utilisé en réunion, avec ou sans support de présentation. Chaque section peut être lue seule. Les chiffres marqués `[À VALIDER PPC]` doivent être remplacés par les données réelles avant toute présentation externe.
 

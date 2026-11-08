@@ -1,7 +1,7 @@
 # 02 — Spécifications fonctionnelles détaillées
 
 **Extension APIX — Plateforme Clients Finaux & Logistique Ciment**
-FBB pour PPC · version 1.0 · 4 novembre 2026
+FBB pour PPC · version 1.0
 
 > Convention : `US-xx-yy` désigne un récit utilisateur, `RF-xx-yy` une exigence fonctionnelle, `RG-…` une règle de gestion référencée en annexe A1. Les priorités sont `MVP`, `V1`, `V2`.
 

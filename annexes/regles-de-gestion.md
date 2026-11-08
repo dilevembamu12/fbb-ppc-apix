@@ -1,7 +1,7 @@
 # Annexe A1 — Règles de gestion
 
 **Extension APIX — Règles opposables, versionnées et testables**
-FBB pour PPC · version 1.0 · 4 novembre 2026
+FBB pour PPC · version 1.0
 
 > Chaque règle porte un identifiant stable, citable en réunion et repérable dans le code. Une règle ne peut être modifiée que par une nouvelle version documentée. Les paramètres marqués `[À VALIDER PPC]` doivent être fixés au cadrage.
 

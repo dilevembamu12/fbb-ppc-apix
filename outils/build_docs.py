@@ -271,7 +271,7 @@ def page_de_garde(doc: Document, titre: str, sous_titre: str, source: Path) -> N
     for ligne in (
         "Maître d'ouvrage : FBB — concepteur d'APIX",
         "Client cible : PPC (cimentier, République Démocratique du Congo)",
-        "Version : 1.0 — 4 novembre 2026",
+        "Version : 1.0",
         f"Fichier source : {source.name}",
     ):
         p = doc.add_paragraph()

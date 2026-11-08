@@ -1,6 +1,6 @@
 # A3 — Plafonds des canaux de paiement en République Démocratique du Congo
 
-> **Statut des données.** Grilles publiques des opérateurs, relevées en novembre 2026. Elles doivent être **confirmées par contrat** avant d'être paramétrées : un plafond mal saisi produit un refus au pire moment.
+> **Statut des données.** Grilles publiques des opérateurs, susceptibles d'évoluer. Elles doivent être **confirmées par contrat** avant d'être paramétrées : un plafond mal saisi produit un refus au pire moment.
 > Les montants en francs congolais sont les montants réglementaires. Les équivalents en dollars sont **indicatifs, à 2 800 FC pour 1 USD** — ce taux est à arrêter avec PPC.
 
 ---

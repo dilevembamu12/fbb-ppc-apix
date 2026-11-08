@@ -233,7 +233,7 @@ def construire() -> int:
         run.font.color.rgb = GRIS_CLAIR
         bordure_bas(p, couleur="BBBBBB", epaisseur="6")
 
-    paragraphe(doc, "Document de travail FBB · APIX — 4 novembre 2026", taille=7.5,
+    paragraphe(doc, "Document de travail FBB · APIX", taille=7.5,
                couleur=GRIS_CLAIR, avant=14, apres=0, alignement=WD_ALIGN_PARAGRAPH.CENTER)
 
     doc.core_properties.title = "Le règlement des transporteurs : cinq questions à établir"

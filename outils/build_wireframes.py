@@ -832,7 +832,7 @@ def ecran_bko01() -> Toile:
     rail_lateral(b, NAV_BKO, titre="APIX PPC", sous_titre="Administration PPC")
 
     b.t(252, 40, "Pilotage des opérations", 20, gras=True)
-    b.t(252, 70, "PPC · semaine du 3 au 7 novembre 2026", 10, couleur=TEXTE_FAIBLE)
+    b.t(252, 70, "PPC · cette semaine", 10, couleur=TEXTE_FAIBLE)
 
     cartes = (("Commandes du jour", "42", "+ 8 vs hier"),
               ("Encaissements du jour", "118 400 $", "+ 12 %"),
