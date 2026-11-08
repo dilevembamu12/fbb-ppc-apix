@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>04 — SMS et USSD, le bon devient un code</title>
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: #0e2436;
+          font-family: "Segoe UI", system-ui, sans-serif;
+          color: #f4f1ea;
+        }
+        #root .surtitre {
+          position: absolute;
+          left: 120px;
+          top: 80px;
+          font-size: 28px;
+          font-weight: 600;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: #e06b2d;
+        }
+        #root .titre {
+          position: absolute;
+          left: 120px;
+          top: 122px;
+          font-size: 64px;
+          font-weight: 600;
+          letter-spacing: -0.018em;
+          line-height: 1.1;
+        }
+        #root .fenetre {
+          position: absolute;
+          top: 240px;
+          width: 682px;
+          height: 640px;
+          border-radius: 14px;
+          background: #ffffff;
+          border: 1px solid rgba(244, 241, 234, 0.16);
+          overflow: hidden;
+        }
+        #root .fenetre img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+        #root .fenetre .voile {
+          position: absolute;
+          inset: 0;
+          background: #0e2436;
+          opacity: 0;
+        }
+        #root .canal {
+          position: absolute;
+          top: 906px;
+          font-size: 28px;
+          font-weight: 600;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          color: rgba(244, 241, 234, 0.58);
+        }
+        #root .mot {
+          position: absolute;
+          top: 936px;
+          font-size: 46px;
+          font-weight: 600;
+          letter-spacing: 0.06em;
+          white-space: nowrap;
+        }
+        #root .mot.hot {
+          color: #e06b2d;
+        }
+        #root .mot.froid {
+          color: rgba(244, 241, 234, 0.86);
+        }
+        #root .qr {
+          position: absolute;
+          left: 845px;
+          top: 280px;
+          width: 230px;
+          height: 230px;
+          border-radius: 12px;
+          background: #ffffff;
+          padding: 16px;
+        }
+        #root .qr i {
+          position: relative;
+          display: block;
+          width: 100%;
+          height: 100%;
+          background: repeating-conic-gradient(#0e2436 0 25%, #ffffff 0 50%) 0 0 / 10px 10px;
+        }
+        #root .qr b {
+          position: absolute;
+          width: 70px;
+          height: 70px;
+          background: #ffffff;
+          border: 10px solid #0e2436;
+        }
+        #root .qr b::after {
+          content: "";
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          width: 20px;
+          height: 20px;
+          margin: -10px 0 0 -10px;
+          background: #0e2436;
+        }
+        #root .chiffres {
+          position: absolute;
+          left: 0;
+          top: 322px;
+          width: 1920px;
+          text-align: center;
+          font-size: 132px;
+          font-weight: 700;
+          letter-spacing: 0.12em;
+          color: #e06b2d;
+          white-space: nowrap;
+        }
+        #root .chiffres span {
+          display: inline-block;
+        }
+        #root .dit {
+          position: absolute;
+          left: 0;
+          width: 1920px;
+          text-align: center;
+          white-space: nowrap;
+        }
+        #root .dit.un {
+          top: 640px;
+          font-size: 34px;
+          color: rgba(244, 241, 234, 0.78);
+        }
+        #root .dit.deux {
+          top: 692px;
+          font-size: 28px;
+          letter-spacing: 0.02em;
+          color: rgba(244, 241, 234, 0.62);
+        }
+        #root .barre-fond {
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          height: 2px;
+          background: rgba(244, 241, 234, 0.1);
+        }
+        #root .barre {
+          position: absolute;
+          left: 37.7778%;
+          bottom: 0;
+          height: 2px;
+          width: 15.5556%;
+          background: #e06b2d;
+          opacity: 0.45;
+          transform-origin: left center;
+        }
+      </style>
+
+      <div id="root" data-composition-id="f04" data-width="1920" data-height="1080" data-duration="14">
+        <div class="surtitre" id="surtitre">SMS et USSD — sans internet</div>
+        <div class="titre" id="titre">Trois mots. Puis un code.</div>
+
+        <div class="fenetre" id="w1" style="left: 218px">
+          <img src="../../capture/assets/p23-parite-sms.png" alt="" />
+          <span class="voile" id="v1"></span>
+        </div>
+        <div class="canal" id="c1" style="left: 218px">SMS · message envoyé</div>
+        <div class="mot hot" id="m1" style="left: 218px">COT 200 GOMBE</div>
+
+        <div class="fenetre" id="w2" style="left: 1020px">
+          <img src="../../capture/assets/p22-parite-ussd.png" alt="" />
+          <span class="voile" id="v2"></span>
+        </div>
+        <div class="canal" id="c2" style="left: 1020px">USSD · session ouverte</div>
+        <div class="mot froid" id="m2" style="left: 1020px">*144#</div>
+
+        <div class="qr" id="qr">
+          <i></i><b style="left: 16px; top: 16px"></b><b style="right: 16px; top: 16px"></b
+          ><b style="left: 16px; bottom: 16px"></b>
+        </div>
+        <div class="chiffres" id="chiffres">
+          <span id="d1">4</span><span id="d2">8</span><span id="d3">1</span><span id="d4">9</span><span
+            id="d5"
+            >0</span
+          ><span id="d6">2</span>
+        </div>
+        <div class="dit un" id="dit1">Le bon change de forme. Pas de valeur.</div>
+        <div class="dit deux" id="dit2">Les six chiffres sont saisis par l'agent, à la remise.</div>
+
+        <div class="barre-fond"></div>
+        <div class="barre" id="barre"></div>
+      </div>
+
+      <script>
+        const tl = gsap.timeline({ paused: true });
+
+        tl.fromTo("#surtitre", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 0.25);
+        tl.fromTo("#titre", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.38);
+
+        tl.fromTo("#w1", { opacity: 0, x: -54 }, { opacity: 1, x: 0, duration: 0.7, ease: "power3.out" }, 0.75);
+        tl.fromTo("#c1", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 1.15);
+        tl.fromTo("#m1", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 1.4);
+
+        tl.fromTo("#w2", { opacity: 0, x: 54 }, { opacity: 1, x: 0, duration: 0.7, ease: "power3.out" }, 2.8);
+        tl.fromTo("#c2", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 3.15);
+        tl.fromTo("#m2", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 3.4);
+
+        // Les deux planches s'éteignent de l'intérieur : la démonstration cède la place à la transformation.
+        tl.to("#v1", { opacity: 0.82, duration: 0.75, ease: "power2.inOut" }, 6.3);
+        tl.to("#v2", { opacity: 0.82, duration: 0.75, ease: "power2.inOut" }, 6.3);
+        tl.to("#c1", { opacity: 0.55, duration: 0.6 }, 6.3);
+        tl.to("#c2", { opacity: 0.55, duration: 0.6 }, 6.3);
+
+        tl.fromTo("#qr", { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, duration: 0.6, ease: "power3.out" }, 6.6);
+
+        // Le QR se dissout entierement, les chiffres prennent sa place.
+        tl.to("#qr", { opacity: 0, scale: 0.9, duration: 0.9, ease: "power2.inOut" }, 7.4);
+        tl.fromTo(
+          "#d1, #d2, #d3, #d4, #d5, #d6",
+          { opacity: 0, y: 22 },
+          { opacity: 1, y: 0, duration: 0.34, stagger: 0.2, ease: "power3.out" },
+          7.6
+        );
+
+        tl.fromTo("#dit1", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 9.35);
+        tl.fromTo("#dit2", { opacity: 0 }, { opacity: 1, duration: 0.55 }, 9.85);
+
+        tl.fromTo("#barre", { scaleX: 0 }, { scaleX: 1, duration: 14, ease: "none" }, 0);
+
+        window.__timelines["f04"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

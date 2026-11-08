@@ -1,0 +1,50 @@
+APIX All In One — film de cadrage, 90 secondes, visite guidée des interfaces.
+Angle : la même cotation, un seul bon, quel que soit le canal.
+
+PROMESSE
+Transformer APIX en chaîne de preuve unique qui relie cinq étapes aujourd'hui séparées —
+cotation, paiement, bon de commande, chargement, livraison — dans une seule application,
+accessible sur cinq canaux.
+
+LES DOULEURS RELEVÉES EN RÉUNION (fil rouge discret)
+- Où est mon camion, maintenant ? Le client appelle, personne ne sait.
+- Combien de sacs sont réellement arrivés ? 95, 98, 100 : aucun constat contradictoire.
+- Qui paie les sacs manquants ? Le transporteur accuse le client, le client accuse l'usine.
+- Pourquoi le ciment paraît-il cher au quartier ? Le prix ex-usine n'est pas le prix payé.
+- 15 à 20 % seulement des encaissements de PPC passent par un canal intégré : quatre cinquièmes
+  des flux échappent à toute traçabilité automatique.
+- Le plafond de paiement de 2 500 $ par transaction bloque la tranche des distributeurs.
+
+LA RÈGLE QUI STRUCTURE TOUT
+Le client demande un prix, reçoit une cotation, paie en la référençant, et la cotation encaissée
+devient le bon de commande. Les comptes d'encaissement refusent les fonds sans cotation valide.
+La cotation est la référence de paiement ; le bon en est le résultat, jamais le préalable.
+
+LA PARITÉ DES CANAUX (cœur du film)
+Application, WhatsApp, Telegram, e-mail, SMS et USSD : les cinq canaux portent la cotation,
+le paiement et le bon. Un client peut commencer sur USSD et terminer sur WhatsApp : c'est le même
+dossier, la même cotation, le même bon.
+
+Le bon n'a pas la même forme selon le canal : QR sur application, WhatsApp, Telegram et e-mail ;
+code de retrait sur SMS et USSD — c'est la console de chargement qui saisit ce code.
+
+CE QUI NE CHANGE SUR AUCUN CANAL
+- Aucun prix n'est produit avant vérification de l'identité.
+- La cotation est la référence de paiement.
+- Le bon naît de l'encaissement, jamais d'un message.
+- Une identité, plusieurs canaux : le canal est un moyen de contact, pas un compte.
+- Chaque message et chaque action sont journalisés.
+- Aucune position, aucun délai de règlement n'est annoncé s'il n'est pas connu.
+
+CÔTÉ PPC
+La console de chargement contrôle le bon — QR ou code — et refuse un bon expiré, déjà utilisé ou
+hors du point de chargement. Le back-office garde la main : catalogue, barème, transporteurs,
+litiges, et une console des canaux qui règle les modèles de messages, le routage et la reprise
+humaine.
+
+LA PREUVE
+Photo géolocalisée, QR nominatif à usage unique, pesée contradictoire, numéro de scellé. Le client
+valide la réception lui-même ; le chauffeur ne peut pas le faire à sa place.
+
+CLÔTURE
+Un client peut commencer sur USSD et terminer sur WhatsApp : même cotation, même bon, même preuve.

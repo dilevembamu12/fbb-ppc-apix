@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>01 — Trois questions sans réponse</title>
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: #0e2436;
+          font-family: "Segoe UI", system-ui, sans-serif;
+          color: #f4f1ea;
+        }
+        #root .photo {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          filter: grayscale(0.5) contrast(1.06) brightness(0.6);
+        }
+        #root .voile {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            90deg,
+            rgba(14, 36, 54, 0.95) 0%,
+            rgba(14, 36, 54, 0.88) 52%,
+            rgba(14, 36, 54, 0.7) 100%
+          );
+        }
+        #root .vignette {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(
+            118% 92% at 28% 42%,
+            rgba(0, 0, 0, 0) 34%,
+            rgba(4, 12, 20, 0.58) 100%
+          );
+        }
+        #root .col {
+          position: absolute;
+          left: 140px;
+          right: 140px;
+          top: 0;
+          bottom: 0;
+        }
+        #root .q {
+          position: absolute;
+          left: 0;
+          display: flex;
+          align-items: baseline;
+          gap: 34px;
+        }
+        #root .idx {
+          font-size: 28px;
+          font-weight: 600;
+          letter-spacing: 0.14em;
+          color: #e06b2d;
+          opacity: 0.62;
+          width: 62px;
+          flex: 0 0 62px;
+        }
+        #root .qt {
+          font-size: 76px;
+          font-weight: 600;
+          letter-spacing: -0.015em;
+          line-height: 1.08;
+          white-space: nowrap;
+        }
+        #root .filet {
+          position: absolute;
+          left: 0;
+          top: 688px;
+          width: 60px;
+          height: 4px;
+          background: #e06b2d;
+          border-radius: 2px;
+          transform-origin: left center;
+        }
+        #root .verdict {
+          position: absolute;
+          left: 0;
+          top: 716px;
+          font-size: 92px;
+          font-weight: 700;
+          letter-spacing: -0.022em;
+          line-height: 1.05;
+          white-space: nowrap;
+        }
+        #root .verdict b {
+          color: #e06b2d;
+          font-weight: 700;
+        }
+        #root .barre-fond {
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          height: 2px;
+          background: rgba(244, 241, 234, 0.1);
+        }
+        #root .barre {
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          height: 2px;
+          width: 10%;
+          background: #e06b2d;
+          opacity: 0.45;
+          transform-origin: left center;
+        }
+      </style>
+
+      <div id="root" data-composition-id="f01" data-width="1920" data-height="1080" data-duration="9">
+        <img class="photo" id="ph1" src="../../capture/assets/douleur_route.jpg" alt="" />
+        <img class="photo" id="ph2" src="../../capture/assets/douleur_manutention.jpg" alt="" />
+        <div class="voile"></div>
+        <div class="vignette"></div>
+
+        <div class="col">
+          <div class="q" id="q1" style="top: 268px">
+            <span class="idx">01</span>
+            <span class="qt">Où est mon camion ?</span>
+          </div>
+          <div class="q" id="q2" style="top: 402px">
+            <span class="idx">02</span>
+            <span class="qt">Combien de sacs sont arrivés ?</span>
+          </div>
+          <div class="q" id="q3" style="top: 536px">
+            <span class="idx">03</span>
+            <span class="qt">Qui paie les manquants ?</span>
+          </div>
+
+          <div class="filet" id="filet"></div>
+          <div class="verdict" id="verdict">Trois questions. <b>Aucune preuve.</b></div>
+        </div>
+
+        <div class="barre-fond"></div>
+        <div class="barre" id="barre"></div>
+      </div>
+
+      <script>
+        const tl = gsap.timeline({ paused: true });
+
+        // Fond : la route, puis la manutention. Léger recul pour que l'image respire.
+        tl.fromTo("#ph1", { scale: 1.06 }, { scale: 1, duration: 4.6, ease: "power1.out" }, 0);
+        tl.fromTo("#ph2", { opacity: 0 }, { opacity: 1, duration: 1.1, ease: "power1.inOut" }, 4.9);
+
+        // Trois questions, calées sur la voix (0,4 / 1,5 / 3,0).
+        tl.fromTo("#q1", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 0.35);
+        tl.fromTo("#q2", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 1.5);
+        tl.fromTo("#q3", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 3.0);
+
+        // Le verdict : les trois questions s'effacent, la phrase reste seule.
+        tl.to("#q1", { opacity: 0.22, duration: 0.6, ease: "power1.inOut" }, 4.35);
+        tl.to("#q2", { opacity: 0.22, duration: 0.6, ease: "power1.inOut" }, 4.42);
+        tl.to("#q3", { opacity: 0.22, duration: 0.6, ease: "power1.inOut" }, 4.49);
+        tl.fromTo("#filet", { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "power2.out" }, 4.55);
+        tl.fromTo("#verdict", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.75, ease: "power3.out" }, 4.75);
+
+        tl.fromTo("#barre", { scaleX: 0 }, { scaleX: 1, duration: 9, ease: "none" }, 0);
+
+        window.__timelines["f01"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

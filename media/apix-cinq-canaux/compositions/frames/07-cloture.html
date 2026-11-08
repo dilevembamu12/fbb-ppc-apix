@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>07 — Clôture</title>
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: #0e2436;
+          font-family: "Segoe UI", system-ui, sans-serif;
+          color: #f4f1ea;
+        }
+        #root .anneau {
+          position: absolute;
+          border-radius: 50%;
+          border: 1.5px solid rgba(244, 241, 234, 0.13);
+        }
+        #root .chapeau {
+          position: absolute;
+          left: 140px;
+          top: 172px;
+          width: 900px;
+          font-size: 32px;
+          line-height: 1.45;
+          color: rgba(244, 241, 234, 0.6);
+        }
+        #root .phrase {
+          position: absolute;
+          left: 140px;
+          font-size: 96px;
+          font-weight: 700;
+          letter-spacing: -0.022em;
+          line-height: 1.05;
+          white-space: nowrap;
+        }
+        #root .phrase.hot {
+          color: #e06b2d;
+        }
+        #root .logotype {
+          position: absolute;
+          right: 140px;
+          top: 928px;
+          font-size: 28px;
+          font-weight: 600;
+          letter-spacing: 0.18em;
+          color: rgba(244, 241, 234, 0.7);
+          text-align: right;
+        }
+        #root .sous-logotype {
+          position: absolute;
+          right: 140px;
+          top: 974px;
+          font-size: 28px;
+          letter-spacing: 0.1em;
+          color: rgba(244, 241, 234, 0.6);
+          text-align: right;
+        }
+        #root .barre-fond {
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          height: 2px;
+          background: rgba(244, 241, 234, 0.1);
+        }
+        #root .barre {
+          position: absolute;
+          left: 86.6667%;
+          bottom: 0;
+          height: 2px;
+          width: 13.3333%;
+          background: #e06b2d;
+          opacity: 0.45;
+          transform-origin: left center;
+        }
+      </style>
+
+      <div id="root" data-composition-id="f07" data-width="1920" data-height="1080" data-duration="12">
+        <div class="anneau" id="r1" style="left: 1250px; top: 380px; width: 360px; height: 360px"></div>
+        <div class="anneau" id="r2" style="left: 1170px; top: 300px; width: 520px; height: 520px"></div>
+        <div class="anneau" id="r3" style="left: 1090px; top: 220px; width: 680px; height: 680px"></div>
+
+        <div class="chapeau" id="chapeau">
+          Un client peut commencer sur USSD et terminer sur WhatsApp.
+        </div>
+
+        <div class="phrase" id="p1" style="top: 300px">Même cotation.</div>
+        <div class="phrase" id="p2" style="top: 420px">Même bon.</div>
+        <div class="phrase hot" id="p3" style="top: 540px">Même preuve.</div>
+
+        <div class="logotype" id="logotype">FBB · APIX</div>
+        <div class="sous-logotype" id="sous-logotype">APIX All In One</div>
+
+        <div class="barre-fond"></div>
+        <div class="barre" id="barre"></div>
+      </div>
+
+      <script>
+        const tl = gsap.timeline({ paused: true });
+
+        // Rien avant 0,5 s : le film retient son souffle.
+        tl.fromTo("#chapeau", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.55);
+
+        tl.fromTo("#p1", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 3.2);
+        tl.fromTo("#p2", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 4.2);
+        tl.fromTo("#p3", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.65, ease: "power3.out" }, 5.2);
+
+        // Les cercles se referment, très discrètement.
+        tl.fromTo("#r1", { opacity: 0, scale: 1.1 }, { opacity: 1, scale: 1, duration: 1.1, ease: "power2.out" }, 6.4);
+        tl.fromTo("#r2", { opacity: 0, scale: 1.1 }, { opacity: 1, scale: 1, duration: 1.2, ease: "power2.out" }, 6.55);
+        tl.fromTo("#r3", { opacity: 0, scale: 1.1 }, { opacity: 1, scale: 1, duration: 1.3, ease: "power2.out" }, 6.7);
+
+        tl.to("#chapeau", { opacity: 0.3, duration: 0.7 }, 8.3);
+        tl.fromTo("#logotype", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 8.6);
+        tl.fromTo("#sous-logotype", { opacity: 0 }, { opacity: 1, duration: 0.6 }, 9.1);
+
+        tl.fromTo("#barre", { scaleX: 0 }, { scaleX: 1, duration: 12, ease: "none" }, 0);
+
+        window.__timelines["f07"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

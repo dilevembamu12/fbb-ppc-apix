@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>06 — Côté PPC, QR ou code</title>
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: #f4f1ea;
+          font-family: "Segoe UI", system-ui, sans-serif;
+          color: #0e2436;
+        }
+        #root .bandeau {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 196px;
+          background: #0e2436;
+        }
+        #root .surtitre {
+          position: absolute;
+          left: 120px;
+          top: 42px;
+          font-size: 28px;
+          font-weight: 600;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: #e06b2d;
+        }
+        #root .titre {
+          position: absolute;
+          left: 120px;
+          top: 82px;
+          font-size: 52px;
+          font-weight: 600;
+          letter-spacing: -0.016em;
+          color: #f4f1ea;
+          white-space: nowrap;
+        }
+        #root .fenetre {
+          position: absolute;
+          left: 140px;
+          top: 250px;
+          width: 1024px;
+          height: 690px;
+          border-radius: 14px;
+          background: #ffffff;
+          border: 1px solid rgba(14, 36, 54, 0.14);
+          overflow: hidden;
+        }
+        #root .fenetre img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+        #root .colonne {
+          position: absolute;
+          left: 1220px;
+          top: 258px;
+          width: 580px;
+        }
+        #root .colonne .entete {
+          font-size: 28px;
+          font-weight: 600;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          color: #5a6b7a;
+        }
+        #root .verif {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          margin-top: 26px;
+          height: 26px;
+        }
+        #root .verif i {
+          width: 10px;
+          height: 10px;
+          border-radius: 2px;
+          border: 1.5px solid rgba(14, 36, 54, 0.3);
+          flex: 0 0 10px;
+        }
+        #root .verif span {
+          font-size: 28px;
+          color: #5a6b7a;
+          white-space: nowrap;
+        }
+        #root .citation {
+          position: absolute;
+          left: 1220px;
+          top: 300px;
+          width: 570px;
+          font-size: 30px;
+          line-height: 1.45;
+          color: #1b3a57;
+        }
+        #root .citation b {
+          color: #0e2436;
+          font-weight: 600;
+        }
+        #root .legende {
+          position: absolute;
+          left: 140px;
+          top: 966px;
+          font-size: 28px;
+          color: #5a6b7a;
+          white-space: nowrap;
+        }
+        #root .barre-fond {
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          height: 2px;
+          background: rgba(14, 36, 54, 0.1);
+        }
+        #root .barre {
+          position: absolute;
+          left: 66.6667%;
+          bottom: 0;
+          height: 2px;
+          width: 20%;
+          background: #e06b2d;
+          opacity: 0.45;
+          transform-origin: left center;
+        }
+      </style>
+
+      <div id="root" data-composition-id="f06" data-width="1920" data-height="1080" data-duration="18">
+        <div class="bandeau" id="bandeau" data-layout-allow-overflow></div>
+        <div class="surtitre" id="surtitre">Côté PPC</div>
+        <div class="titre" id="titre">Le contrôle ne bouge pas d'un pouce.</div>
+
+        <div class="fenetre" id="fenetre">
+          <img id="p05" src="../../capture/assets/p05-chargement-controle.png" alt="" />
+          <img id="p11" src="../../capture/assets/p11-canaux-tableau.png" alt="" />
+          <img id="p09" src="../../capture/assets/p09-backoffice-litige.png" alt="" />
+        </div>
+
+        <div class="colonne" id="colonne">
+          <div class="entete">Ce qui est vérifié</div>
+          <div class="verif" id="v1"><i></i><span>le bon existe</span></div>
+          <div class="verif" id="v2"><i></i><span>il n'est pas expiré</span></div>
+          <div class="verif" id="v3"><i></i><span>il n'est pas déjà chargé</span></div>
+        </div>
+
+        <div class="citation" id="cit2">
+          Les canaux, les modèles et le routage restent dans la main de PPC.
+        </div>
+        <div class="citation" id="cit3">Le litige dit qui paie quoi, montant par montant.</div>
+
+        <div class="legende" id="leg1">Contrôle du bon — un QR, ou six chiffres saisis.</div>
+        <div class="legende" id="leg2">Console des canaux — états, volumes, coûts, conditions d'ouverture.</div>
+        <div class="legende" id="leg3">Instruction d'un litige — ce qui est retenu, ce qui est libéré.</div>
+
+        <div class="barre-fond"></div>
+        <div class="barre" id="barre"></div>
+      </div>
+
+      <script>
+        const tl = gsap.timeline({ paused: true });
+
+        tl.fromTo("#bandeau", { y: -40 }, { y: 0, duration: 0.6, ease: "power3.out" }, 0.15);
+        tl.fromTo("#surtitre", { opacity: 0 }, { opacity: 1, duration: 0.45 }, 0.45);
+        tl.fromTo("#titre", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.5);
+
+        tl.fromTo("#fenetre", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.8);
+        tl.fromTo("#p05", { opacity: 0 }, { opacity: 1, duration: 0.45 }, 1.1);
+        tl.fromTo("#leg1", { opacity: 0 }, { opacity: 1, duration: 0.5 }, 1.5);
+
+        tl.fromTo("#colonne", { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 2.4);
+        tl.to("#v1 i", { backgroundColor: "#0e2436", borderColor: "#0e2436", duration: 0.28 }, 3.0);
+        tl.to("#v1 span", { color: "#0e2436", duration: 0.28 }, 3.0);
+        tl.to("#v2 i", { backgroundColor: "#0e2436", borderColor: "#0e2436", duration: 0.28 }, 3.9);
+        tl.to("#v2 span", { color: "#0e2436", duration: 0.28 }, 3.9);
+        tl.to("#v3 i", { backgroundColor: "#0e2436", borderColor: "#0e2436", duration: 0.28 }, 4.8);
+        tl.to("#v3 span", { color: "#0e2436", duration: 0.28 }, 4.8);
+
+        // Le verdict de la console : on s'y approche, sans rien ajouter à l'image.
+        tl.to("#p05", { scale: 1.26, transformOrigin: "70.5% 38.5%", duration: 0.85, ease: "power2.inOut" }, 7.0);
+
+        tl.to("#colonne", { opacity: 0, x: 18, duration: 0.45 }, 8.7);
+
+        // Deuxième écran : la console des canaux.
+        tl.to("#p05", { opacity: 0, duration: 0.5 }, 9.5);
+        tl.fromTo("#p11", { opacity: 0 }, { opacity: 1, duration: 0.55 }, 9.6);
+        tl.to("#leg1", { opacity: 0, duration: 0.3 }, 9.5);
+        tl.fromTo("#leg2", { opacity: 0 }, { opacity: 1, duration: 0.45 }, 9.85);
+        tl.fromTo("#cit2", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 9.4);
+
+        // Troisième écran : le litige, qui répond à la question d'ouverture.
+        tl.to("#p11", { opacity: 0, duration: 0.5 }, 14.0);
+        tl.fromTo("#p09", { opacity: 0 }, { opacity: 1, duration: 0.55 }, 14.15);
+        tl.to("#leg2", { opacity: 0, duration: 0.3 }, 14.0);
+        tl.fromTo("#leg3", { opacity: 0 }, { opacity: 1, duration: 0.45 }, 14.35);
+        tl.to("#cit2", { opacity: 0, duration: 0.4 }, 14.0);
+        tl.fromTo("#cit3", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 14.3);
+
+        tl.fromTo("#barre", { scaleX: 0 }, { scaleX: 1, duration: 18, ease: "none" }, 0);
+
+        window.__timelines["f06"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

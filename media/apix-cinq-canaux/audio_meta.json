@@ -1,0 +1,43 @@
+{
+  "projet": "apix-cinq-canaux",
+  "duree_totale": 90,
+  "voix": {
+    "moteur": "kokoro-local",
+    "voix_id": "ff_siwis",
+    "langue": "fr-fr",
+    "debit": 1.0,
+    "duree_cumulee": 57.49,
+    "pistes": [
+      { "fichier": "audio/l01.wav", "frame": 1, "debut": 0.4, "duree": 5.18 },
+      { "fichier": "audio/l02.wav", "frame": 2, "debut": 9.6, "duree": 9.07 },
+      { "fichier": "audio/l03.wav", "frame": 3, "debut": 21.0, "duree": 8.64 },
+      { "fichier": "audio/l04.wav", "frame": 4, "debut": 35.0, "duree": 8.13 },
+      { "fichier": "audio/l05.wav", "frame": 5, "debut": 49.0, "duree": 7.62 },
+      { "fichier": "audio/l06.wav", "frame": 6, "debut": 61.0, "duree": 12.67 },
+      { "fichier": "audio/l07.wav", "frame": 7, "debut": 80.5, "duree": 6.19 }
+    ]
+  },
+  "effets": {
+    "banque": ".media/audio/sfx/",
+    "cues": [
+      { "fichier": "sfx_004.mp3", "debut": 0.4, "duree": 0.9, "volume": 0.5, "role": "premiere question" },
+      { "fichier": "sfx_004.mp3", "debut": 1.5, "duree": 0.9, "volume": 0.5, "role": "deuxieme question" },
+      { "fichier": "sfx_004.mp3", "debut": 3.0, "duree": 0.9, "volume": 0.58, "role": "troisieme question, plus grave" },
+      { "fichier": "sfx_003.mp3", "debut": 30.2, "duree": 1.2, "volume": 0.3, "role": "pulse unique sur le QR du bon WhatsApp" },
+      { "fichier": "sfx_002.mp3", "debut": 32.0, "duree": 2.0, "volume": 0.35, "role": "montee vers la coupe SMS et USSD, coupee avant la voix de 35,0" },
+      { "fichier": "sfx_001.mp3", "debut": 67.0, "duree": 1.6, "volume": 0.55, "role": "impact grave sur le verdict BON REFUSE, cadre 6 local 7,0 s" }
+    ]
+  },
+  "musique_de_fond": {
+    "statut": "absente-par-decision",
+    "raison": "le catalogue de musique exige le CLI HeyGen, absent de ce poste, et hyperframes media-use generate passe aussi par HeyGen : aucun moteur de musique local n'est expose",
+    "decision_client": "livrer sans nappe — la voix et les effets portent le film, et l'absence de musique fait ressortir les deux impacts graves",
+    "si_reprise": "installer le CLI HeyGen puis hyperframes auth login --oauth, ou fournir un fichier musical via --from"
+  },
+  "notes": [
+    "La voix occupe 57,49 s sur 90 : 32 s de respiration, reparties dans les frames 3, 4 et 7.",
+    "Aucun effet ne se superpose a une phrase parlee : les cues tombent dans les silences ou sur les transitions, et la montee de 32,0 est coupee a 34,0, juste avant la voix de 35,0.",
+    "Deux impacts graves seulement dans tout le film : l'ouverture et le REFUSE.",
+    "Les effets sont volontairement tires de quatre fichiers seulement : le film doit sonner comme un systeme, pas comme une bande-annonce."
+  ]
+}

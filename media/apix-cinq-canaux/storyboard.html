@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Esquisses — APIX · cinq canaux (90 s)</title>
+<style>
+  :root{
+    --nuit:#0E2436; --nuit-moyen:#1B3A57; --orange:#E06B2D; --orange-pale:#F6DFD2;
+    --sable:#F4F1EA; --gris:#5A6B7A; --gris-clair:#DFE3E6; --blanc:#fff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#20262c;color:var(--sable);font-family:"Segoe UI",system-ui,sans-serif;
+       padding:40px 44px 70px}
+  header{max-width:1400px;margin:0 auto 26px}
+  header .surtitre{color:var(--orange);font-size:12px;font-weight:700;letter-spacing:.14em;
+       text-transform:uppercase}
+  header h1{font-size:30px;font-weight:600;margin-top:8px;letter-spacing:-.01em}
+  header p{margin-top:10px;color:#9FB2C2;font-size:14px;line-height:1.5;max-width:900px}
+  .grille{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:26px}
+  .carte{background:#2A3138;border-radius:12px;padding:14px;border:1px solid #363f48}
+  .carte.pleine{grid-column:1 / -1}
+  .ecran{position:relative;aspect-ratio:16/9;border-radius:8px;overflow:hidden;
+       background:var(--sable);color:var(--nuit)}
+  .meta{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;
+       font-size:12px;color:#9FB2C2}
+  .meta b{color:var(--sable);font-size:13px;font-weight:600}
+  .duree{background:var(--nuit-moyen);color:#CFE0EC;border-radius:20px;padding:2px 10px;font-size:11px}
+  .vo{margin-top:10px;font-size:12px;color:#9FB2C2;line-height:1.45;font-style:italic}
+  /* --- primitives d'esquisse --- */
+  .bloc{position:absolute;background:#fff;border:1px solid #C9CFD5;border-radius:6px}
+  .rempli{background:var(--nuit)}
+  .photo{position:absolute;inset:0;background:repeating-linear-gradient(135deg,#C9C4BA 0 10px,
+        #BDB8AE 10px 20px)}
+  .voile{position:absolute;inset:0;background:rgba(14,36,54,.62)}
+  .q{position:absolute;left:8%;right:8%;color:#fff;font-weight:600;line-height:1.1}
+  .t{position:absolute;color:var(--nuit);font-weight:600}
+  .t small{display:block;font-weight:400;color:var(--gris);font-size:.62em;margin-top:4px}
+  .puce-txt{font-size:10px;color:var(--gris)}
+  .badge-o{position:absolute;background:var(--orange);color:#fff;border-radius:20px;
+        font-size:9px;font-weight:700;padding:3px 9px;letter-spacing:.06em}
+  .tel{position:absolute;background:#fff;border:2px solid var(--nuit);border-radius:14px}
+  .tel::after{content:"";position:absolute;left:14%;right:14%;top:16%;height:3px;border-radius:2px;
+        background:var(--gris-clair);box-shadow:0 10px 0 var(--gris-clair),0 20px 0 var(--gris-clair)}
+  .large{position:absolute;background:#fff;border:2px solid var(--nuit);border-radius:6px}
+  .large::after{content:"";position:absolute;left:6%;right:6%;top:14%;height:4px;
+        border-radius:2px;background:var(--gris-clair);box-shadow:0 12px 0 var(--gris-clair),
+        0 24px 0 var(--gris-clair),0 36px 0 var(--gris-clair)}
+  .code{font-family:Consolas,monospace;letter-spacing:.12em;color:var(--orange);font-weight:700}
+  .trait{position:absolute;height:2px;background:var(--orange)}
+  .legende{position:absolute;bottom:8px;left:10px;font-size:9px;color:var(--gris)}
+  footer{max-width:1400px;margin:34px auto 0;color:#7f8b96;font-size:12px;line-height:1.6;
+       border-top:1px solid #3a434c;padding-top:16px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="surtitre">Esquisses de composition — avant animation</div>
+  <h1>APIX · une seule cotation, un seul bon — 90 secondes</h1>
+  <p>Sept cadres à plat, à l'échelle 16:9. Aucune animation, aucune couleur de marque en dehors de
+     l'orange réservé à l'action principale. Ce que l'on valide ici, c'est la <b>composition</b> :
+     où va le regard, quelle surface porte l'information, quelle image tombe à quel moment.</p>
+</header>
+
+<main class="grille">
+
+  <!-- 1 -->
+  <section class="carte pleine">
+    <div class="meta"><b>1 · Trois questions sans réponse</b><span class="duree">9 s · cut</span></div>
+    <div class="ecran">
+      <div class="photo"></div><div class="voile"></div>
+      <div class="q" style="top:16%;font-size:34px">Où est mon camion ?</div>
+      <div class="q" style="top:41%;font-size:34px;opacity:.82">Combien de sacs sont arrivés ?</div>
+      <div class="q" style="top:66%;font-size:34px;opacity:.6">Qui paie les manquants ?</div>
+      <div class="legende" style="color:#DCE5EC">photo route · photo chargement — chaque question tombe seule</div>
+    </div>
+    <p class="vo">« Trois questions. Aucune preuve. » — la 4ᵉ phrase reste seule une seconde de plus.</p>
+  </section>
+
+  <!-- 2 -->
+  <section class="carte pleine">
+    <div class="meta"><b>2 · Une seule cotation, un seul bon</b><span class="duree">11 s · crossfade</span></div>
+    <div class="ecran">
+      <div class="bloc" style="left:4%;top:12%;width:26%;height:40%">
+        <div class="t" style="left:10%;top:14%;font-size:15px">Cotation<small>prix ferme, 48 h</small></div>
+      </div>
+      <div class="bloc" style="left:37%;top:12%;width:26%;height:40%">
+        <div class="t" style="left:10%;top:14%;font-size:15px">Paiement<small>référencé COT-…</small></div>
+      </div>
+      <div class="bloc rempli" style="left:70%;top:12%;width:26%;height:40%">
+        <div class="t" style="left:10%;top:14%;font-size:15px;color:#fff">Bon<small style="color:#B9C9D6">émis une fois</small></div>
+      </div>
+      <div class="trait" style="left:30%;top:31%;width:7%"></div>
+      <div class="trait" style="left:63%;top:31%;width:7%"></div>
+      <div style="position:absolute;left:4%;right:4%;bottom:8%;display:flex;gap:1.4%">
+        <div class="bloc" style="position:relative;flex:1;height:44px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600">Appli</div>
+        <div class="bloc" style="position:relative;flex:1;height:44px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;border-color:var(--orange);background:var(--orange-pale);color:#A8491B">WhatsApp</div>
+        <div class="bloc" style="position:relative;flex:1;height:44px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600">Telegram</div>
+        <div class="bloc" style="position:relative;flex:1;height:44px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600">E-mail</div>
+        <div class="bloc" style="position:relative;flex:1;height:44px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600">SMS</div>
+        <div class="bloc" style="position:relative;flex:1;height:44px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600">USSD</div>
+      </div>
+    </div>
+    <p class="vo">Les cinq tuiles se déploient et se relient au même bon. Une seule tuile orange : le canal en cours.</p>
+  </section>
+
+  <!-- 3 -->
+  <section class="carte">
+    <div class="meta"><b>3 · WhatsApp</b><span class="duree">14 s · wipe</span></div>
+    <div class="ecran">
+      <div class="tel" style="left:8%;top:10%;width:26%;height:80%"></div>
+      <div class="tel" style="left:40%;top:10%;width:26%;height:80%"></div>
+      <div class="badge-o" style="right:8%;top:18%">BON + QR</div>
+      <div class="bloc" style="right:8%;top:40%;width:22%;height:34%;background:#fff">
+        <div style="position:absolute;inset:16%;background:
+          repeating-conic-gradient(#0E2436 0 25%,#fff 0 50%) 0 0/12px 12px"></div>
+      </div>
+      <div class="legende">p14 · p15 — cadres de mise en avant sur la cotation puis sur le bon</div>
+    </div>
+    <p class="vo">« …le bon arrive dans la conversation, avec son QR. » — un seul pulse sur le QR.</p>
+  </section>
+
+  <!-- 4 -->
+  <section class="carte">
+    <div class="meta"><b>4 · SMS et USSD — le bon devient un code</b><span class="duree">14 s · crossfade</span></div>
+    <div class="ecran">
+      <div class="tel" style="left:5%;top:12%;width:23%;height:76%"></div>
+      <div class="tel" style="left:32%;top:12%;width:23%;height:76%"></div>
+      <div class="t" style="left:62%;top:22%;font-size:13px">Le bon<small>QR hier — code aujourd'hui</small></div>
+      <div class="code" style="position:absolute;left:60%;top:49%;font-size:18px">481902</div>
+      <div class="badge-o" style="left:62%;top:68%">SAISI PAR L'AGENT</div>
+      <div class="legende">p23 (SMS) · p22 (USSD) — le QR se décompose chiffre par chiffre</div>
+    </div>
+    <p class="vo">Le passage à comprendre sans l'expliquer : même valeur, autre forme.</p>
+  </section>
+
+  <!-- 5 -->
+  <section class="carte">
+    <div class="meta"><b>5 · Telegram et e-mail</b><span class="duree">12 s · wipe</span></div>
+    <div class="ecran">
+      <div class="tel" style="left:6%;top:11%;width:24%;height:78%"></div>
+      <div class="large" style="left:38%;top:16%;width:56%;height:66%"></div>
+      <div class="trait" style="left:44%;top:62%;width:16%;height:3px"></div>
+      <div class="legende">p24 (Telegram) · p25 (e-mail, seul écran large des canaux)</div>
+    </div>
+    <p class="vo">Le trait souligne « Payer 3 145 $ » : le point où le client quitte le message pour payer.</p>
+  </section>
+
+  <!-- 6 -->
+  <section class="carte pleine">
+    <div class="meta"><b>6 · Côté PPC : QR ou code</b><span class="duree">18 s · crossfade</span></div>
+    <div class="ecran">
+      <div class="large" style="left:4%;top:14%;width:46%;height:66%"></div>
+      <div class="badge-o" style="right:8%;top:16%;background:#B4341E">BON REFUSÉ</div>
+      <div class="bloc" style="right:8%;top:30%;width:38%;height:14%"></div>
+      <div class="bloc" style="right:8%;top:48%;width:38%;height:14%"></div>
+      <div class="bloc" style="right:8%;top:66%;width:38%;height:14%"></div>
+      <div class="legende">p05 verdict motivé → p11 console des canaux → p09 litige, montants retenu / libéré</div>
+    </div>
+    <p class="vo">Trois plans du plus opérationnel au plus stratégique. Le REFUSÉ est le second et dernier impact sonore.</p>
+  </section>
+
+  <!-- 7 -->
+  <section class="carte pleine">
+    <div class="meta"><b>7 · Clôture</b><span class="duree">12 s · cut</span></div>
+    <div class="ecran" style="background:var(--nuit)">
+      <div style="position:absolute;left:8%;top:22%;color:#fff;font-size:26px;font-weight:600;line-height:1.25">
+        Même cotation.<br>Même bon.<br><span style="color:var(--orange)">Même preuve.</span>
+      </div>
+      <div style="position:absolute;right:9%;bottom:16%;color:#8FA6B8;font-size:11px;letter-spacing:.18em">
+        FBB · APIX
+      </div>
+    </div>
+    <p class="vo">Silence d'une demi-seconde avant la première phrase. Aucun appel à l'action commercial.</p>
+  </section>
+
+</main>
+
+<footer>
+  Esquisse de composition — les planches de wireframes définitives remplaceront les blocs schématiques.
+  Charte : bleu nuit #0E2436 · orange #E06B2D (action principale uniquement) · sable #F4F1EA · Segoe UI.
+  Durée cumulée : 9 + 11 + 14 + 14 + 12 + 18 + 12 = <b>90 secondes</b>.
+</footer>
+
+</body>
+</html>
