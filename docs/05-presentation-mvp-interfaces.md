@@ -19,6 +19,7 @@ FBB pour PPC · pièce jointe au dossier « Extension APIX », version 1.0
 | Parcours de bout en bout, écran par écran | **Oui** | Section 5 |
 | Contraintes de terrain et conséquences ergonomiques | **Oui** | Section 7 |
 | Charte graphique détaillée (couleurs, typographies, composants) | Non | Livrée avec les maquettes de la présentation commerciale |
+| Plafonds de paiement par opérateur et par palier | Non | **Annexe A3** — Plafonds des canaux de paiement en RDC |
 | Choix technologiques d'implémentation | Non | Document 03 — Architecture technique |
 
 ---
@@ -105,7 +106,7 @@ Total : **62 écrans**, dont 16 mutualisés entre l'application et le web client
 3. **Trois états obligatoires** : chargement, vide, erreur. Un écran vide explique ce qu'il faut faire pour le remplir ; un écran en erreur propose une action, jamais un code technique (RF-TR-04).
 4. **Des identifiants lisibles.** Une cotation s'appelle `COT-2026-000123`, un bon `BON-2026-000456`, un litige `LIT-2026-000012`. Le client peut les dicter au téléphone.
 5. **Une couleur par état**, partout la même : brouillon, valide, expiré, payé, en cours, litige, clos.
-6. **Le canal ne décide de rien.** L'interface n'affiche que les canaux capables d'encaisser le montant, dès la création de la cotation (RG-PAY-14).
+6. **Le canal ne décide de rien.** L'interface n'affiche que les canaux capables d'encaisser le montant, dès la création de la cotation (RG-PAY-14). Un plafond n'est pas une panne : l'écran affiche le motif et l'action de déblocage — montée de palier de vérification, virement bancaire, ou règlement avec un second portefeuille (annexe A3).
 7. **Rien ne se supprime.** Toute action produit un événement ; une correction référence l'événement précédent au lieu de l'effacer.
 8. **Le hors-ligne est un mode normal**, pas une panne : file d'attente visible, estampille locale conservée et estampille serveur ajoutée à la réception (RG-CHG-06, RG-POD-07).
 9. **Le back-office est soumis aux mêmes règles que le terrain.** Un administrateur ne peut pas créer un bon sans cotation, ni saisir un prix hors barème sans dérogation nominative.
@@ -147,7 +148,7 @@ Total : **62 écrans**, dont 16 mutualisés entre l'application et le web client
 | CLI-06 | Choix de l'option | Choisit entre enlèvement, transport PPC et cas particulier | Option C sans prix affiché |
 | CLI-07 | Demande de cotation | Vérifie le détail ligne par ligne avant de demander la cotation | Lignes ciment, transport et annexes séparées (RG-COT-03) |
 | CLI-08 | Cotation certifiée | Lit le numéro, la date, la durée de validité et le total | Compte à rebours visible ; cotation expirée non payable (RG-COT-05) |
-| CLI-09 | Choix du moyen de paiement | Sélectionne un canal compatible avec le montant | Seuls les canaux capables d'encaisser sont proposés (RG-PAY-14) |
+| CLI-09 | Choix du moyen de paiement | Sélectionne un canal compatible avec le montant | Seuls les canaux capables d'encaisser sont proposés : palier du client et plafond du compte marchand, le plus contraignant l'emporte (RG-PAY-14, annexe A3) |
 | CLI-10 | Attente et confirmation | Suit la confirmation émise par l'établissement | Confirmation sur notification authentifiée uniquement (RG-PAY-01) |
 | CLI-11 | Bon de commande | Affiche le QR signé, le détail et le code d'enlèvement | Bon nominatif et à usage unique (RG-CMD-04, RG-CMD-05) |
 | CLI-12 | Suivi de la commande | Voit l'état, la dernière position horodatée et le transporteur | Jamais de position inventée : l'absence de position est affichée comme telle |
@@ -444,7 +445,7 @@ Légende : **L** lecture, **C** création ou saisie, **V** validation ou décisi
 
 | Sujet | Question ouverte | Écran concerné | Ce qui change selon la réponse |
 |---|---|---|---|
-| Périodicité du plafond de 2 500 $ | Q-50 | CLI-09 | Affichage d'un plafond par transaction, par jour ou par mois ; le message d'alternative n'est pas le même |
+| Périodicité du plafond de 2 500 $ | Q-50 | CLI-09 | Le plafond s'applique-t-il par transaction ou par jour, et côté client ou côté marchand ? Le message d'alternative n'est pas le même, et le multi-portefeuilles devient inutile si le plafond est journalier par titulaire |
 | Durée de validité d'une cotation | Q-51 | CLI-08 | Le compte à rebours de 48 heures est une proposition : sa durée exacte vient de PPC |
 | Délai de règlement des transporteurs | Q-02 | BKO-06, TRP-05 | Aucune date n'est affichée aujourd'hui ; dès que le délai est arrêté, il devient une promesse tenue à l'écran |
 | Tolérance d'écart de quantité | RG-CHG-03, RG-POD-04 | CHG-03, CLI-13 | « 1 % ou 2 sacs » : le seuil affiché, et donc le déclenchement du litige, en dépend |
@@ -455,6 +456,8 @@ Légende : **L** lecture, **C** création ou saisie, **V** validation ou décisi
 | Périmètre du canal WhatsApp | Q-56 | WAB-02, WAB-03 | Si le canal se limite à la notification et au suivi, WAB-02 et WAB-03 disparaissent |
 | IA locale ou menus numérotés | Q-57 | WAB-02 | La formulation change, pas le parcours : le menu numéroté reste la référence |
 | Ouverture de Telegram et de l'USSD | à ouvrir | CNL-01 | La console est déjà outillée ; c'est une décision d'ouverture, pas un développement |
+| Paiement multi-portefeuilles du même titulaire | Q-58, Q-59 | CLI-09, WAB-03 | Si les opérateurs ne l'autorisent pas par écrit, la seule issue haute reste le virement bancaire |
+| Palier du compte marchand de PPC | Q-59 | CLI-09, BKO-01 | Un compte marchand business relève le plafond par transaction et supprime la douleur à la racine |
 
 ---
 
