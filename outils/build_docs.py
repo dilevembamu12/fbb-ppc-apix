@@ -70,7 +70,7 @@ DOCUMENTS = [
         "source": "docs/05-presentation-mvp-interfaces.md",
         "sortie": "05-Presentation-MVP-interfaces.docx",
         "titre": "Présentation du MVP et de ses interfaces",
-        "sous_titre": "53 écrans, 8 interfaces, 4 parcours de bout en bout",
+        "sous_titre": "62 écrans, 10 interfaces, 4 parcours et 2 flux conversationnels",
     },
     {
         "source": "annexes/regles-de-gestion.md",

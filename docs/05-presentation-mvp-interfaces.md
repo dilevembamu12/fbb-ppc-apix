@@ -54,7 +54,7 @@ Trois conséquences directes :
 | Élément écarté | Pourquoi il est écarté du MVP | Version cible | Ce que l'interface prévoit déjà |
 |---|---|---|---|
 | Groupage logistique | Dépend de la constitution de lots, donc d'un volume réel ; ne sert à rien sur les premiers clients | V1 | L'écran de choix d'option annonce « groupage à venir » plutôt que de le simuler |
-| WhatsApp Business | Exige un compte marchand validé et une modération de messages | V1 | Les services sont exposés sans état d'écran, pour être branchés sur un canal conversationnel |
+| WhatsApp Business | Exige un compte marchand validé et une modération de messages | V1 | Le parcours conversationnel est **spécifié et maquetté** (IF-10) ; la console des canaux (IF-09) est décrite |
 | Commande par USSD et repli SMS | Dépend d'un opérateur et d'un menu à faire valider | V2 | Les libellés d'état sont courts et numérotables (`1` à `6`), réutilisables en menu USSD |
 | Chatbot avec intelligence artificielle locale | PPC n'a pas arbitré entre IA locale et menus numérotés | V1 | Le parcours est déjà une suite de questions fermées, donc jouable en menus numérotés |
 | Facture normalisée | Exige un connecteur fiscal validé par le conseil fiscal de PPC | V1 | Le reçu certifié occupe la place, avec les mêmes numéros de pièce |
@@ -91,8 +91,10 @@ Trois conséquences directes :
 | **IF-06** | Back-office PPC | AC-ADM — administrateur, AC-FIN — contrôleur financier | Navigateur, écran large | En ligne | 10 | M2, M3, M4, M6, M8, M11 |
 | **IF-07** | Console dépôt | AC-DEP — dépôt ou point de retrait agréé | Navigateur, tablette ou téléphone | En ligne | 3 | M5, M9 |
 | **IF-08** | Console d'exploitation APIX | AC-FBB — super-administrateur | Navigateur | En ligne | 3 | Transverse |
+| **IF-09** | Console d'automatisation et des canaux | AC-ADM — administrateur PPC, AC-FBB — exploitant | Navigateur, écran large | En ligne | 5 | Transverse (V1) |
+| **IF-10** | Chatbot WhatsApp côté client | AC-CLI — client final sur WhatsApp | Application WhatsApp | En ligne | 4 | M1 à M4, M7 (V1) |
 
-Total : **53 écrans**, dont 16 mutualisés entre l'application et le web client.
+Total : **62 écrans**, dont 16 mutualisés entre l'application et le web client.
 
 > L'interface bancaire (AC-BNK) n'est pas une interface utilisateur : c'est une intégration. Elle n'apparaît donc pas dans cet inventaire, mais elle conditionne trois écrans (CLI-09, CLI-10, BKO-06).
 
@@ -120,9 +122,9 @@ Total : **53 écrans**, dont 16 mutualisés entre l'application et le web client
 | Web client (navigateur) | **MVP** | Même parcours, mise en page large, export tableur | — |
 | Notifications SMS | **MVP** | Envoi sortant sur changement d'état et sur décision de litige | Contrat passerelle SMS de PPC |
 | Courriel | **MVP** | Reçu et dossier de preuve en pièce jointe | — |
-| WhatsApp Business | V1 | Cotation, paiement et bon depuis une conversation | Compte marchand validé, modèles de messages approuvés |
-| USSD | V2 | Consultation de l'état d'une commande, sans internet | Ouverture d'un code court auprès de chaque opérateur |
-| Telegram | Non retenu | — | Canal sans base installée chez les clients de PPC |
+| WhatsApp Business | V1 — **spécifié et maquetté** | Cotation, paiement et bon depuis une conversation (IF-10) | Compte marchand validé, modèles de messages approuvés |
+| USSD | V2 | État d'une commande sans internet, et commande par menu numéroté | Ouverture d'un code court auprès de chaque opérateur |
+| Telegram | V1 — canal prêt, non ouvert | Notifications et suivi depuis un second canal | Décision de PPC ; la console des canaux est déjà outillée pour l'ouvrir |
 | Chatbot avec IA locale | V1 | Interprétation d'une demande en langage libre, avec repli sur menus numérotés | Arbitrage de PPC sur l'hébergement de l'IA |
 
 ---
@@ -286,6 +288,49 @@ L'interface reprend les seize écrans `CLI-01` à `CLI-16` en mise en page large
 - Aucun écran FBB ne permet de modifier un montant, un bon ou une décision de litige.
 - Toute action de support laisse une trace visible par PPC.
 
+### 4.9 IF-09 — Console d'automatisation et des canaux *(V1)*
+
+**Acteurs :** AC-ADM, administrateur PPC ; AC-FBB, exploitant APIX pour la partie technique.
+**Objectif :** ouvrir, configurer et surveiller les canaux externes — WhatsApp Business, SMS, e-mail, Telegram, USSD — sans jamais leur donner de pouvoir sur le prix, le bon de commande ou l'argent.
+**Mode :** navigateur, écran large. Cette interface est **hors périmètre MVP** : elle est spécifiée ici parce que PPC l'a demandée explicitement en réunion, et parce qu'aucun canal ne peut s'ouvrir sans elle.
+
+| Écran | Nom | Ce que l'utilisateur y fait | Point de contrôle |
+|---|---|---|---|
+| CNL-01 | Tableau des canaux | Voit les canaux déclarés, leur état, leur volume et leur coût unitaire | Un canal ne s'active que si ses cinq conditions d'ouverture sont réunies |
+| CNL-02 | Modèles de messages | Rédige et fait approuver les modèles par canal et par langue | Aucun message hors modèle approuvé ne peut partir |
+| CNL-03 | Règles de routage | Décide, par événement, quels canaux sont utilisés, dans quel ordre et avec quel repli | Une règle non testée n'est jamais publiée |
+| CNL-04 | Conversations | Reprend la main sur une conversation, renseigne, relance un paiement | La reprise ne permet ni de changer un prix, ni de créer un bon |
+| CNL-05 | Bac à sable | Simule un parcours complet avant ouverture d'un canal | Test de bout en bout obligatoire, avec un dossier de test identifié |
+
+**Garde-fous de cette interface**
+
+- La console ne peut pas modifier un prix, un barème, un bon ou un encaissement.
+- Elle ne peut pas désactiver un message de sécurité : paiement confirmé, litige ouvert, décision de litige partent toujours.
+- Elle n'écrit jamais de message libre vers un client : tout part d'un modèle approuvé.
+- Le journal d'envoi conserve chaque message, son canal, son horodatage et son accusé de réception.
+
+### 4.10 IF-10 — Chatbot WhatsApp côté client *(V1)*
+
+**Acteur :** AC-CLI, client final PPC, depuis le compte professionnel de PPC sur WhatsApp.
+**Objectif :** obtenir une cotation, payer et recevoir son bon **sans installer d'application** — c'est le canal que PPC a demandé en réunion, et celui qui parle aux clients qui ont déjà WhatsApp et rien d'autre.
+**Mode :** conversationnel, texte et boutons de réponse rapide. Le parcours fonctionne **aussi en menus numérotés** si PPC n'autorise pas l'intelligence artificielle.
+
+| Écran | Nom | Ce que le client y fait | Point de contrôle |
+|---|---|---|---|
+| WAB-01 | Accueil et identification | Choisit une action dans le menu, reçoit un code par SMS | Aucun prix tant que le numéro n'est pas vérifié (RG-COT-01) |
+| WAB-02 | Commande guidée | Répond à des questions fermées : produit, quantité, zone, option | Une question à la fois ; le bot ne calcule aucun prix |
+| WAB-03 | Cotation et paiement | Reçoit la cotation dans la conversation, choisit son moyen de paiement | Le montant est produit par le service de cotation, pas par le bot |
+| WAB-04 | Bon et suivi | Reçoit son bon avec QR, suit le chargement et la livraison, valide la réception | Le bon est émis par le système à l'encaissement, jamais par le bot |
+
+**Garde-fous de cette interface**
+
+- Aucun prix, aucun ordre de grandeur avant vérification du numéro : c'est la protection contre le sondage de la grille par un concurrent.
+- Le paiement transporte le numéro de cotation ; sans lui, aucun encaissement n'est possible (RG-COT-04).
+- « Parler à un agent » est proposé dès le premier message, et automatiquement après deux échecs.
+- Le bot n'annonce jamais un délai de règlement du transporteur : il ne le connaît pas.
+
+> Les deux flux associés — le parcours conversationnel complet et l'automatisation des messages sortants — figurent en annexe A, planches A.16 et A.17.
+
 ---
 
 ## 5. Parcours de bout en bout
@@ -372,6 +417,8 @@ Légende : **L** lecture, **C** création ou saisie, **V** validation ou décisi
 | IF-06 Back-office PPC | — | — | — | — | **L C V** | L C V | — | L |
 | IF-07 Console dépôt | — | — | — | L | L | — | **L C** | — |
 | IF-08 Console d'exploitation APIX | — | — | — | — | L | — | — | **L C** |
+| IF-09 Console des canaux *(V1)* | — | — | — | — | **L C** | L | — | L C |
+| IF-10 Chatbot WhatsApp *(V1)* | **L C** | — | — | — | L | — | — | — |
 
 > Le détail des 30 fonctions et des 9 rôles figure dans `dist/xlsx/02-Matrice-roles-droits.xlsx`. La présente matrice ne donne que la vue par interface, utile à la conception et à la recette.
 
@@ -405,6 +452,9 @@ Légende : **L** lecture, **C** création ou saisie, **V** validation ou décisi
 | Accès des utilisateurs PPC par annuaire | US-M11-06 | BKO-10 | Si l'annuaire n'est pas disponible, l'écran retombe sur une gestion locale de comptes |
 | Agrégateur de paiement | Piste Araka ou banque agrégateur | CLI-09 | Le client ne voit que des canaux ; le choix du fournisseur ne modifie que les frais, pas l'écran |
 | Nombre de versements d'un échéancier | RG-PAY-18 | CLI-09 | Un échéancier à deux versements ne se présente pas comme un échéancier à quatre |
+| Périmètre du canal WhatsApp | Q-56 | WAB-02, WAB-03 | Si le canal se limite à la notification et au suivi, WAB-02 et WAB-03 disparaissent |
+| IA locale ou menus numérotés | Q-57 | WAB-02 | La formulation change, pas le parcours : le menu numéroté reste la référence |
+| Ouverture de Telegram et de l'USSD | à ouvrir | CNL-01 | La console est déjà outillée ; c'est une décision d'ouverture, pas un développement |
 
 ---
 
@@ -455,6 +505,13 @@ Légende : **L** lecture, **C** création ou saisie, **V** validation ou décisi
 | A.8 | IF-06 — BKO-05 paiements reçus sans cotation | Bureau |
 | A.9 | IF-06 — BKO-07 instruction d'un litige | Bureau |
 | A.10 | IF-07 — DEP-01 réception d'un bon au dépôt | Tablette |
+| A.11 | IF-09 — CNL-01 tableau des canaux | Bureau |
+| A.12 | IF-09 — CNL-03 règles de routage des messages | Bureau |
+| A.13 | IF-09 — CNL-04 reprise humaine d'une conversation | Bureau |
+| A.14 | IF-10 — WAB-01 identification, WAB-02 commande guidée | Téléphone |
+| A.15 | IF-10 — WAB-03 cotation et paiement, WAB-04 bon et suivi | Téléphone |
+| A.16 | Flux 1 — parcours conversationnel WhatsApp | Schéma |
+| A.17 | Flux 2 — automatisation des messages sortants | Schéma |
 
 :::paysage
 
@@ -478,6 +535,20 @@ Légende : **L** lecture, **C** création ou saisie, **V** validation ou décisi
 
 ![Planche A.10 — IF-07 Console dépôt : réception d'un bon|23](assets/wireframes/p10-depot-reception.png)
 
+![Planche A.11 — IF-09 Console des canaux : tableau des canaux externes|25](assets/wireframes/p11-canaux-tableau.png)
+
+![Planche A.12 — IF-09 Console des canaux : règles de routage des messages|25](assets/wireframes/p12-canaux-routage.png)
+
+![Planche A.13 — IF-09 Console des canaux : reprise humaine d'une conversation|25](assets/wireframes/p13-canaux-conversations.png)
+
+![Planche A.14 — IF-10 Chatbot WhatsApp : identification et commande guidée|24](assets/wireframes/p14-whatsapp-identification-cotation.png)
+
+![Planche A.15 — IF-10 Chatbot WhatsApp : paiement et bon de commande|24](assets/wireframes/p15-whatsapp-paiement-bon.png)
+
+![Planche A.16 — Flux 1, parcours conversationnel WhatsApp de la question au bon|25](assets/wireframes/p16-flux-conversation.png)
+
+![Planche A.17 — Flux 2, automatisation des messages sortants et repli humain|25](assets/wireframes/p17-flux-automatisation.png)
+
 :::portrait
 
 ## Annexe B — Glossaire des préfixes d'écran
@@ -492,3 +563,5 @@ Légende : **L** lecture, **C** création ou saisie, **V** validation ou décisi
 | `BKO-` | IF-06 Back-office PPC | Administrateur et contrôleur financier PPC |
 | `DEP-` | IF-07 Console dépôt | Dépôt ou point de retrait agréé |
 | `EXP-` | IF-08 Console d'exploitation APIX | Super-administrateur APIX |
+| `CNL-` | IF-09 Console d'automatisation et des canaux | Administrateur PPC et exploitant APIX |
+| `WAB-` | IF-10 Chatbot WhatsApp | Client final PPC |

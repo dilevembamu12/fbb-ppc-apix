@@ -271,6 +271,103 @@ def alerte(b: Toile, x, y, w, texte, hauteur=None):
 
 
 # --------------------------------------------------------------------------
+# Composants conversationnels (WhatsApp) et diagrammes de flux
+# --------------------------------------------------------------------------
+def entete_whatsapp(b: Toile, nom="PPC Ciment", sous="Compte professionnel"):
+    b.r(0, 38, L_PHONE, 64, remplissage=(240, 240, 240))
+    b.t(18, 66, "‹", 24)
+    b.r(46, 50, 40, 40, remplissage=REMPLI_FORT, arrondi=20)
+    b.t(66, 70, "PPC", 10, semi=True, couleur=TEXTE_FAIBLE, ancre="mm")
+    b.t(98, 60, nom, 12, semi=True)
+    b.t(98, 80, sous, 9, couleur=TEXTE_FAIBLE)
+    b.r(L_PHONE - 42, 60, 24, 24, contour=TRAIT_FORT, ep=1, arrondi=12)
+    b.ligne(0, 102, L_PHONE, 102, TRAIT)
+
+
+def bulle(b: Toile, y, texte, sortante=False, largeur_max=286, taille=10):
+    """Message conversationnel ; renvoie l'ordonnée suivante."""
+    largeur = min(largeur_max, b.mesurer(texte, taille) + 28)
+    lignes = b.nb_lignes(texte, largeur - 26, taille)
+    hauteur = 14 + lignes * (taille * 1.35)
+    x = L_PHONE - 16 - largeur if sortante else 16
+    b.r(x, y, largeur, hauteur, remplissage=REMPLI if sortante else BLANC,
+        contour=None if sortante else TRAIT, ep=1, arrondi=8)
+    b.tl(x + 13, y + 7, largeur - 26, texte, taille, interligne=1.35)
+    return y + hauteur + 8
+
+
+def boutons_rapides(b: Toile, y, libelles, largeur=286, principal=0):
+    """Réponses rapides façon WhatsApp : pastilles empilées sous le message."""
+    for i, libelle in enumerate(libelles):
+        if i == principal:
+            b.r(16, y, largeur, 32, contour=ACCENT, ep=1.5, arrondi=8, remplissage=ACCENT_PALE)
+            b.t(16 + largeur / 2, y + 16, libelle, 10, semi=True, couleur=ACCENT, ancre="mm")
+        else:
+            b.r(16, y, largeur, 32, contour=TRAIT_FORT, ep=1, arrondi=8)
+            b.t(16 + largeur / 2, y + 16, libelle, 10, ancre="mm")
+        y += 40
+    return y + 4
+
+
+def carte_dans_bulle(b: Toile, y, titre, lignes, action, largeur=286, note=None):
+    """Carte de cotation, de bon ou de reçu, insérée dans la conversation."""
+    hauteur = 58 + len(lignes) * 20 + 46 + (18 if note else 0)
+    b.r(16, y, largeur, hauteur, remplissage=BLANC, contour=TRAIT_FORT, ep=1, arrondi=8)
+    b.t(30, y + 16, titre, 10, semi=True)
+    yy = y + 40
+    for libelle, valeur in lignes:
+        b.t(30, yy, libelle, 9, couleur=TEXTE_FAIBLE)
+        b.t(16 + largeur - 16, yy, valeur, 9, semi=True, ancre="ra")
+        yy += 20
+    if note:
+        b.t(30, yy + 2, note, 9, couleur=TEXTE_FAIBLE)
+        yy += 18
+    bouton(b, 30, yy + 10, largeur - 28, 34, action, principal=True, taille=10)
+    return y + hauteur + 10
+
+
+def bandeau_systeme(b: Toile, y, texte):
+    """Ligne de système centrée, comme dans une conversation."""
+    largeur = b.mesurer(texte, 9) + 24
+    b.r((L_PHONE - largeur) / 2, y, largeur, 24, remplissage=REMPLI, arrondi=12)
+    b.t(L_PHONE / 2, y + 12, texte, 9, couleur=TEXTE_FAIBLE, ancre="mm")
+    return y + 32
+
+
+def barre_saisie(b: Toile):
+    y = H_PHONE - H_PIEDS - 50
+    b.r(0, y, L_PHONE, 50, remplissage=(240, 240, 240))
+    b.ligne(0, y, L_PHONE, y, TRAIT)
+    b.r(12, y + 9, L_PHONE - 64, 32, remplissage=BLANC, contour=TRAIT, ep=1, arrondi=16)
+    b.t(28, y + 25, "Écrivez un message", 10, couleur=TEXTE_FAIBLE, ancre="lm")
+    b.r(L_PHONE - 44, y + 11, 30, 30, remplissage=TEXTE_FAIBLE, arrondi=15)
+    b.d.polygon([((L_PHONE - 32) * b.e, (y + 20) * b.e),
+                 ((L_PHONE - 32) * b.e, (y + 32) * b.e),
+                 ((L_PHONE - 22) * b.e, (y + 26) * b.e)], fill=BLANC)
+
+
+def noeud(b: Toile, x, y, w, h, titre, sous=None, accent=False, taille=11):
+    b.r(x, y, w, h, contour=ACCENT if accent else TRAIT_FORT, ep=1.5, arrondi=8,
+        remplissage=ACCENT_PALE if accent else BLANC)
+    if sous:
+        b.tl(x + 14, y + 12, w - 28, titre, taille, semi=True, interligne=1.25)
+        b.tl(x + 14, y + h - 28, w - 28, sous, 9, couleur=TEXTE_FAIBLE, interligne=1.25)
+    else:
+        b.tl(x + 14, y + h / 2 - 9, w - 28, titre, taille, semi=True, interligne=1.25)
+
+
+def fleche(b: Toile, x1, y1, x2, y2, couleur=TRAIT_FORT):
+    import math
+    b.ligne(x1, y1, x2, y2, couleur, 1.5)
+    angle = math.atan2(y2 - y1, x2 - x1)
+    longueur, ouverture = 9.0, 0.42
+    points = [((x2 + longueur * math.cos(angle + d)) * b.e,
+               (y2 + longueur * math.sin(angle + d)) * b.e)
+              for d in (0, math.pi - ouverture, math.pi + ouverture)]
+    b.d.polygon(points, fill=couleur)
+
+
+# --------------------------------------------------------------------------
 # IF-01 — Application client
 # --------------------------------------------------------------------------
 def ecran_cli04() -> Toile:
@@ -975,6 +1072,482 @@ def ecran_dep01() -> Toile:
     return b
 
 
+def lien(b: Toile, points, couleur=TRAIT_FORT):
+    """Polyligne fléchée : segments droits, pointe sur le dernier."""
+    for (x1, y1), (x2, y2) in zip(points, points[1:-1]):
+        b.ligne(x1, y1, x2, y2, couleur, 1.5)
+    fleche(b, points[-2][0], points[-2][1], points[-1][0], points[-1][1], couleur)
+
+
+def decision(b: Toile, x, y, w, h, question):
+    """Losange de décision, dessiné comme un hexagone aplati pour rester lisible."""
+    b.r(x, y, w, h, contour=TRAIT_FORT, ep=1.5, arrondi=10)
+    b.tl(x + 16, y + h / 2 - 9, w - 32, question, 10, semi=True, interligne=1.25)
+
+
+# --------------------------------------------------------------------------
+# IF-09 — Console d'automatisation et de configuration des canaux
+# --------------------------------------------------------------------------
+NAV_CNL = ["Vue d'ensemble", "Canaux", "Modèles de messages", "Règles de routage",
+           "Conversations", "Bac à sable", "Journal d'envoi"]
+
+
+def ecran_cnl01() -> Toile:
+    b = Toile(1280, 760, ft=1.2)
+    rail_lateral(b, NAV_CNL, actif=1, titre="APIX Canaux", sous_titre="Administration PPC")
+
+    b.t(252, 40, "Canaux externes", 20, gras=True)
+    b.t(252, 70, "6 canaux déclarés · 4 actifs · 1 en préparation · 1 non ouvert", 10,
+        couleur=TEXTE_FAIBLE)
+
+    entetes = ["Canal", "Usage", "État", "Volume 7 j", "Coût unitaire", "Dernier incident"]
+    largeurs = [190, 250, 150, 120, 130, 152]
+    x = 252
+    b.r(252, 100, 992, 30, remplissage=REMPLI)
+    for entete, larg in zip(entetes, largeurs):
+        b.t(x + 12, 110, entete, 9, semi=True, couleur=TEXTE_FAIBLE)
+        x += larg
+
+    lignes = (
+        ("WhatsApp Business", "cotation, paiement, bon", "actif", "812 messages", "0,04 $ / conv.", "—"),
+        ("E-mail", "reçus, dossier de preuve", "actif", "340 envois", "0,01 $", "—"),
+        ("SMS", "notifications critiques", "actif", "1 240 envois", "0,03 $", "—"),
+        ("Notification applicative", "changement d'état", "actif", "2 100", "inclus", "—"),
+        ("USSD", "zones sans internet", "en préparation", "—", "à négocier", "—"),
+        ("Telegram", "canal complémentaire", "non ouvert", "—", "0,00 $", "—"),
+    )
+    y = 130
+    for ligne in lignes:
+        x = 252
+        for i, (val, larg) in enumerate(zip(ligne, largeurs)):
+            couleur = TEXTE
+            if i == 2:
+                couleur = ACCENT if val in ("non ouvert", "en préparation") else TEXTE
+            b.t(x + 12, y, val, 10, semi=(i == 0), couleur=couleur)
+            x += larg
+        y += 34
+        b.ligne(252, y - 12, 1244, y - 12, TRAIT)
+
+    # panneau latéral : ce que la console ne permet pas
+    b.r(252, 380, 470, 250, contour=TRAIT_FORT, ep=1.5, arrondi=8)
+    b.t(272, 400, "Ce que cette console ne peut pas faire", 11, semi=True)
+    y = 430
+    for interdit in ("Modifier un prix ou un barème",
+                     "Créer un bon de commande",
+                     "Désactiver le SMS d'un événement critique",
+                     "Écrire un message hors modèle approuvé",
+                     "Répondre à un client sans identité vérifiée"):
+        b.r(272, y - 3, 14, 14, contour=TRAIT_FORT, ep=1, arrondi=3)
+        b.ligne(275, y, 283, y + 8, ACCENT, 1.5)
+        b.ligne(283, y, 275, y + 8, ACCENT, 1.5)
+        b.t(296, y, interdit, 10)
+        y += 30
+
+    b.r(742, 380, 502, 250, contour=TRAIT, ep=1, arrondi=8)
+    b.t(762, 400, "Conditions d'ouverture d'un canal", 11, semi=True)
+    y = 430
+    for etape in ("1. Compte marchand validé et numéro d'entreprise vérifié",
+                  "2. Modèles de messages soumis et approuvés par le canal",
+                  "3. Test de bout en bout réussi dans le bac à sable",
+                  "4. Plafond de messages et budget quotidien renseignés",
+                  "5. Astreinte de reprise humaine désignée"):
+        b.t(762, y, etape, 10, couleur=TEXTE_FAIBLE)
+        y += 30
+
+    b.t(252, 660, "Un canal ne s'active pas par un bouton : il s'active quand ses cinq conditions sont réunies.",
+        10, couleur=ACCENT)
+    b.t(252, 726, "CNL-01 · Tableau des canaux — IF-09 Console des canaux", 10, couleur=TEXTE_FAIBLE)
+    return b
+
+
+def ecran_cnl03() -> Toile:
+    b = Toile(1280, 760, ft=1.2)
+    rail_lateral(b, NAV_CNL, actif=3, titre="APIX Canaux", sous_titre="Administration PPC")
+
+    b.t(252, 40, "Règles de routage des messages", 20, gras=True)
+    b.t(252, 70, "Un événement, plusieurs canaux : l'ordre et le repli sont décidés ici, une seule fois", 10,
+        couleur=TEXTE_FAIBLE)
+
+    entetes = ["Événement", "WhatsApp", "SMS", "E-mail", "Appli", "Délai", "Repli"]
+    largeurs = [230, 120, 100, 100, 100, 110, 232]
+    x = 252
+    b.r(252, 100, 992, 30, remplissage=REMPLI)
+    for entete, larg in zip(entetes, largeurs):
+        b.t(x + 10, 110, entete, 9, semi=True, couleur=TEXTE_FAIBLE)
+        x += larg
+
+    lignes = (
+        ("Cotation émise", "oui", "non", "oui", "oui", "immédiat", "SMS à 5 min"),
+        ("Paiement confirmé", "oui", "oui", "oui", "oui", "immédiat", "SMS à 2 min"),
+        ("Bon de commande émis", "oui", "non", "oui", "oui", "immédiat", "e-mail à 5 min"),
+        ("Chargement certifié", "oui", "non", "non", "oui", "immédiat", "SMS si 2 échecs"),
+        ("Livraison prouvée", "oui", "oui", "oui", "oui", "immédiat", "SMS à 5 min"),
+        ("Litige ouvert", "oui", "oui", "oui", "oui", "immédiat", "agent sous 1 h"),
+        ("Décision de litige", "oui", "oui", "oui", "oui", "immédiat", "agent sous 1 h"),
+    )
+    y = 130
+    for ligne in lignes:
+        x = 252
+        for i, (val, larg) in enumerate(zip(ligne, largeurs)):
+            couleur = TEXTE_FAIBLE if val == "non" else TEXTE
+            b.t(x + 10, y, val, 10, semi=(i == 0), couleur=couleur)
+            x += larg
+        y += 32
+        b.ligne(252, y - 11, 1244, y - 11, TRAIT)
+
+    b.r(252, 372, 470, 240, contour=TRAIT, ep=1, arrondi=8)
+    b.t(272, 392, "Règles de priorité appliquées avant l'envoi", 11, semi=True)
+    y = 422
+    for regle in ("Canal préféré déclaré par le client, sinon WhatsApp",
+                  "Langue du dernier échange : français ou lingala",
+                  "Heures calmes 21 h – 6 h : mise en file, sauf paiement et litige",
+                  "Plafond de 3 messages par client et par jour",
+                  "Un message de sécurité n'est jamais désactivable"):
+        b.t(272, y, regle, 10, couleur=TEXTE_FAIBLE)
+        y += 30
+
+    b.r(742, 372, 502, 240, contour=TRAIT_FORT, ep=1.5, arrondi=8)
+    b.t(762, 392, "Test de la règle « Litige ouvert »", 11, semi=True)
+    b.t(762, 420, "Simulation du 07/11/2026 à 15 h 05", 9, couleur=TEXTE_FAIBLE)
+    y = 448
+    for canal, detail in (("WhatsApp Business", "envoyé · 15:05:02"),
+                          ("SMS", "envoyé · 15:05:03"),
+                          ("E-mail", "envoyé · 15:05:04"),
+                          ("Reprise humaine", "ticket ouvert si non délivré sous 1 h")):
+        b.t(762, y, canal, 10, semi=True)
+        b.t(1224, y, detail, 9, couleur=TEXTE_FAIBLE, ancre="ra")
+        y += 28
+        b.ligne(762, y - 10, 1224, y - 10, TRAIT)
+
+    b.t(252, 640, "Le routage est vérifié par un test avant publication : une règle non testée n'est jamais active.",
+        10, couleur=ACCENT)
+    b.t(252, 726, "CNL-03 · Règles de routage — IF-09 Console des canaux", 10, couleur=TEXTE_FAIBLE)
+    return b
+
+
+def ecran_cnl04() -> Toile:
+    b = Toile(1280, 760, ft=1.2)
+    rail_lateral(b, NAV_CNL, actif=4, titre="APIX Canaux", sous_titre="Administration PPC")
+
+    b.t(252, 40, "Conversations", 20, gras=True)
+    b.t(252, 70, "2 conversations demandent une reprise humaine", 10, couleur=ACCENT)
+
+    # liste des conversations
+    b.r(252, 96, 320, 500, contour=TRAIT, ep=1, arrondi=8)
+    y = 112
+    for numero, apercu, etat in (("+243 ••• 412", "Je veux payer autrement", "à reprendre"),
+                                 ("+243 ••• 907", "Où est mon camion ?", "à reprendre"),
+                                 ("+243 ••• 331", "Cotation payée", "bot"),
+                                 ("+243 ••• 118", "Merci", "clos")):
+        if etat == "à reprendre":
+            b.r(252, y - 6, 320, 92, remplissage=ACCENT_PALE)
+        b.t(268, y + 4, numero, 10, semi=True)
+        b.t(268, y + 26, apercu, 10, couleur=TEXTE_FAIBLE)
+        b.t(268, y + 48, etat, 9, couleur=ACCENT if etat == "à reprendre" else TEXTE_FAIBLE)
+        y += 100
+        b.ligne(252, y - 12, 572, y - 12, TRAIT)
+
+    # fil de conversation
+    b.r(600, 96, 420, 500, contour=TRAIT, ep=1, arrondi=8)
+    b.t(618, 112, "+243 ••• 412 — Kivu Trans SARL", 10, semi=True)
+    b.ligne(600, 132, 1020, 132, TRAIT)
+    y = 150
+    b.r(618, y, 300, 44, remplissage=REMPLI, arrondi=8)
+    b.tl(630, y + 8, 276, "Votre cotation COT-2026-000123 attend un paiement de 3 145 $.", 9, interligne=1.3)
+    y += 54
+    b.r(720, y, 282, 44, remplissage=BLANC, contour=TRAIT, ep=1, arrondi=8)
+    b.tl(732, y + 8, 258, "Je veux payer autrement, le virement prend trop de temps.", 9, interligne=1.3)
+    y += 54
+    b.r(618, y, 344, 56, remplissage=REMPLI, arrondi=8)
+    b.tl(630, y + 8, 320,
+         "Je transmets à un agent PPC : ce montant dépasse ce que je peux régler ici.", 9, interligne=1.3)
+    y += 66
+    b.r(600, y, 420, 40, remplissage=BANDE)
+    b.t(618, y + 14, "Le bot a passé la main — motif : demande hors périmètre", 9, couleur=ACCENT)
+    y += 54
+    b.r(618, y, 300, 40, remplissage=REMPLI, arrondi=8)
+    b.tl(630, y + 8, 276, "Bonjour, je suis Nadine, je m'occupe de votre dossier.", 9, interligne=1.3)
+
+    # panneau contexte
+    b.r(1044, 96, 200, 500, contour=TRAIT_FORT, ep=1.5, arrondi=8)
+    b.t(1060, 112, "Contexte", 10, semi=True)
+    y = 140
+    for lib, val in (("Client", "Kivu Trans SARL"), ("Vérifié", "oui"),
+                     ("Plafond", "2 500 $"), ("Cotation", "COT-2026-000123"),
+                     ("Montant", "3 145,00 $"), ("Bon", "non émis")):
+        b.t(1060, y, lib, 9, couleur=TEXTE_FAIBLE)
+        b.t(1060, y + 15, val, 10, semi=True)
+        y += 42
+    bouton(b, 1060, 412, 168, 36, "Reprendre la main", principal=True, taille=10)
+    bouton(b, 1060, 456, 168, 36, "Renvoyer au bot", taille=10)
+    b.tl(1060, 502, 168, "La reprise ne permet ni de changer un prix, ni de créer un bon.", 9,
+         couleur=TEXTE_FAIBLE)
+
+    b.r(252, 616, 992, 74, remplissage=BANDE, arrondi=6)
+    b.t(272, 630, "Ce que l'agent peut faire", 10, semi=True)
+    b.tl(272, 650, 950,
+         "Renseigner, rassurer, relancer un paiement, ouvrir un litige. Il ne peut pas accorder de remise, "
+         "ni contourner un plafond : ces décisions passent par une dérogation nominative tracée.",
+         9, couleur=TEXTE_FAIBLE)
+
+    b.t(252, 726, "CNL-04 · Reprise humaine d'une conversation — IF-09 Console des canaux", 10,
+        couleur=TEXTE_FAIBLE)
+    return b
+
+
+# --------------------------------------------------------------------------
+# IF-10 — Chatbot WhatsApp côté client
+# --------------------------------------------------------------------------
+def ecran_wab01() -> Toile:
+    b = Toile(L_PHONE, H_PHONE)
+    b.r(0, 0, L_PHONE, H_PHONE, contour=TRAIT)
+    b.t(18, 12, "14:32", 11, semi=True)
+    for i in range(4):
+        b.r(L_PHONE - 92 + i * 7, 22 - i * 3, 4, 3 + i * 3, remplissage=TEXTE_FAIBLE)
+    entete_whatsapp(b)
+    y = 116
+    y = bandeau_systeme(b, y, "Aujourd'hui")
+    y = bulle(b, y, "Bonjour ! Ici l'assistant PPC Ciment. Pour afficher des prix, je dois vérifier votre numéro.")
+    y = boutons_rapides(b, y, ["Recevoir un code par SMS", "Je suis déjà client", "Parler à un agent"], principal=-1)
+    y = bandeau_systeme(b, y, "Code envoyé au +243 ••• ••• 412")
+    y = bulle(b, y, "482 913", sortante=True)
+    y = bulle(b, y, "Numéro vérifié. Que souhaitez-vous faire ?")
+    y = boutons_rapides(b, y, ["Commander du ciment", "Suivre ma commande", "Poser une question"], principal=-1)
+    barre_saisie(b)
+    pied_ecran(b, "WAB-01", "Accueil et identification")
+    return b
+
+
+def ecran_wab02() -> Toile:
+    b = Toile(L_PHONE, H_PHONE)
+    b.r(0, 0, L_PHONE, H_PHONE, contour=TRAIT)
+    b.t(18, 12, "14:35", 11, semi=True)
+    for i in range(4):
+        b.r(L_PHONE - 92 + i * 7, 22 - i * 3, 4, 3 + i * 3, remplissage=TEXTE_FAIBLE)
+    entete_whatsapp(b)
+    y = 116
+    y = bulle(b, y, "Quel produit ?")
+    y = boutons_rapides(b, y, ["CEM II 42,5 — 50 kg", "CEM I 52,5 — 50 kg"], principal=-1)
+    y = bulle(b, y, "CEM II 42,5", sortante=True)
+    y = bulle(b, y, "Quelle quantité, en sacs de 50 kg ?")
+    y = bulle(b, y, "200 sacs", sortante=True)
+    y = bulle(b, y, "Où livrer ?")
+    y = boutons_rapides(b, y, ["Gombe", "Limete", "Autre zone"], principal=-1)
+    y = bulle(b, y, "Avec le transport PPC ou vous organisez l'enlèvement ?")
+    y = boutons_rapides(b, y, ["Avec transport PPC", "Enlèvement par mes soins"], principal=-1)
+    barre_saisie(b)
+    pied_ecran(b, "WAB-02", "Commande guidée par menus")
+    return b
+
+
+def ecran_wab03() -> Toile:
+    b = Toile(L_PHONE, H_PHONE)
+    b.r(0, 0, L_PHONE, H_PHONE, contour=TRAIT)
+    b.t(18, 12, "14:41", 11, semi=True)
+    for i in range(4):
+        b.r(L_PHONE - 92 + i * 7, 22 - i * 3, 4, 3 + i * 3, remplissage=TEXTE_FAIBLE)
+    entete_whatsapp(b)
+    y = 116
+    y = bulle(b, y, "Voici votre cotation. Le prix est ferme pendant 48 heures.")
+    y = carte_dans_bulle(
+        b, y, "Cotation COT-2026-000123",
+        [("Ciment · 200 sacs", "2 480,00 $"), ("Transport · Gombe", "640,00 $"),
+         ("Total tout compris", "3 145,00 $")],
+        "Payer cette cotation", note="Valable jusqu'au 09/11 à 14 h 35",
+    )
+    y = bulle(b, y, "3 145 $ dépasse le plafond du mobile money (2 500 $). Deux solutions :")
+    y = boutons_rapides(b, y, ["Virement bancaire", "Échéancier en 2 versements"], principal=-1)
+    y = bulle(b, y, "Virement bancaire", sortante=True)
+    y = carte_dans_bulle(
+        b, y, "Référence de virement",
+        [("Référence à indiquer", "COT-2026-000123"), ("Montant", "3 145,00 $")],
+        "Copier la référence", note="Aucun virement sans cette référence n'est accepté",
+    )
+    barre_saisie(b)
+    pied_ecran(b, "WAB-03", "Cotation et paiement")
+    return b
+
+
+def ecran_wab04() -> Toile:
+    b = Toile(L_PHONE, H_PHONE)
+    b.r(0, 0, L_PHONE, H_PHONE, contour=TRAIT)
+    b.t(18, 12, "15:12", 11, semi=True)
+    for i in range(4):
+        b.r(L_PHONE - 92 + i * 7, 22 - i * 3, 4, 3 + i * 3, remplissage=TEXTE_FAIBLE)
+    entete_whatsapp(b)
+    y = 116
+    y = bandeau_systeme(b, y, "Paiement confirmé par la banque")
+    y = bulle(b, y, "Paiement reçu. Votre bon de commande est émis, une seule fois.")
+    b.r(16, y, 286, 132, remplissage=BLANC, contour=TRAIT_FORT, ep=1, arrondi=8)
+    b.t(30, y + 14, "Bon BON-2026-000456", 10, semi=True)
+    qr(b, 30, y + 34, 68, graine=11)
+    b.t(112, y + 40, "200 sacs CEM II 42,5", 9)
+    b.t(112, y + 58, "Usine de Kimpese", 9, couleur=TEXTE_FAIBLE)
+    b.t(112, y + 76, "Nominatif · usage unique", 9, couleur=ACCENT)
+    bouton(b, 30, y + 92, 258, 32, "Afficher le QR", principal=True, taille=10)
+    y += 142
+    y = bulle(b, y, "Transporteur affecté : Kivu Logistique. Camion en chargement à 15 h 40.")
+    y = bulle(b, y, "Votre commande est chargée. Livraison prévue aujourd'hui avant 18 h.")
+    y = bulle(b, y, "À la livraison, validez la réception vous-même : le chauffeur ne peut pas le faire à votre place.")
+    y = boutons_rapides(b, y, ["Valider la réception", "Signaler un problème"], principal=-1)
+    barre_saisie(b)
+    pied_ecran(b, "WAB-04", "Bon de commande et suivi")
+    return b
+
+
+# --------------------------------------------------------------------------
+# Diagrammes de flux
+# --------------------------------------------------------------------------
+def flux_conversation() -> Toile:
+    b = Toile(1400, 860, ft=1.0, fond=FOND)
+    b.t(40, 26, "Parcours conversationnel WhatsApp — de la question au bon de commande", 18, gras=True)
+    b.t(40, 54, "Le bot ne calcule rien : il interroge les mêmes services que l'application mobile.", 10,
+        couleur=TEXTE_FAIBLE)
+
+    xg, wg = 60, 300
+    y = 96
+    noeud(b, xg, y, wg, 56, "Client écrit au numéro d'entreprise")
+    lien(b, [(xg + wg / 2, y + 56), (xg + wg / 2, y + 78)])
+    y += 78
+    noeud(b, xg, y, wg, 56, "Menu numéroté\ncommander · suivre · agent", accent=False)
+    lien(b, [(xg + wg / 2, y + 56), (xg + wg / 2, y + 78)])
+    y += 78
+    decision(b, xg, y, wg, 60, "Numéro vérifié ?")
+    # branche « non »
+    lien(b, [(xg + wg, y + 30), (xg + wg + 60, y + 30)])
+    noeud(b, xg + wg + 70, y + 4, 250, 52, "Code à usage unique par SMS", "5 minutes, 3 tentatives")
+    lien(b, [(xg + wg + 195, y + 4), (xg + wg + 195, y - 30), (xg + wg, y - 30)])
+    b.t(xg + wg + 62, y + 8, "non", 9, couleur=ACCENT)
+    b.t(xg + wg / 2 + 8, y + 44, "oui", 9, couleur=ACCENT)
+    lien(b, [(xg + wg / 2, y + 60), (xg + wg / 2, y + 82)])
+    y += 82
+    noeud(b, xg, y, wg, 56, "Produit, quantité, zone de livraison", "questions fermées, une à la fois")
+    lien(b, [(xg + wg / 2, y + 56), (xg + wg / 2, y + 78)])
+    y += 78
+    noeud(b, xg, y, wg, 64, "Cotation émise — COT-2026-000123", "prix ferme, valable 48 heures", accent=True)
+    lien(b, [(xg + wg / 2, y + 64), (xg + wg / 2, y + 86)])
+    y += 86
+    decision(b, xg, y, wg, 60, "Paiement reçu et référencé ?")
+    lien(b, [(xg + wg, y + 30), (xg + wg + 60, y + 30)])
+    noeud(b, xg + wg + 70, y + 4, 250, 52, "Rappel puis repli sur un agent", "jamais de relance sans référence")
+    b.t(xg + wg + 62, y + 8, "non", 9, couleur=ACCENT)
+    b.t(xg + wg / 2 + 8, y + 44, "oui", 9, couleur=ACCENT)
+    lien(b, [(xg + wg / 2, y + 60), (xg + wg / 2, y + 82)])
+    y += 82
+    noeud(b, xg, y, wg, 64, "Bon de commande émis — BON-2026-000456", "automatiquement, une seule fois",
+          accent=True)
+    lien(b, [(xg + wg / 2, y + 64), (xg + wg / 2, y + 86)])
+    y += 86
+    noeud(b, xg, y, wg, 56, "Chargement, livraison, reçu certifié")
+
+    # annotations
+    xa = 730
+    b.r(xa, 96, 610, 690, contour=TRAIT, ep=1, arrondi=8, remplissage=BLANC)
+    b.t(xa + 22, 116, "Ce que ce parcours garantit", 12, semi=True)
+    y = 152
+    for titre, texte in (
+        ("Aucun prix avant vérification",
+         "Un visiteur non identifié ne reçoit ni grille, ni ordre de grandeur."),
+        ("Aucun prix calculé par le bot",
+         "La cotation est produite par le service de cotation, avec son numéro et sa durée de validité."),
+        ("Le paiement référence la cotation",
+         "Le message de paiement transporte le numéro de cotation ; sans lui, aucun encaissement."),
+        ("Le bon naît de l'encaissement",
+         "Le bot ne crée jamais un bon : il annonce celui que le système a émis."),
+        ("Repli humain à tout moment",
+         "« Parler à un agent » est offert dès le premier message, et proposé après deux échecs."),
+        ("L'IA est facultative",
+         "Le parcours est une suite de questions fermées : les menus numérotés suffisent si PPC "
+         "n'autorise pas l'IA locale."),
+        ("Langue du client",
+         "Français ou lingala, choisi sur le dernier échange ; les modèles existent dans les deux langues."),
+        ("Tout est journalisé",
+         "Chaque message envoyé, reçu ou rejeté figure au journal d'envoi, consultable par PPC."),
+    ):
+        b.t(xa + 22, y, titre, 11, semi=True)
+        hauteur = b.tl(xa + 22, y + 20, 566, texte, 10, couleur=TEXTE_FAIBLE)
+        y += 20 + hauteur + 20
+
+    b.t(40, 826, "Flux 1 · Parcours conversationnel — IF-10 Chatbot WhatsApp", 10, couleur=TEXTE_FAIBLE)
+    return b
+
+
+def flux_automatisation() -> Toile:
+    b = Toile(1400, 860, ft=1.0, fond=FOND)
+    b.t(40, 26, "Automatisation des messages sortants — un événement, plusieurs canaux", 18, gras=True)
+    b.t(40, 54, "L'ordre des canaux et le repli sont décidés une seule fois, dans les règles de routage.", 10,
+        couleur=TEXTE_FAIBLE)
+
+    # colonne des événements
+    b.t(60, 96, "Événements", 11, semi=True, couleur=TEXTE_FAIBLE)
+    evenements = ["Cotation émise", "Paiement confirmé", "Bon de commande émis",
+                  "Chargement certifié", "Livraison prouvée", "Litige ouvert", "Décision de litige"]
+    y = 118
+    positions = []
+    for e in evenements:
+        b.r(60, y, 260, 44, contour=TRAIT_FORT, ep=1, arrondi=6, remplissage=BLANC)
+        b.t(74, y + 22, e, 10, semi=True, ancre="lm")
+        positions.append(y + 22)
+        y += 56
+
+    # bus vertical puis routeur
+    b.ligne(320, positions[0], 360, positions[0], TRAIT_FORT, 1.5)
+    b.ligne(360, positions[0], 360, positions[-1], TRAIT_FORT, 1.5)
+    for py in positions:
+        b.ligne(320, py, 360, py, TRAIT_FORT, 1.5)
+    fleche(b, 360, positions[3], 430, positions[3], TRAIT_FORT)
+
+    b.r(430, 190, 280, 130, contour=TRAIT_FORT, ep=1.5, arrondi=8, remplissage=BLANC)
+    b.t(452, 208, "Moteur de routage", 12, semi=True)
+    for regle in ("canal préféré du client", "langue du dernier échange",
+                  "heures calmes 21 h – 6 h", "plafond de 3 messages / jour"):
+        b.t(452, 234 + 20 * ("canal préféré du client", "langue du dernier échange",
+                             "heures calmes 21 h – 6 h", "plafond de 3 messages / jour").index(regle),
+            "· " + regle, 9.5, couleur=TEXTE_FAIBLE)
+
+    # canaux
+    b.t(790, 96, "Canaux", 11, semi=True, couleur=TEXTE_FAIBLE)
+    canaux = ["WhatsApp Business", "SMS", "E-mail", "Notification applicative"]
+    y = 118
+    cibles = []
+    for i, c in enumerate(canaux):
+        accent = i == 0
+        b.r(790, y, 250, 44, contour=ACCENT if accent else TRAIT_FORT, ep=1.5, arrondi=6,
+            remplissage=ACCENT_PALE if accent else BLANC)
+        b.t(804, y + 22, c, 10, semi=True, ancre="lm")
+        cibles.append(y + 22)
+        y += 56
+        fleche(b, 710, 255, 786, cibles[-1], TRAIT_FORT)
+
+    # suite : accusé de réception
+    ysf = 470
+    b.r(430, ysf, 280, 80, contour=TRAIT_FORT, ep=1.5, arrondi=8, remplissage=BLANC)
+    b.tl(452, ysf + 26, 236, "Accusé de réception dans les 5 minutes ?", 10, semi=True)
+    fleche(b, 570, 320, 570, ysf - 4, TRAIT_FORT)
+
+    b.r(790, ysf, 250, 80, contour=TRAIT_FORT, ep=1, arrondi=6, remplissage=BLANC)
+    b.tl(804, ysf + 26, 222, "Repli sur le canal suivant de la règle", 10, interligne=1.3)
+    fleche(b, 710, ysf + 40, 786, ysf + 40, TRAIT_FORT)
+    b.t(716, ysf + 22, "non", 9, couleur=ACCENT)
+
+    b.r(430, ysf + 118, 610, 86, contour=ACCENT, ep=1.5, arrondi=8, remplissage=ACCENT_PALE)
+    b.tl(452, ysf + 134, 566,
+         "Deux échecs consécutifs ouvrent un ticket de reprise humaine dans la console des canaux : "
+         "l'agent voit le message non délivré et le contexte du dossier.", 10, interligne=1.35)
+    fleche(b, 915, ysf + 80, 915, ysf + 114, TRAIT_FORT)
+
+    b.r(60, 698, 1280, 92, contour=TRAIT, ep=1, arrondi=8, remplissage=BLANC)
+    b.t(80, 712, "Ce que l'automatisation ne fait jamais", 11, semi=True)
+    b.tl(80, 734, 1240,
+         "Elle n'envoie pas de prix, ni de montant de marge, ni de données d'un autre client. Elle ne relance "
+         "jamais un paiement sans référence de cotation. Elle ne désactive pas un message de sécurité "
+         "(paiement confirmé, litige ouvert, décision de litige).", 10, couleur=TEXTE_FAIBLE)
+
+    b.t(40, 826, "Flux 2 · Automatisation des messages sortants — IF-09 Console des canaux", 10,
+        couleur=TEXTE_FAIBLE)
+    return b
+
+
 # --------------------------------------------------------------------------
 # Planches
 # --------------------------------------------------------------------------
@@ -993,11 +1566,24 @@ PLANCHES = [
     ("p08-backoffice-sans-cotation", "IF-06 · Back-office PPC — paiements sans cotation", ["bko05"]),
     ("p09-backoffice-litige", "IF-06 · Back-office PPC — instruction d'un litige", ["bko07"]),
     ("p10-depot-reception", "IF-07 · Console dépôt — réception d'un bon", ["dep01"]),
+    ("p11-canaux-tableau", "IF-09 · Console des canaux — tableau des canaux", ["cnl01"]),
+    ("p12-canaux-routage", "IF-09 · Console des canaux — règles de routage des messages", ["cnl03"]),
+    ("p13-canaux-conversations", "IF-09 · Console des canaux — reprise humaine d'une conversation",
+     ["cnl04"]),
+    ("p14-whatsapp-identification-cotation",
+     "IF-10 · Chatbot WhatsApp — identification et commande guidée", ["wab01", "wab02"]),
+    ("p15-whatsapp-paiement-bon", "IF-10 · Chatbot WhatsApp — paiement et bon de commande",
+     ["wab03", "wab04"]),
+    ("p16-flux-conversation", "Flux 1 · Parcours conversationnel WhatsApp", ["flux_conversation"]),
+    ("p17-flux-automatisation", "Flux 2 · Automatisation des messages sortants", ["flux_automatisation"]),
 ]
 
 
 def construire(nom_fichier: str, ecrans: list[str]) -> Path:
-    toiles = [globals()[f"ecran_{cle}"]() for cle in ecrans]
+    toiles = []
+    for cle in ecrans:
+        fonction = globals().get(f"ecran_{cle}") or globals()[cle]
+        toiles.append(fonction())
     if len(toiles) == 1:
         planche = toiles[0]
     else:
