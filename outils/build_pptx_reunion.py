@@ -486,24 +486,46 @@ def s06_ubiquite(prs):
     texte(diapo, Inches(6.3), Inches(4.12), Inches(4.95), Inches(0.22),
           "Back-office PPC — c'est vous qui homologuez", taille=9, couleur=GRIS)
 
-    supports = [
-        ("Smartphone", "Android 8 et plus, 2 Go de mémoire."),
-        ("Web", "Même compte, mêmes données, depuis un poste ou un cybercafé."),
-        ("Hors connexion", "72 heures sans réseau, sans perdre une preuve."),
-        ("SMS et USSD", "Pour le client sans smartphone."),
-    ]
-    for index, (titre, corps) in enumerate(supports):
-        colonne = index % 2
-        ligne = index // 2
-        xx = Inches(6.3) + colonne * Inches(2.5)
-        yy = Inches(4.52) + ligne * Inches(0.85)
-        texte(diapo, xx, yy, Inches(2.35), Inches(0.22), titre, taille=11, couleur=NUIT, gras=True)
-        texte(diapo, xx, yy + Inches(0.23), Inches(2.35), Inches(0.5), corps, taille=9.5,
-              couleur=GRIS, interligne=1.2)
+    texte(diapo, Inches(6.3), Inches(4.34), Inches(4.95), Inches(0.26),
+          "Une seule cotation, un seul bon", taille=13, couleur=NUIT, gras=True,
+          police=POLICE_TITRE)
+    texte(diapo, Inches(6.3), Inches(4.6), Inches(4.95), Inches(0.2),
+          "quel que soit le canal qu'utilise le client", taille=9.5, couleur=GRIS, italique=True)
+
+    canaux = (
+        ("WhatsApp", "bon en QR"),
+        ("Telegram", "bon en QR"),
+        ("E-mail", "bon en PDF"),
+        ("SMS", "code de retrait"),
+        ("USSD", "code de retrait"),
+    )
+    for index, (nom_canal, forme_bon) in enumerate(canaux):
+        xx = Inches(6.3) + index * Inches(0.99)
+        rectangle(diapo, xx, Inches(4.9), Inches(0.9), Inches(0.72), BLANC, arrondi=True)
+        rectangle(diapo, xx, Inches(4.9), Inches(0.9), Inches(0.05),
+                  ORANGE if index < 3 else GRIS, arrondi=True)
+        texte(diapo, xx, Inches(4.99), Inches(0.9), Inches(0.2), nom_canal, taille=7.5,
+              couleur=NUIT, gras=True, alignement=PP_ALIGN.CENTER)
+        texte(diapo, xx, Inches(5.21), Inches(0.9), Inches(0.34), forme_bon, taille=6.5,
+              couleur=GRIS, alignement=PP_ALIGN.CENTER, interligne=1.0)
+
+    constats = (
+        "Application, WhatsApp, Telegram et e-mail : le bon reste un QR.",
+        "SMS et USSD : il devient un code de retrait, saisi par l'agent de chargement.",
+        "Le chauffeur, lui, travaille 72 heures sans réseau sans perdre une preuve.",
+    )
+    yy = Inches(5.8)
+    for constat in constats:
+        texte(diapo, Inches(6.3), yy, Inches(4.95), Inches(0.32), constat, taille=8.5,
+              couleur=GRIS, interligne=1.15)
+        yy += Inches(0.27)
 
     source(diapo, "Maquettes schématiques, non contractuelles.")
-    notes(diapo, "Répondre d'avance à « nos clients n'ont pas de smartphone » : USSD et SMS sont prévus, et le "
-                 "dépôt reste un point de contact humain.")
+    notes(diapo, "Répondre d'avance à « nos clients n'ont pas de smartphone » : USSD et SMS portent la cotation, "
+                 "le paiement et le bon, comme les autres canaux — c'est le même dossier, pas un canal au rabais. "
+                 "Deux précisions à dire à voix haute : sur SMS et USSD le bon est un code de retrait, pas un QR ; "
+                 "et aucun canal n'affiche de prix avant vérification de l'identité, pour qu'un concurrent ne "
+                 "puisse pas sonder la grille. Le dépôt reste un point de contact humain.")
 
 
 def s07_sequestre(prs):

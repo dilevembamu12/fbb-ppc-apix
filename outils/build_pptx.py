@@ -655,7 +655,8 @@ def d12_ubiquite(prs):
         ("Smartphone", "Android 8 et plus, 2 Go de mémoire. Interface lisible en plein soleil."),
         ("Web", "Même compte, même données, depuis un cybercafé ou un bureau."),
         ("Hors connexion", "Le chauffeur travaille 72 heures sans réseau, sans perdre une preuve."),
-        ("SMS et USSD", "Pour le client sans smartphone : notification, état de livraison, rappel."),
+        ("WhatsApp, Telegram, SMS et USSD", "Le même parcours que l'application : cotation, paiement et bon. "
+                                             "Sur SMS et USSD, le bon devient un code de retrait."),
     ]
     y = Inches(2.05)
     for titre, corps in blocs:
@@ -668,7 +669,7 @@ def d12_ubiquite(prs):
 
     rectangle(diapo, Inches(7.55), Inches(5.85), Inches(4.95), Inches(0.85), NUIT, arrondi=True)
     texte(diapo, Inches(7.85), Inches(6.02), Inches(4.4), Inches(0.55),
-          "Une seule application, quatre façons d'y accéder.", taille=13, couleur=BLANC, gras=True)
+          "Une seule cotation, un seul bon — cinq canaux.", taille=13, couleur=BLANC, gras=True)
     pied(diapo)
     notes(diapo, "Répondre d'avance à l'objection « nos clients n'ont pas de smartphone » : "
                  "USSD et SMS sont prévus, et le dépôt reste un point de contact humain.")
