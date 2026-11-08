@@ -1697,6 +1697,183 @@ def flux_automatisation() -> Toile:
     return b
 
 
+def carte_mini(b: Toile, x, y, w, h,
+               route=((0.08, 0.80), (0.32, 0.62), (0.50, 0.68), (0.76, 0.34), (0.90, 0.22)),
+               position=None, libelle_position="Dernière position connue", graine=5):
+    """Fond de carte schématique : grille, îlots, itinéraire, repères. Aucune donnée réelle."""
+    b.r(x, y, w, h, remplissage=(246, 247, 248), contour=TRAIT, ep=1)
+    for i in range(1, 6):
+        yy = y + h * i / 6
+        b.ligne(x + 2, yy, x + w - 2, yy, (231, 235, 239), 1)
+    for i in range(1, 8):
+        xx = x + w * i / 8
+        b.ligne(xx, y + 2, xx, y + h - 2, (231, 235, 239), 1)
+
+    alea = random.Random(graine)
+    for _ in range(4):
+        bx = x + w * alea.uniform(0.05, 0.72)
+        by = y + h * alea.uniform(0.06, 0.66)
+        bw = w * alea.uniform(0.08, 0.16)
+        bh = h * alea.uniform(0.08, 0.16)
+        b.r(bx, by, bw, bh, remplissage=(235, 238, 241))
+
+    points = [(x + px * w, y + py * h) for px, py in route]
+    for (x1, y1), (x2, y2) in zip(points, points[1:]):
+        b.ligne(x1, y1, x2, y2, TRAIT_FORT, 2.5)
+
+    depart = points[0]
+    b.r(depart[0] - 4, depart[1] - 4, 8, 8, remplissage=TEXTE_FAIBLE, arrondi=4, contour=BLANC, ep=1.5)
+
+    arrivee = points[-1]
+    b.r(arrivee[0] - 7, arrivee[1] - 7, 14, 14, contour=TEXTE, ep=2, arrondi=7)
+    b.r(arrivee[0] - 2, arrivee[1] - 2, 4, 4, remplissage=TEXTE, arrondi=2)
+
+    if position:
+        px, py = x + position[0] * w, y + position[1] * h
+        b.r(px - 9, py - 9, 18, 18, remplissage=BLANC, arrondi=9)
+        b.r(px - 5, py - 5, 10, 10, remplissage=TEXTE, arrondi=5)
+        if libelle_position:
+            largeur = b.mesurer(libelle_position, 8) + 16
+            bx = min(max(px - largeur / 2, x + 4), x + w - largeur - 4)
+            by = py - 30 if py - 30 > y + 4 else py + 12
+            b.r(bx, by, largeur, 18, remplissage=BLANC, contour=TRAIT, arrondi=4)
+            b.t(bx + 8, by + 9, libelle_position, 8, couleur=TEXTE_FAIBLE, ancre="lm")
+
+
+# --------------------------------------------------------------------------
+# Géolocalisation — suivi et preuve
+# --------------------------------------------------------------------------
+def ecran_cli12() -> Toile:
+    b = cadre_phone("Suivi de la commande")
+    b.t(18, 116, "BON-2026-000456 — Kivu Logistique", 10, couleur=TEXTE_FAIBLE)
+    carte_mini(b, 18, 136, L_PHONE - 36, 186, position=(0.55, 0.50),
+               libelle_position="16 h 42", graine=5)
+
+    b.t(18, 334, "Dernière position transmise il y a 3 minutes", 9, couleur=TEXTE_FAIBLE)
+
+    y = 362
+    for heure, etape, fait in (("14:41", "Cotation payée et bon émis", True),
+                               ("15:40", "Chargement certifié — 200 sacs, scellé 4471-B", True),
+                               ("16:05", "En route vers Gombe", True),
+                               ("—", "Livraison attendue avant 18 h", False)):
+        b.r(24, y + 2, 9, 9, remplissage=TEXTE if fait else BLANC,
+            contour=TEXTE if fait else TRAIT_FORT, ep=1, arrondi=5)
+        if y < 480:
+            b.ligne(28, y + 13, 28, y + 30, TRAIT, 1)
+        b.t(46, y, heure, 9, couleur=TEXTE_FAIBLE)
+        b.tl(90, y - 1, 270, etape, 10, interligne=1.25)
+        y += 44
+
+    b.r(18, 548, L_PHONE - 36, 62, contour=TRAIT, ep=1, arrondi=8)
+    b.t(32, 560, "Chauffeur J. Mbala", 10, semi=True)
+    b.t(32, 578, "Camion CAM-04 · 15 tonnes", 9, couleur=TEXTE_FAIBLE)
+    b.r(L_PHONE - 132, 562, 96, 30, contour=TRAIT_FORT, ep=1, arrondi=15)
+    b.t(L_PHONE - 84, 577, "Appeler", 9, semi=True, ancre="mm")
+
+    bouton(b, 18, H_PHONE - H_PIEDS - 96, L_PHONE - 36, 44, "Voir le dossier de preuve")
+    b.tl(18, H_PHONE - H_PIEDS - 44, L_PHONE - 36,
+         "La position n'est affichée que si le chauffeur l'a transmise : aucune position n'est inventée.",
+         8.5, couleur=TEXTE_FAIBLE)
+    pied_ecran(b, "CLI-12", "Suivi de la commande")
+    return b
+
+
+def ecran_cli14() -> Toile:
+    b = cadre_phone("Dossier de preuve")
+    b.t(18, 116, "BON-2026-000456 — livré le 07/11 à 17 h 52", 9, couleur=TEXTE_FAIBLE)
+
+    photo(b, 18, 136, L_PHONE - 36, 150, "Photo du chargement livré")
+    b.r(28, 146, 200, 20, remplissage=BLANC, contour=TRAIT, ep=1, arrondi=4)
+    b.t(38, 156, "Photo géolocalisée · 17 h 52", 8, couleur=TEXTE_FAIBLE, ancre="lm")
+
+    b.t(18, 300, "Position relevée au moment de la prise", 9, couleur=TEXTE_FAIBLE)
+    b.r(18, 316, L_PHONE - 36, 38, remplissage=REMPLI, arrondi=6)
+    b.t(30, 335, "−4,3271 ; 15,3134 — précision 12 m", 10, semi=True, ancre="lm")
+    b.t(L_PHONE - 30, 335, "GPS", 8, couleur=TEXTE_FAIBLE, ancre="rm")
+
+    y = 372
+    for libelle, detail in (("QR nominatif", "flashé par le chauffeur, usage unique"),
+                            ("Pesée contradictoire", "10 250 kg annoncés · 10 180 kg constatés"),
+                            ("Scellé", "4471-B vérifié à l'arrivée"),
+                            ("Validation client", "signée le 07/11 à 17 h 51")):
+        b.r(18, y, 16, 16, contour=TRAIT_FORT, ep=1, arrondi=3)
+        b.ligne(21, y + 8, 24, y + 12, TEXTE, 1.5)
+        b.ligne(24, y + 12, 30, y + 3, TEXTE, 1.5)
+        b.t(42, y - 1, libelle, 10, semi=True)
+        b.t(42, y + 15, detail, 8.5, couleur=TEXTE_FAIBLE)
+        y += 40
+
+    b.r(18, y + 4, L_PHONE - 36, 40, remplissage=BANDE, arrondi=6)
+    b.t(30, y + 18, "Dossier signé · empreinte a3f2…9c — vérifiable hors ligne", 9,
+        couleur=TEXTE_FAIBLE)
+
+    bouton(b, 18, H_PHONE - H_PIEDS - 96, L_PHONE - 36, 44, "Télécharger le dossier (PDF)", principal=True)
+    bouton(b, 18, H_PHONE - H_PIEDS - 44, L_PHONE - 36, 36, "Ouvrir un litige", taille=10)
+    pied_ecran(b, "CLI-14", "Dossier de preuve")
+    return b
+
+
+def ecran_chf03() -> Toile:
+    b = cadre_phone("Détail de la course")
+    b.t(18, 116, "BON-2026-000456", 11, semi=True)
+    b.t(18, 136, "Kivu Trans SARL — 200 sacs CEM II 42,5", 9, couleur=TEXTE_FAIBLE)
+
+    carte_mini(b, 18, 160, L_PHONE - 36, 170,
+               route=((0.06, 0.86), (0.28, 0.70), (0.46, 0.74), (0.72, 0.40), (0.94, 0.16)),
+               position=None, graine=13)
+    b.t(18, 340, "Point de repère : marché central, après la station", 10, semi=True)
+    b.t(18, 358, "Zone Gombe — 4e avenue · GPS facultatif", 9, couleur=TEXTE_FAIBLE)
+
+    y = 392
+    for libelle, valeur in (("Fenêtre de livraison", "aujourd'hui avant 18 h"),
+                            ("Contact sur place", "+243 ••• ••• 412"),
+                            ("Poids et scellé", "10 250 kg · scellé 4471-B")):
+        b.t(18, y, libelle, 9, couleur=TEXTE_FAIBLE)
+        b.t(L_PHONE - 18, y, valeur, 10, semi=True, ancre="ra")
+        y += 26
+        b.ligne(18, y - 9, L_PHONE - 18, y - 9, TRAIT)
+
+    b.r(18, y + 10, L_PHONE - 36, 66, remplissage=BANDE, arrondi=6)
+    b.tl(30, y + 22, L_PHONE - 60,
+         "Le point de repère fait foi pour l'arrivée. La position GPS est un confort, jamais une condition de livraison.",
+         9, couleur=TEXTE_FAIBLE)
+
+    bouton(b, 18, H_PHONE - H_PIEDS - 96, L_PHONE - 36, 44, "Appeler le client")
+    bouton(b, 18, H_PHONE - H_PIEDS - 44, L_PHONE - 36, 36, "Démarrer le trajet", taille=10)
+    pied_ecran(b, "CHF-03", "Détail de la course")
+    return b
+
+
+def ecran_chf05() -> Toile:
+    b = cadre_phone("Route et événements", action="SOS")
+    b.r(0, 100, L_PHONE, 28, remplissage=REMPLI_FORT)
+    b.t(18, 110, "Hors ligne — les positions sont mises en file", 9)
+
+    carte_mini(b, 18, 142, L_PHONE - 36, 180, position=(0.62, 0.46),
+               libelle_position="Position enregistrée à 16 h 42", graine=21)
+    b.t(18, 332, "Dernière position transmise : 16 h 30", 9, couleur=TEXTE_FAIBLE)
+
+    y = 360
+    for libelle, detail in (("Départ", "quitter le point de chargement"),
+                            ("Incident", "panne, contrôle, route coupée"),
+                            ("Arrivée", "se présenter chez le client")):
+        b.r(18, y, L_PHONE - 36, 52, contour=TRAIT_FORT, ep=1, arrondi=8)
+        b.t(34, y + 16, libelle, 11, semi=True)
+        b.t(34, y + 34, detail, 8.5, couleur=TEXTE_FAIBLE)
+        b.r(L_PHONE - 54, y + 16, 20, 20, contour=TRAIT, ep=1, arrondi=10)
+        y += 62
+
+    b.r(18, y + 6, L_PHONE - 36, 74, contour=ACCENT, ep=1.5, arrondi=8, remplissage=ACCENT_PALE)
+    b.t(32, y + 18, "2 positions en attente d'envoi", 10, semi=True, couleur=ACCENT)
+    b.tl(32, y + 38, L_PHONE - 64,
+         "Chaque position est horodatée sur le téléphone ; l'horodatage serveur est ajouté à la réception.",
+         8.5, couleur=TEXTE_FAIBLE)
+
+    bouton(b, 18, H_PHONE - H_PIEDS - 44, L_PHONE - 36, 36, "Synchroniser maintenant", taille=10)
+    pied_ecran(b, "CHF-05", "Route et événements")
+    return b
+
+
 # --------------------------------------------------------------------------
 # Planches
 # --------------------------------------------------------------------------
@@ -1727,6 +1904,10 @@ PLANCHES = [
     ("p17-flux-automatisation", "Flux 2 · Automatisation des messages sortants", ["flux_automatisation"]),
     ("p18-canaux-modeles", "IF-09 · Console des canaux — modèles de messages", ["cnl02"]),
     ("p19-canaux-bac-a-sable", "IF-09 · Console des canaux — bac à sable", ["cnl05"]),
+    ("p20-geolocalisation-suivi-preuve",
+     "Géolocalisation côté client — suivi de la commande et dossier de preuve", ["cli12", "cli14"]),
+    ("p21-geolocalisation-chauffeur",
+     "Géolocalisation côté chauffeur — détail de la course et positions", ["chf03", "chf05"]),
 ]
 
 

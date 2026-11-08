@@ -517,6 +517,8 @@ Légende : **L** lecture, **C** création ou saisie, **V** validation ou décisi
 | A.17 | Flux 2 — automatisation des messages sortants | Schéma |
 | A.18 | IF-09 — CNL-02 modèles de messages | Bureau |
 | A.19 | IF-09 — CNL-05 bac à sable | Bureau |
+| A.20 | Géolocalisation côté client — CLI-12 suivi, CLI-14 dossier de preuve | Téléphone |
+| A.21 | Géolocalisation côté chauffeur — CHF-03 détail de la course, CHF-05 positions | Téléphone |
 
 :::paysage
 
@@ -557,6 +559,10 @@ Légende : **L** lecture, **C** création ou saisie, **V** validation ou décisi
 ![Planche A.18 — IF-09 Console des canaux : modèles de messages et variables|25](assets/wireframes/p18-canaux-modeles.png)
 
 ![Planche A.19 — IF-09 Console des canaux : bac à sable avant ouverture|25](assets/wireframes/p19-canaux-bac-a-sable.png)
+
+![Planche A.20 — Géolocalisation côté client : suivi de la commande et dossier de preuve|24](assets/wireframes/p20-geolocalisation-suivi-preuve.png)
+
+![Planche A.21 — Géolocalisation côté chauffeur : détail de la course et positions transmises|24](assets/wireframes/p21-geolocalisation-chauffeur.png)
 
 :::portrait
 
