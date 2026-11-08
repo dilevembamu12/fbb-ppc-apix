@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-build_pptx_reunion.py — Version « réunion » : 12 diapositives + 6 annexes.
+build_pptx_reunion.py — Version « réunion » : 12 diapositives + 7 annexes.
 
 Contrainte : règle 10/20/30 (12 diapositives maximum en séquence, 20 minutes).
 Registre : celui du dossier détaillé — titres déclaratifs, phrases courtes, une
 idée par diapositive, les douleurs avant le produit.
 
     Diapositives 1 à 12 : séquence présentée
-    Annexes A1 à A6     : ouvertes uniquement sur question
+    Annexes A1 à A7     : ouvertes uniquement sur question
 
 Les maquettes d'interface sont dessinées avec des formes natives : aucune capture
 d'écran tierce, aucun nom de produit existant.
@@ -989,6 +989,118 @@ def a06_technique(prs):
 
 
 # ---------------------------------------------------------------------------
+def a07_canaux(prs):
+    diapo = prs.slides.add_slide(prs.slide_layouts[6])
+    fond(diapo, SABLE)
+    en_tete(diapo, "Annexe A7 · Parité des canaux", "Cinq canaux, un seul dossier", 19)
+
+    texte(diapo, MARGE, Inches(1.44), LARGEUR_UTILE, Inches(0.26),
+          "La cotation, le paiement et le bon sont accessibles sur les cinq — seul le rendu du bon change.",
+          taille=13, couleur=GRIS, italique=True)
+
+    largeur = (LARGEUR_UTILE - Inches(0.8)) / 5
+    colonnes = [
+        ("WhatsApp", "carte et boutons", "QR",
+         "Gabarits de messages approuvés obligatoires. Le bon arrive en QR dans la conversation."),
+        ("Telegram", "bot et claviers", "QR",
+         "Aucun compte marchand à ouvrir : c'est le canal le plus rapide à mettre en service."),
+        ("E-mail", "pièce jointe", "PDF",
+         "Aucune session à tenir : tout passe par un lien signé, valable aussi longtemps que la cotation."),
+        ("SMS", "texte seul", "code de retrait",
+         "160 caractères par message. Le bon devient un code que l'agent de chargement saisit."),
+        ("USSD", "sans internet", "code de retrait",
+         "Quatre écrans maximum, pas d'image : le bon devient un code de retrait."),
+    ]
+
+    for index, (nom_canal, role, forme_bon, contrainte) in enumerate(colonnes):
+        x = MARGE + index * (largeur + Inches(0.2))
+        texte(diapo, x, Inches(1.92), largeur, Inches(0.28), nom_canal, taille=13.5,
+              couleur=NUIT, gras=True, police=POLICE_TITRE)
+        texte(diapo, x, Inches(2.2), largeur, Inches(0.2), role, taille=9, couleur=GRIS, italique=True)
+
+        ex, ey, ew = x + Inches(0.06), Inches(2.46), largeur - Inches(0.12)
+        rectangle(diapo, ex, ey, ew, Inches(2.2), BLANC, arrondi=True)
+
+        if index == 0:      # WhatsApp : bulles + bouton
+            rectangle(diapo, ex + Inches(0.12), ey + Inches(0.16), Inches(1.32), Inches(0.3), GRIS_CLAIR, arrondi=True)
+            rectangle(diapo, ex + Inches(0.55), ey + Inches(0.54), Inches(1.45), Inches(0.3), SABLE, arrondi=True)
+            rectangle(diapo, ex + Inches(0.12), ey + Inches(0.92), ew - Inches(0.24), Inches(0.44),
+                      GRIS_CLAIR, arrondi=True)
+            rectangle(diapo, ex + Inches(0.12), ey + Inches(1.62), ew - Inches(0.24), Inches(0.34),
+                      ORANGE, arrondi=True)
+            texte(diapo, ex + Inches(0.12), ey + Inches(1.69), ew - Inches(0.24), Inches(0.2),
+                  "Payer 3 145 $", taille=7, couleur=BLANC, gras=True, alignement=PP_ALIGN.CENTER)
+        elif index == 1:    # Telegram : bulles + claviers
+            rectangle(diapo, ex + Inches(0.12), ey + Inches(0.16), Inches(1.3), Inches(0.3), GRIS_CLAIR, arrondi=True)
+            rectangle(diapo, ex + Inches(0.5), ey + Inches(0.54), Inches(1.5), Inches(0.3), SABLE, arrondi=True)
+            for ligne in range(2):
+                for colonne in range(2):
+                    rectangle(diapo, ex + Inches(0.12 + colonne * 1.0), ey + Inches(1.02 + ligne * 0.38),
+                              Inches(0.94), Inches(0.3), GRIS_CLAIR, arrondi=True)
+            rectangle(diapo, ex + Inches(0.12), ey + Inches(1.8), ew - Inches(0.24), Inches(0.3),
+                      NUIT, arrondi=True)
+            texte(diapo, ex + Inches(0.12), ey + Inches(1.85), ew - Inches(0.24), Inches(0.2),
+                  "Payer", taille=7, couleur=BLANC, gras=True, alignement=PP_ALIGN.CENTER)
+        elif index == 2:    # E-mail : en-tête, corps, bouton et pièce jointe
+            for rang, longueur in enumerate((0.9, 1.3, 0.6)):
+                rectangle(diapo, ex + Inches(0.14), ey + Inches(0.16 + rang * 0.16),
+                          Inches(longueur), Inches(0.06), GRIS_CLAIR)
+            for rang in range(3):
+                rectangle(diapo, ex + Inches(0.14), ey + Inches(0.72 + rang * 0.16),
+                          ew - Inches(0.28), Inches(0.05), RGBColor(0xE6, 0xE9, 0xEB))
+            rectangle(diapo, ex + Inches(0.14), ey + Inches(1.34), Inches(1.3), Inches(0.3),
+                      ORANGE, arrondi=True)
+            texte(diapo, ex + Inches(0.14), ey + Inches(1.39), Inches(1.3), Inches(0.2),
+                  "Payer", taille=7, couleur=BLANC, gras=True, alignement=PP_ALIGN.CENTER)
+            rectangle(diapo, ex + Inches(0.14), ey + Inches(1.78), Inches(1.5), Inches(0.28),
+                      GRIS_CLAIR, arrondi=True)
+            texte(diapo, ex + Inches(0.22), ey + Inches(1.83), Inches(1.4), Inches(0.18),
+                  "COT-2026-000123.pdf", taille=6, couleur=GRIS)
+        elif index == 3:    # SMS : échange de texte
+            lignes = ("COT 200 GOMBE", "Cotation 3 145,00 $", "PAY", "Code 481902")
+            for rang, ligne in enumerate(lignes):
+                sortante = rang % 2 == 0
+                rectangle(diapo, ex + (Inches(0.42) if sortante else Inches(0.14)),
+                          ey + Inches(0.2 + rang * 0.46), Inches(1.45), Inches(0.32),
+                          SABLE if sortante else GRIS_CLAIR, arrondi=True)
+                texte(diapo, ex + (Inches(0.5) if sortante else Inches(0.22)),
+                      ey + Inches(0.27 + rang * 0.46), Inches(1.3), Inches(0.18),
+                      ligne, taille=6.5, couleur=NUIT if sortante else GRIS)
+        else:               # USSD : menu numéroté
+            rectangle(diapo, ex + Inches(0.14), ey + Inches(0.18), ew - Inches(0.28), Inches(1.46),
+                      RGBColor(0xF2, 0xF4, 0xF6), arrondi=True)
+            for rang, ligne in enumerate(("1. Commander", "2. Suivre", "3. Agent")):
+                texte(diapo, ex + Inches(0.26), ey + Inches(0.3 + rang * 0.34), Inches(1.7), Inches(0.2),
+                      ligne, taille=7, couleur=NUIT, gras=rang == 0)
+            texte(diapo, ex + Inches(0.26), ey + Inches(1.32), Inches(1.7), Inches(0.18),
+                  "Répondre : 1", taille=6.5, couleur=GRIS, italique=True)
+            rectangle(diapo, ex + Inches(0.14), ey + Inches(1.78), ew - Inches(0.28), Inches(0.3),
+                      GRIS_CLAIR, arrondi=True)
+            texte(diapo, ex + Inches(0.26), ey + Inches(1.83), Inches(1.7), Inches(0.18),
+                  "Paiement ouvert", taille=6.5, couleur=GRIS)
+
+        couleur_puce = ORANGE_PALE if forme_bon in ("QR", "PDF") else GRIS_CLAIR
+        couleur_texte = ORANGE if forme_bon in ("QR", "PDF") else NUIT
+        rectangle(diapo, x, Inches(4.8), Inches(1.5), Inches(0.28), couleur_puce, arrondi=True)
+        texte(diapo, x, Inches(4.86), Inches(1.5), Inches(0.18), f"Bon : {forme_bon}", taille=7.5,
+              couleur=couleur_texte, gras=True, alignement=PP_ALIGN.CENTER)
+
+        texte(diapo, x, Inches(5.18), largeur, Inches(1.0), contrainte, taille=8.5,
+              couleur=GRIS, interligne=1.2)
+
+    rectangle(diapo, MARGE, Inches(6.34), LARGEUR_UTILE, Inches(0.56), NUIT, arrondi=True)
+    texte(diapo, MARGE + Inches(0.28), Inches(6.46), LARGEUR_UTILE - Inches(0.56), Inches(0.32),
+          "Un client peut commencer sur USSD et terminer sur WhatsApp : même cotation, même bon, même preuve.",
+          taille=11, couleur=BLANC, gras=True)
+    pied(diapo)
+    notes(diapo, "Annexe : à ouvrir si PPC demande « et ceux qui n'ont pas de smartphone ? ». Insister sur le "
+                 "point qui rassure un directeur financier : ce n'est pas un canal au rabais, c'est le même "
+                 "dossier avec un autre rendu. Deux limites à dire si on les interroge : sur SMS et USSD le bon "
+                 "est un code, pas un QR ; et le paiement par USSD suppose un prestataire de collecte raccordé "
+                 "derrière la passerelle.")
+
+
+# ---------------------------------------------------------------------------
 def construire(chemin: Path) -> int:
     prs = Presentation()
     prs.slide_width = LARGEUR
@@ -998,13 +1110,14 @@ def construire(chemin: Path) -> int:
         s01_titre, s02_probleme, s03_fuites, s04_marche, s05_chaine, s06_ubiquite,
         s07_sequestre, s08_preuve, s09_bareme, s10_groupage, s11_concurrence, s12_decisions,
         a01_modele, a02_equipe, a03_route, a04_groupage, a05_preuve_detail, a06_technique,
+        a07_canaux,
     ):
         constructeur(prs)
 
     prs.core_properties.title = "APIX All In One — 12 diapositives (version réunion)"
     prs.core_properties.author = "FBB"
     prs.core_properties.subject = "Extension APIX : clients finaux, paiement séquestré et logistique ciment"
-    prs.core_properties.comments = "Généré par outils/build_pptx_reunion.py — 12 diapositives + 6 annexes"
+    prs.core_properties.comments = "Généré par outils/build_pptx_reunion.py — 12 diapositives + 7 annexes"
 
     chemin.parent.mkdir(parents=True, exist_ok=True)
     prs.save(chemin)
@@ -1013,7 +1126,7 @@ def construire(chemin: Path) -> int:
 
 def main() -> int:
     nom = construire(SORTIE)
-    print(f"[OK] {SORTIE.relative_to(RACINE)} — {nom} diapositives (12 + 6 annexes)")
+    print(f"[OK] {SORTIE.relative_to(RACINE)} — {nom} diapositives (12 + 7 annexes)")
     return 0
 
 
