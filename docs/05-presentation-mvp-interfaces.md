@@ -512,6 +512,8 @@ Légende : **L** lecture, **C** création ou saisie, **V** validation ou décisi
 | A.15 | IF-10 — WAB-03 cotation et paiement, WAB-04 bon et suivi | Téléphone |
 | A.16 | Flux 1 — parcours conversationnel WhatsApp | Schéma |
 | A.17 | Flux 2 — automatisation des messages sortants | Schéma |
+| A.18 | IF-09 — CNL-02 modèles de messages | Bureau |
+| A.19 | IF-09 — CNL-05 bac à sable | Bureau |
 
 :::paysage
 
@@ -548,6 +550,10 @@ Légende : **L** lecture, **C** création ou saisie, **V** validation ou décisi
 ![Planche A.16 — Flux 1, parcours conversationnel WhatsApp de la question au bon|25](assets/wireframes/p16-flux-conversation.png)
 
 ![Planche A.17 — Flux 2, automatisation des messages sortants et repli humain|25](assets/wireframes/p17-flux-automatisation.png)
+
+![Planche A.18 — IF-09 Console des canaux : modèles de messages et variables|25](assets/wireframes/p18-canaux-modeles.png)
+
+![Planche A.19 — IF-09 Console des canaux : bac à sable avant ouverture|25](assets/wireframes/p19-canaux-bac-a-sable.png)
 
 :::portrait
 

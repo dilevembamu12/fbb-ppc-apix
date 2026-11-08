@@ -1295,6 +1295,155 @@ def ecran_cnl04() -> Toile:
     return b
 
 
+def ecran_cnl02() -> Toile:
+    b = Toile(1280, 760, ft=1.2)
+    rail_lateral(b, NAV_CNL, actif=2, titre="APIX Canaux", sous_titre="Administration PPC")
+
+    b.t(252, 40, "Modèles de messages", 20, gras=True)
+    b.t(252, 70, "12 modèles · 9 approuvés · 2 en attente d'approbation · 1 rejeté", 10,
+        couleur=TEXTE_FAIBLE)
+
+    # liste des modèles
+    b.r(252, 100, 420, 500, contour=TRAIT, ep=1, arrondi=8)
+    y = 116
+    modeles = (
+        ("MSG-COT-01", "Cotation émise", "WhatsApp · français", "approuvé"),
+        ("MSG-COT-02", "Cotation émise", "WhatsApp · lingala", "en attente"),
+        ("MSG-PAY-01", "Paiement confirmé", "WhatsApp · français", "approuvé"),
+        ("MSG-BON-01", "Bon de commande émis", "WhatsApp · français", "approuvé"),
+        ("MSG-LIV-01", "Livraison prouvée", "E-mail · français", "approuvé"),
+        ("MSG-LIT-01", "Litige ouvert", "SMS · français", "approuvé"),
+        ("MSG-DEC-01", "Décision de litige", "WhatsApp · français", "rejeté"),
+    )
+    for code, nom, canal, statut in modeles:
+        if statut != "approuvé":
+            b.r(252, y - 8, 420, 58, remplissage=ACCENT_PALE if statut == "rejeté" else REMPLI)
+        b.t(268, y, code, 9, semi=True, couleur=TEXTE_FAIBLE)
+        b.t(268, y + 18, nom, 11, semi=True)
+        b.t(268, y + 36, canal, 9, couleur=TEXTE_FAIBLE)
+        b.t(656, y + 22, statut, 9, semi=True,
+            couleur=ACCENT if statut != "approuvé" else TEXTE_FAIBLE, ancre="ra")
+        y += 62
+        b.ligne(252, y - 10, 672, y - 10, TRAIT)
+
+    # aperçu du modèle
+    b.r(700, 100, 544, 500, contour=TRAIT_FORT, ep=1.5, arrondi=8)
+    b.t(720, 118, "MSG-COT-01 — Cotation émise", 11, semi=True)
+    b.t(1224, 118, "WhatsApp Business", 9, couleur=TEXTE_FAIBLE, ancre="ra")
+    b.r(720, 142, 92, 26, contour=TRAIT_FORT, ep=1, arrondi=13, remplissage=BLANC)
+    b.t(766, 155, "Français", 9, semi=True, ancre="mm")
+    b.r(818, 142, 92, 26, contour=TRAIT, ep=1, arrondi=13)
+    b.t(864, 155, "Lingala", 9, couleur=TEXTE_FAIBLE, ancre="mm")
+
+    b.r(720, 186, 504, 150, remplissage=REMPLI, arrondi=8)
+    b.tl(738, 202, 468,
+         "Bonjour {{client}}, voici votre cotation {{cotation}} d'un montant de {{montant}}, "
+         "valable jusqu'au {{date_validite}}. Elle est votre référence de paiement : indiquez-la "
+         "lors de votre virement.", 10, interligne=1.45)
+
+    b.t(720, 352, "Variables disponibles", 9, couleur=TEXTE_FAIBLE)
+    y = 372
+    for nom_var, source in (("{{client}}", "nom du compte vérifié"),
+                            ("{{cotation}}", "numéro COT-…"),
+                            ("{{montant}}", "total de la cotation"),
+                            ("{{date_validite}}", "fin de validité, 48 h")):
+        b.r(720, y - 3, 236, 26, contour=TRAIT, ep=1, arrondi=4)
+        b.t(732, y + 10, nom_var, 9, semi=True, ancre="lm")
+        b.t(970, y + 10, source, 9, couleur=TEXTE_FAIBLE, ancre="lm")
+        y += 32
+
+    bouton(b, 720, 520, 240, 44, "Soumettre à l'approbation", principal=True, taille=10)
+    bouton(b, 976, 520, 248, 44, "Envoyer un test au bac à sable", taille=10)
+
+    b.r(252, 622, 992, 80, remplissage=BANDE, arrondi=6)
+    b.t(272, 636, "Trois règles que la console applique sans exception", 10, semi=True)
+    b.tl(272, 656, 950,
+         "Un message part toujours d'un modèle approuvé. Une variable non renseignée bloque l'envoi "
+         "au lieu d'envoyer un blanc. Un modèle rejeté reste consultable mais inutilisable.",
+         9, couleur=TEXTE_FAIBLE)
+
+    b.t(252, 726, "CNL-02 · Modèles de messages — IF-09 Console des canaux", 10, couleur=TEXTE_FAIBLE)
+    return b
+
+
+def ecran_cnl05() -> Toile:
+    b = Toile(1280, 760, ft=1.2)
+    rail_lateral(b, NAV_CNL, actif=5, titre="APIX Canaux", sous_titre="Administration PPC")
+
+    b.t(252, 40, "Bac à sable", 20, gras=True)
+    b.t(252, 70, "Simuler un parcours complet avant d'ouvrir un canal à de vrais clients", 10,
+        couleur=TEXTE_FAIBLE)
+
+    # scénario
+    b.r(252, 100, 320, 440, contour=TRAIT, ep=1, arrondi=8)
+    b.t(272, 118, "Scénario de test", 11, semi=True)
+    y = 150
+    for libelle, valeur in (("Canal", "WhatsApp Business"), ("Événement", "Cotation émise"),
+                            ("Profil client", "compte vérifié"), ("Langue", "français"),
+                            ("Montant", "3 145,00 $")):
+        b.t(272, y, libelle, 9, couleur=TEXTE_FAIBLE)
+        b.r(272, y + 16, 280, 36, contour=TRAIT, ep=1, arrondi=5)
+        b.t(286, y + 34, valeur, 10, ancre="lm")
+        y += 64
+    bouton(b, 272, 480, 280, 44, "Lancer le test", principal=True, taille=10)
+
+    # conversation simulée
+    b.r(600, 100, 400, 440, contour=TRAIT, ep=1, arrondi=8)
+    b.r(600, 100, 400, 34, remplissage=REMPLI_FORT)
+    b.t(618, 117, "MODE TEST — aucun message n'est réellement envoyé", 9, semi=True)
+    y = 150
+    for texte, sortante in (("Bonjour Kivu Trans, voici votre cotation COT-2026-000123…", False),
+                            ("Merci. Je paie par virement.", True),
+                            ("Référence à indiquer : COT-2026-000123.", False)):
+        largeur = 320
+        lignes = b.nb_lignes(texte, largeur - 26, 9)
+        hauteur = 14 + lignes * 12
+        x = 970 - largeur if sortante else 618
+        b.r(x, y, largeur, hauteur, remplissage=REMPLI if sortante else BLANC,
+            contour=None if sortante else TRAIT, ep=1, arrondi=8)
+        b.tl(x + 13, y + 7, largeur - 26, texte, 9, interligne=1.35)
+        y += hauteur + 12
+    b.tl(618, 400, 364,
+         "La conversation de test suit exactement les règles publiées : mêmes modèles, même routage.",
+         9, couleur=TEXTE_FAIBLE)
+
+    # résultat
+    b.r(1024, 100, 220, 440, contour=TRAIT_FORT, ep=1.5, arrondi=8)
+    b.t(1042, 118, "Résultat", 11, semi=True)
+    y = 148
+    for libelle, valeur in (("Messages envoyés", "4"), ("Échecs", "0"),
+                            ("Délai moyen", "1,2 s")):
+        b.t(1042, y, libelle, 9, couleur=TEXTE_FAIBLE)
+        b.t(1226, y, valeur, 12, semi=True, ancre="ra")
+        y += 30
+
+    b.ligne(1042, y + 2, 1226, y + 2, TRAIT)
+    y += 18
+    b.t(1042, y, "Conditions d'ouverture", 9, semi=True)
+    y += 22
+    for condition in ("Compte marchand validé", "Modèles approuvés",
+                      "Test de bout en bout réussi", "Plafonds renseignés",
+                      "Astreinte humaine désignée"):
+        b.r(1042, y - 2, 14, 14, contour=TRAIT_FORT, ep=1, arrondi=3)
+        b.ligne(1045, y + 5, 1048, y + 9, TEXTE, 1.5)
+        b.ligne(1048, y + 9, 1054, y - 1, TEXTE, 1.5)
+        b.t(1064, y, condition, 9)
+        y += 30
+
+    b.r(252, 570, 992, 120, remplissage=BANDE, arrondi=6)
+    b.t(272, 586, "Ce que le test doit prouver, avant toute ouverture", 10, semi=True)
+    y = 608
+    for preuve in ("Le message part avec toutes ses variables renseignées, sans blanc ni erreur technique.",
+                   "Le client reçoit la bonne information au bon moment, dans sa langue.",
+                   "En cas d'échec d'envoi, le repli prévu par la règle se déclenche réellement.",
+                   "Le journal d'envoi conserve la trace, y compris pour le test."):
+        b.t(272, y, "· " + preuve, 9, couleur=TEXTE_FAIBLE)
+        y += 20
+
+    b.t(252, 726, "CNL-05 · Bac à sable — IF-09 Console des canaux", 10, couleur=TEXTE_FAIBLE)
+    return b
+
+
 # --------------------------------------------------------------------------
 # IF-10 — Chatbot WhatsApp côté client
 # --------------------------------------------------------------------------
@@ -1576,6 +1725,8 @@ PLANCHES = [
      ["wab03", "wab04"]),
     ("p16-flux-conversation", "Flux 1 · Parcours conversationnel WhatsApp", ["flux_conversation"]),
     ("p17-flux-automatisation", "Flux 2 · Automatisation des messages sortants", ["flux_automatisation"]),
+    ("p18-canaux-modeles", "IF-09 · Console des canaux — modèles de messages", ["cnl02"]),
+    ("p19-canaux-bac-a-sable", "IF-09 · Console des canaux — bac à sable", ["cnl05"]),
 ]
 
 
