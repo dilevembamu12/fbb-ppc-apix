@@ -97,10 +97,11 @@ python outils\build_docs.py --check          # vérifie les tableaux Markdown sa
 | `dist/docs/02-Specifications-fonctionnelles.docx` | 12 modules, récits, critères de recette | Équipe produit et développement |
 | `dist/docs/03-Architecture-technique.docx` | Architecture, données, sécurité | Direction technique |
 | `dist/docs/04-Argumentaire-commercial.docx` | Positionnement et objections | Direction commerciale |
-| `dist/docs/05-Presentation-MVP-interfaces.docx` | 10 interfaces, 62 écrans, 4 parcours et 2 flux conversationnels, recette du MVP | Conception, développement, recette |
+| `dist/docs/05-Presentation-MVP-interfaces.docx` | 11 interfaces, 69 écrans, 4 parcours et 2 flux conversationnels, recette du MVP | Conception, développement, recette |
 | `dist/docs/A1-Regles-de-gestion.docx` | Règles numérotées et paramètres | Métier, développement, juridique |
 | `dist/docs/A2-Questions-ouvertes-PPC.docx` | Questions et décisions attendues | Chef de projet |
 | `dist/docs/A3-Plafonds-canaux-paiement.docx` | Grilles de plafonds mobile money par opérateur et par palier, routage du paiement | Atelier paiement avec PPC |
+| `dist/docs/A4-Parite-des-canaux.docx` | Matrice de parité WhatsApp / Telegram / e-mail / SMS / USSD, grammaire, phasage | Atelier canaux avec PPC |
 | `dist/xlsx/01-Backlog-APIX-Logistique.xlsx` | 13 épopées, 60 récits estimés, charge par cycle | Planification |
 | `dist/xlsx/02-Matrice-roles-droits.xlsx` | 30 fonctions × 9 rôles | Sécurité et conception des écrans |
 | `dist/xlsx/03-Grille-tarifaire-logistique.xlsx` | Référentiel d'axes, engins, simulateur de prix | Atelier barème avec PPC |

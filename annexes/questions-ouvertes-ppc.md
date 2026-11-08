@@ -122,6 +122,8 @@ Ces points ont été soulevés en entretien et n'ont pas encore de réponse arr�
 | **Q-57** | Une intelligence artificielle locale est-elle une exigence, ou une préférence ? | La préférence pour une IA souveraine est exprimée ; le fonctionnement sans IA est exigé | Le caractère contractuel ou non de cette préférence |
 | **Q-58** | Le contrat marchand de PPC autorise-t-il plusieurs portefeuilles d'un même titulaire pour régler une même commande ? | Le fractionnement est souvent interdit par les conditions des opérateurs ; les paliers vérifiés plafonnent bien au-dessous des commandes de ciment | L'autorisation écrite, et le nombre de portefeuilles admis par commande |
 | **Q-59** | PPC peut-il ouvrir un compte marchand business (avec RCCM) chez Vodacom, Airtel et Orange ? | Les paliers marchands autorisent 10 000 000 FC par transaction, contre 2 500 000 FC au mieux pour un compte vérifié | Le coût, les pièces exigées et le délai d'ouverture — c'est la réponse de fond au plafond |
+| **Q-60** | Quel prestataire encaisse les paiements initiés par USSD et par SMS ? | Africa's Talking fournit l'USSD et le SMS mais ne collecte pas les fonds ; un PSP ou un agrégateur est nécessaire derrière | Sans PSP raccordé, le menu USSD affiche un prix et ne peut pas être payé |
+| **Q-61** | PPC veut-il les cinq canaux en V1, ou un déploiement progressif ? | La parité complète est demandée ; elle représente cinq adaptateurs et un moteur de session | Le chiffrage, le calendrier, et le choix des deux premiers canaux |
 
 ---
 

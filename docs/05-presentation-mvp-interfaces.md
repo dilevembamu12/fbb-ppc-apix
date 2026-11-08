@@ -93,9 +93,10 @@ Trois conséquences directes :
 | **IF-07** | Console dépôt | AC-DEP — dépôt ou point de retrait agréé | Navigateur, tablette ou téléphone | En ligne | 3 | M5, M9 |
 | **IF-08** | Console d'exploitation APIX | AC-FBB — super-administrateur | Navigateur | En ligne | 3 | Transverse |
 | **IF-09** | Console d'automatisation et des canaux | AC-ADM — administrateur PPC, AC-FBB — exploitant | Navigateur, écran large | En ligne | 5 | Transverse (V1) |
-| **IF-10** | Chatbot WhatsApp côté client | AC-CLI — client final sur WhatsApp | Application WhatsApp | En ligne | 4 | M1 à M4, M7 (V1) |
+| **IF-10** | Canaux conversationnels et textuels | AC-CLI — client final | WhatsApp, Telegram, SMS, USSD | En ligne, et **sans internet** pour l'USSD | 10 | M1 à M4, M7, M8 (V1) |
+| **IF-11** | E-mail transactionnel | AC-CLI — client final et services achats | Courriel | Asynchrone | 1 | M2 à M4, M8 (V1) |
 
-Total : **62 écrans**, dont 16 mutualisés entre l'application et le web client.
+Total : **69 écrans**, dont 16 mutualisés entre l'application et le web client. La parité des canaux est décrite en **annexe A4**.
 
 > L'interface bancaire (AC-BNK) n'est pas une interface utilisateur : c'est une intégration. Elle n'apparaît donc pas dans cet inventaire, mais elle conditionne trois écrans (CLI-09, CLI-10, BKO-06).
 
@@ -122,10 +123,11 @@ Total : **62 écrans**, dont 16 mutualisés entre l'application et le web client
 | Application iOS | **MVP** | Même périmètre fonctionnel | Compte développeur Apple de PPC |
 | Web client (navigateur) | **MVP** | Même parcours, mise en page large, export tableur | — |
 | Notifications SMS | **MVP** | Envoi sortant sur changement d'état et sur décision de litige | Contrat passerelle SMS de PPC |
-| Courriel | **MVP** | Reçu et dossier de preuve en pièce jointe | — |
-| WhatsApp Business | V1 — **spécifié et maquetté** | Cotation, paiement et bon depuis une conversation (IF-10) | Compte marchand validé, modèles de messages approuvés |
-| USSD | V2 | État d'une commande sans internet, et commande par menu numéroté | Ouverture d'un code court auprès de chaque opérateur |
-| Telegram | V1 — canal prêt, non ouvert | Notifications et suivi depuis un second canal | Décision de PPC ; la console des canaux est déjà outillée pour l'ouvrir |
+| Courriel | MVP pour les reçus, **V1 pour le parcours complet** | Cotation, lien de paiement signé, bon et reçu en pièce jointe (IF-11) | Adresse vérifiée |
+| WhatsApp Business | **V1 — parcours complet** | Cotation, paiement et bon depuis la conversation (IF-10) | Compte marchand validé, gabarits de messages approuvés |
+| Telegram | **V1.1 — parcours complet** | Même parcours, servi par un bot, sans compte marchand à négocier | Bot créé, aucune négociation préalable |
+| SMS | Notifications au MVP, **parcours complet en V1.2** | `COT`, `PAY`, `BON`, `ETAT` par mots-clés ; bon transmis en **code de retrait** | Coût par message arbitré, et PSP raccordé |
+| USSD | **V1.2 — parcours complet** | Menus numérotés, paiement ouvert dans la session, bon en **code de retrait** | Passerelle USSD **et PSP raccordé** (Q-60) |
 | Chatbot avec IA locale | V1 | Interprétation d'une demande en langage libre, avec repli sur menus numérotés | Arbitrage de PPC sur l'hébergement de l'IA |
 
 ---
@@ -227,7 +229,7 @@ L'interface reprend les seize écrans `CLI-01` à `CLI-16` en mise en page large
 | Écran | Nom | Ce que l'agent y fait | Point de contrôle |
 |---|---|---|---|
 | CHG-01 | File du point de chargement | Voit les bons attendus pour son point, dans l'ordre d'arrivée | Aucun bon d'un autre point de chargement (RG-CMD-08) |
-| CHG-02 | Contrôle du bon | Scanne le QR et obtient un verdict immédiat | Bon invalide, expiré, déjà utilisé : refus motivé (RG-CHG-01) |
+| CHG-02 | Contrôle du bon | Scanne le QR **ou saisit le code de retrait**, et obtient un verdict immédiat | Bon invalide, expiré, déjà utilisé : refus motivé (RG-CHG-01). Le code est indispensable aux bons émis par SMS ou USSD |
 | CHG-03 | Enregistrement du chargement | Saisit poids réel, nombre de sacs, numéro de scellé, photo | Écart hors tolérance : validation superviseur obligatoire (RG-CHG-03) |
 | CHG-04 | Clôture | Clôture le bon et remet le bon de sortie | Clôture irréversible (RG-CHG-04) |
 | CHG-05 | Journal du poste | Consulte les dernières opérations de son poste | Traçable par agent, horodaté, non modifiable |
@@ -310,11 +312,13 @@ L'interface reprend les seize écrans `CLI-01` à `CLI-16` en mise en page large
 - Elle n'écrit jamais de message libre vers un client : tout part d'un modèle approuvé.
 - Le journal d'envoi conserve chaque message, son canal, son horodatage et son accusé de réception.
 
-### 4.10 IF-10 — Chatbot WhatsApp côté client *(V1)*
+### 4.10 IF-10 — Canaux conversationnels et textuels *(V1)*
 
-**Acteur :** AC-CLI, client final PPC, depuis le compte professionnel de PPC sur WhatsApp.
-**Objectif :** obtenir une cotation, payer et recevoir son bon **sans installer d'application** — c'est le canal que PPC a demandé en réunion, et celui qui parle aux clients qui ont déjà WhatsApp et rien d'autre.
-**Mode :** conversationnel, texte et boutons de réponse rapide. Le parcours fonctionne **aussi en menus numérotés** si PPC n'autorise pas l'intelligence artificielle.
+**Acteur :** AC-CLI, client final PPC.
+**Objectif :** obtenir une cotation, payer et recevoir son bon **sans installer d'application**, sur le canal que le client utilise déjà.
+**Mode :** quatre canaux, un seul parcours. Le canal est un transport, pas une fonctionnalité : c'est le même moteur de session côté serveur, avec quatre rendus. Le détail de la parité figure en **annexe A4**.
+
+#### WhatsApp Business — le canal de volume
 
 | Écran | Nom | Ce que le client y fait | Point de contrôle |
 |---|---|---|---|
@@ -323,14 +327,52 @@ L'interface reprend les seize écrans `CLI-01` à `CLI-16` en mise en page large
 | WAB-03 | Cotation et paiement | Reçoit la cotation dans la conversation, choisit son moyen de paiement | Le montant est produit par le service de cotation, pas par le bot |
 | WAB-04 | Bon et suivi | Reçoit son bon avec QR, suit le chargement et la livraison, valide la réception | Le bon est émis par le système à l'encaissement, jamais par le bot |
 
+#### Telegram — même parcours, sans compte marchand
+
+| Écran | Nom | Ce que le client y fait | Point de contrôle |
+|---|---|---|---|
+| TGM-01 | Commande par bot | Avance par claviers en ligne : produit, quantité, zone | Même moteur que WhatsApp ; seul le rendu change |
+| TGM-02 | Cotation et bon | Reçoit la cotation, paie, reçoit le bon en fichier avec QR | Le bon porte aussi un code de retrait, utilisable sans téléphone |
+
+#### SMS — le canal le plus contraint
+
+| Écran | Nom | Ce que le client y fait | Point de contrôle |
+|---|---|---|---|
+| SMS-01 | Commande et paiement | Écrit `COT 200 GOMBE`, puis `PAY` ; valide la demande mobile money sur son téléphone | 160 caractères par message ; toute réponse non reconnue renvoie l'aide |
+| SMS-02 | Bon et suivi | Reçoit son **code de retrait**, demande le détail par `BON`, l'état par `ETAT` | Ni image ni QR : le code est la preuve, et il est à usage unique |
+
+#### USSD — le canal qui fonctionne sans internet
+
+| Écran | Nom | Ce que le client y fait | Point de contrôle |
+|---|---|---|---|
+| USS-01 | Menu principal | Choisit commander, suivre ou parler à un agent | Numéro de session vérifié ; quatre écrans au maximum |
+| USS-02 | Cotation et paiement | Lit le total, choisit payer ou recevoir le détail par SMS | Le prix ne s'affiche qu'après vérification : pas de sondage de la grille |
+
 **Garde-fous de cette interface**
 
-- Aucun prix, aucun ordre de grandeur avant vérification du numéro : c'est la protection contre le sondage de la grille par un concurrent.
+- Aucun prix, aucun ordre de grandeur avant vérification de l'identité, sur aucun des quatre canaux.
 - Le paiement transporte le numéro de cotation ; sans lui, aucun encaissement n'est possible (RG-COT-04).
 - « Parler à un agent » est proposé dès le premier message, et automatiquement après deux échecs.
-- Le bot n'annonce jamais un délai de règlement du transporteur : il ne le connaît pas.
+- Aucun canal n'annonce un délai de règlement du transporteur : il n'est pas connu.
+- Un changement de canal ne crée jamais un second dossier : le numéro de cotation est la clé de reprise.
 
-> Les deux flux associés — le parcours conversationnel complet et l'automatisation des messages sortants — figurent en annexe A, planches A.16 et A.17.
+### 4.11 IF-11 — E-mail transactionnel *(V1)*
+
+**Acteur :** AC-CLI, et les services achats des entreprises et des dépôts.
+**Objectif :** recevoir une cotation opposable, payer en un clic, et conserver un dossier complet pour la comptabilité.
+**Mode :** asynchrone. Aucune session à tenir : tout passe par un **lien signé**, propre au client et à la cotation.
+
+| Écran | Nom | Ce que le client y fait | Point de contrôle |
+|---|---|---|---|
+| MEL-01 | E-mail de cotation | Lit le total, clique sur le lien de paiement signé, télécharge le PDF | Le lien authentifie sans mot de passe ; transféré, il n'ouvre aucun prix |
+
+**Garde-fous de cette interface**
+
+- Le lien est propre au client et expire avec la cotation : un message transféré ne donne accès à rien.
+- L'e-mail ne promet jamais d'instantanéité : il annonce un dossier complet.
+- Aucune donnée d'un autre client ne figure dans le message ni dans la pièce jointe.
+
+> Les deux flux associés — le parcours conversationnel complet et l'automatisation des messages sortants — figurent en annexe A, planches A.16 et A.17. Les quatre canaux supplémentaires sont en planches A.22 à A.25.
 
 ---
 
@@ -419,7 +461,8 @@ Légende : **L** lecture, **C** création ou saisie, **V** validation ou décisi
 | IF-07 Console dépôt | — | — | — | L | L | — | **L C** | — |
 | IF-08 Console d'exploitation APIX | — | — | — | — | L | — | — | **L C** |
 | IF-09 Console des canaux *(V1)* | — | — | — | — | **L C** | L | — | L C |
-| IF-10 Chatbot WhatsApp *(V1)* | **L C** | — | — | — | L | — | — | — |
+| IF-10 Canaux conversationnels et textuels *(V1)* | **L C** | — | — | — | L | — | — | — |
+| IF-11 E-mail transactionnel *(V1)* | **L C** | — | — | — | L | — | — | — |
 
 > Le détail des 30 fonctions et des 9 rôles figure dans `dist/xlsx/02-Matrice-roles-droits.xlsx`. La présente matrice ne donne que la vue par interface, utile à la conception et à la recette.
 
@@ -458,6 +501,8 @@ Légende : **L** lecture, **C** création ou saisie, **V** validation ou décisi
 | Ouverture de Telegram et de l'USSD | à ouvrir | CNL-01 | La console est déjà outillée ; c'est une décision d'ouverture, pas un développement |
 | Paiement multi-portefeuilles du même titulaire | Q-58, Q-59 | CLI-09, WAB-03 | Si les opérateurs ne l'autorisent pas par écrit, la seule issue haute reste le virement bancaire |
 | Palier du compte marchand de PPC | Q-59 | CLI-09, BKO-01 | Un compte marchand business relève le plafond par transaction et supprime la douleur à la racine |
+| Encaissement des paiements initiés par USSD et SMS | Q-60 | USS-02, SMS-01 | Sans PSP raccordé, le menu affiche un prix et ne peut pas être payé : le canal reste consultatif |
+| Périmètre des canaux au MVP | Q-61 | IF-10, IF-11 | Cinq canaux en V1 est faisable, mais se chiffre comme cinq adaptateurs plus un moteur, pas comme un ajout |
 
 ---
 
@@ -519,6 +564,10 @@ Légende : **L** lecture, **C** création ou saisie, **V** validation ou décisi
 | A.19 | IF-09 — CNL-05 bac à sable | Bureau |
 | A.20 | Géolocalisation côté client — CLI-12 suivi, CLI-14 dossier de preuve | Téléphone |
 | A.21 | Géolocalisation côté chauffeur — CHF-03 détail de la course, CHF-05 positions | Téléphone |
+| A.22 | Parité · USSD — menu principal, cotation et paiement | Téléphone |
+| A.23 | Parité · SMS — commande, paiement, bon en code de retrait | Téléphone |
+| A.24 | Parité · Telegram — commande par bot, cotation et bon | Téléphone |
+| A.25 | Parité · E-mail — cotation et lien de paiement signé | Bureau |
 
 :::paysage
 
@@ -564,6 +613,14 @@ Légende : **L** lecture, **C** création ou saisie, **V** validation ou décisi
 
 ![Planche A.21 — Géolocalisation côté chauffeur : détail de la course et positions transmises|24](assets/wireframes/p21-geolocalisation-chauffeur.png)
 
+![Planche A.22 — Parité · USSD : menu principal, cotation et paiement dans la session|24](assets/wireframes/p22-parite-ussd.png)
+
+![Planche A.23 — Parité · SMS : commande, paiement et bon en code de retrait|24](assets/wireframes/p23-parite-sms.png)
+
+![Planche A.24 — Parité · Telegram : commande par bot, cotation et bon|24](assets/wireframes/p24-parite-telegram.png)
+
+![Planche A.25 — Parité · E-mail : cotation et lien de paiement signé|25](assets/wireframes/p25-parite-email.png)
+
 :::portrait
 
 ## Annexe B — Glossaire des préfixes d'écran
@@ -580,3 +637,7 @@ Légende : **L** lecture, **C** création ou saisie, **V** validation ou décisi
 | `EXP-` | IF-08 Console d'exploitation APIX | Super-administrateur APIX |
 | `CNL-` | IF-09 Console d'automatisation et des canaux | Administrateur PPC et exploitant APIX |
 | `WAB-` | IF-10 Chatbot WhatsApp | Client final PPC |
+| `TGM-` | IF-10 Bot Telegram | Client final PPC |
+| `SMS-` | IF-10 Canal SMS | Client final PPC |
+| `USS-` | IF-10 Canal USSD | Client final PPC |
+| `MEL-` | IF-11 E-mail transactionnel | Client final PPC et services achats |

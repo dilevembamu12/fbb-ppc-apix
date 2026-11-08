@@ -1875,6 +1875,266 @@ def ecran_chf05() -> Toile:
 
 
 # --------------------------------------------------------------------------
+# Parité des canaux — USSD, SMS, Telegram, e-mail
+# --------------------------------------------------------------------------
+def cadre_ussd(titre: str) -> Toile:
+    b = Toile(L_PHONE, H_PHONE)
+    b.r(0, 0, L_PHONE, H_PHONE, contour=TRAIT)
+    b.t(18, 12, "14:32", 11, semi=True)
+    for i in range(4):
+        b.r(L_PHONE - 92 + i * 7, 22 - i * 3, 4, 3 + i * 3, remplissage=TEXTE_FAIBLE)
+    b.r(0, 38, L_PHONE, 30, remplissage=REMPLI_FORT)
+    b.t(18, 53, "Session USSD · *144# · Vodacom", 9, couleur=TEXTE_FAIBLE, ancre="lm")
+    b.r(14, 86, L_PHONE - 28, 420, contour=TRAIT_FORT, ep=1.5, arrondi=6)
+    b.t(32, 102, titre, 11, semi=True)
+    return b
+
+
+def lignes_ussd(b: Toile, y, lignes, taille=10, pas=26):
+    for ligne in lignes:
+        if ligne == "-":
+            b.ligne(32, y + 6, L_PHONE - 32, y + 6, TRAIT)
+            y += 16
+            continue
+        b.t(32, y, ligne, taille, semi=ligne.isupper() or ligne[:2] in ("1.", "2.", "3."))
+        y += pas
+    return y
+
+
+def reponse_ussd(b: Toile, y, texte, note=None):
+    b.r(32, y, L_PHONE - 64, 40, contour=TRAIT_FORT, ep=1, arrondi=4, remplissage=BLANC)
+    b.t(48, y + 20, texte, 12, semi=True, ancre="lm")
+    b.t(32, y + 52, "Répondre", 9, couleur=TEXTE_FAIBLE)
+    if note:
+        b.tl(32, y + 70, L_PHONE - 64, note, 8.5, couleur=TEXTE_FAIBLE)
+
+
+def ecran_ussd01() -> Toile:
+    b = cadre_ussd("PPC Ciment")
+    y = lignes_ussd(b, 136, [
+        "Numéro vérifié : +243 ••• 412", "-",
+        "1. Commander du ciment", "2. Suivre ma commande",
+        "3. Parler à un agent", "-",
+    ])
+    reponse_ussd(b, y + 10, "1",
+                 "Sans internet. La session expire après 20 secondes sans réponse, "
+                 "et un code court est envoyé par SMS pour reprendre.")
+    b.tl(32, 544, L_PHONE - 64,
+         "Quatre écrans au maximum entre le menu et la cotation : au-delà, le client abandonne.",
+         9, couleur=TEXTE_FAIBLE)
+    pied_ecran(b, "USS-01", "Menu principal USSD")
+    return b
+
+
+def ecran_ussd02() -> Toile:
+    b = cadre_ussd("Cotation COT-2026-000123")
+    y = lignes_ussd(b, 136, [
+        "CEM II 42,5 · 200 sacs", "Zone Gombe · avec transport", "-",
+        "TOTAL 3 145,00 $", "Valable jusqu'au 09/11 à 14 h 35", "-",
+        "1. Payer maintenant", "2. Recevoir le détail par SMS", "-",
+    ])
+    reponse_ussd(b, y + 6, "1",
+                 "Le paiement ouvre une demande mobile money sur ce numéro : "
+                 "aucun montant n'est saisi à la main.")
+    b.tl(32, 544, L_PHONE - 64,
+         "Le prix ne s'affiche qu'après vérification du numéro : un concurrent ne peut pas sonder la grille par USSD.",
+         9, couleur=TEXTE_FAIBLE)
+    pied_ecran(b, "USS-02", "Cotation et paiement USSD")
+    return b
+
+
+def ecran_sms01() -> Toile:
+    b = Toile(L_PHONE, H_PHONE)
+    b.r(0, 0, L_PHONE, H_PHONE, contour=TRAIT)
+    b.t(18, 12, "14:35", 11, semi=True)
+    for i in range(4):
+        b.r(L_PHONE - 92 + i * 7, 22 - i * 3, 4, 3 + i * 3, remplissage=TEXTE_FAIBLE)
+    b.r(0, 38, L_PHONE, 50, remplissage=BANDE)
+    b.t(L_PHONE / 2, 63, "PPC Ciment — SMS", 12, semi=True, ancre="ma")
+    b.ligne(0, 88, L_PHONE, 88, TRAIT)
+
+    y = 104
+    y = bandeau_systeme(b, y, "Numéro vérifié à 14 h 31")
+    y = bulle(b, y, "COT 200 GOMBE", sortante=True)
+    y = bulle(b, y, "Cotation COT-2026-000123 : 200 sacs CEM II, livraison Gombe. Total 3 145,00 $. "
+                    "Valable jusqu'au 09/11. Repondez PAY pour payer.")
+    y = bulle(b, y, "PAY", sortante=True)
+    y = bulle(b, y, "Demande envoyee sur votre mobile money. Validez sur votre telephone, puis repondez OK.")
+    y = bulle(b, y, "OK", sortante=True)
+    barre_saisie(b)
+    b.t(L_PHONE - 20, H_PHONE - H_PIEDS - 58, "112/160", 8, couleur=TEXTE_FAIBLE, ancre="ra")
+    pied_ecran(b, "SMS-01", "Commande et paiement par SMS")
+    return b
+
+
+def ecran_sms02() -> Toile:
+    b = Toile(L_PHONE, H_PHONE)
+    b.r(0, 0, L_PHONE, H_PHONE, contour=TRAIT)
+    b.t(18, 12, "14:47", 11, semi=True)
+    for i in range(4):
+        b.r(L_PHONE - 92 + i * 7, 22 - i * 3, 4, 3 + i * 3, remplissage=TEXTE_FAIBLE)
+    b.r(0, 38, L_PHONE, 50, remplissage=BANDE)
+    b.t(L_PHONE / 2, 63, "PPC Ciment — SMS", 12, semi=True, ancre="ma")
+    b.ligne(0, 88, L_PHONE, 88, TRAIT)
+
+    y = 104
+    y = bulle(b, y, "Paiement recu. Code de retrait : 481902. Presentez ce code au point de chargement "
+                    "de Kimpese. Repondez BON pour recevoir le detail.")
+    y = bulle(b, y, "BON", sortante=True)
+    y = bulle(b, y, "Bon BON-2026-000456 · 200 sacs CEM II · code 481902 · nominatif, usage unique, "
+                    "valable 7 jours.")
+    y = bulle(b, y, "ETAT", sortante=True)
+    y = bulle(b, y, "En chargement a Kimpese depuis 15 h 40. Livraison prevue avant 18 h.")
+
+    b.r(16, 600, L_PHONE - 32, 76, remplissage=BANDE, arrondi=6)
+    b.t(30, 614, "Ce que le SMS ne peut pas faire", 9, semi=True)
+    b.tl(30, 632, L_PHONE - 60,
+         "Ni pièce jointe, ni QR, ni image. Le bon est un code : c'est la console de chargement qui le saisit.",
+         8.5, couleur=TEXTE_FAIBLE)
+    barre_saisie(b)
+    b.t(L_PHONE - 20, H_PHONE - H_PIEDS - 58, "134/160", 8, couleur=TEXTE_FAIBLE, ancre="ra")
+    pied_ecran(b, "SMS-02", "Bon et suivi par SMS")
+    return b
+
+
+def entete_telegram(b: Toile):
+    b.r(0, 38, L_PHONE, 64, remplissage=(240, 242, 244))
+    b.r(18, 52, 36, 36, remplissage=REMPLI_FORT, arrondi=18)
+    b.t(36, 70, "P", 12, semi=True, couleur=TEXTE_FAIBLE, ancre="mm")
+    b.t(66, 60, "Bot PPC Ciment", 12, semi=True)
+    b.t(66, 78, "bot · en ligne", 9, couleur=TEXTE_FAIBLE)
+    b.ligne(0, 102, L_PHONE, 102, TRAIT)
+
+
+def clavier_inline(b: Toile, y, rangees, largeur=286):
+    for rangee in rangees:
+        pas = largeur // len(rangee)
+        for i, libelle in enumerate(rangee):
+            b.r(16 + i * pas, y, pas - 6, 34, contour=TRAIT_FORT, ep=1, arrondi=6, remplissage=BLANC)
+            b.t(16 + i * pas + (pas - 6) / 2, y + 17, libelle, 9.5, semi=True, ancre="mm")
+        y += 40
+    return y + 4
+
+
+def ecran_tgm01() -> Toile:
+    b = Toile(L_PHONE, H_PHONE)
+    b.r(0, 0, L_PHONE, H_PHONE, contour=TRAIT)
+    b.t(18, 12, "14:38", 11, semi=True)
+    for i in range(4):
+        b.r(L_PHONE - 92 + i * 7, 22 - i * 3, 4, 3 + i * 3, remplissage=TEXTE_FAIBLE)
+    entete_telegram(b)
+
+    y = 116
+    y = bulle(b, y, "Bonjour. Je suis le bot PPC Ciment. Votre compte Telegram est rattaché au numéro "
+                    "vérifié +243 ••• 412.")
+    y = bulle(b, y, "Que souhaitez-vous faire ?")
+    y = clavier_inline(b, y, [["Commander", "Suivre"], ["Parler à un agent"]])
+    y = bulle(b, y, "Commander", sortante=True)
+    y = bulle(b, y, "Produit ?")
+    y = clavier_inline(b, y, [["CEM II 42,5", "CEM I 52,5"]])
+    y = bulle(b, y, "CEM II 42,5", sortante=True)
+    y = bulle(b, y, "Quantité en sacs de 50 kg — répondez par un nombre.")
+    y = bulle(b, y, "200", sortante=True)
+    b.tl(18, 640, L_PHONE - 36,
+         "Même moteur que WhatsApp : seuls le rendu et les gabarits changent. Aucun compte marchand à ouvrir, "
+         "mais une population plus étroite.", 8.5, couleur=TEXTE_FAIBLE)
+    barre_saisie(b)
+    pied_ecran(b, "TGM-01", "Commande par bot Telegram")
+    return b
+
+
+def ecran_tgm02() -> Toile:
+    b = Toile(L_PHONE, H_PHONE)
+    b.r(0, 0, L_PHONE, H_PHONE, contour=TRAIT)
+    b.t(18, 12, "15:04", 11, semi=True)
+    for i in range(4):
+        b.r(L_PHONE - 92 + i * 7, 22 - i * 3, 4, 3 + i * 3, remplissage=TEXTE_FAIBLE)
+    entete_telegram(b)
+
+    y = 116
+    y = bulle(b, y, "Cotation prête. Prix ferme pendant 48 heures.")
+    b.r(16, y, 286, 158, contour=TRAIT_FORT, ep=1, arrondi=8, remplissage=BLANC)
+    b.t(30, y + 14, "COT-2026-000123", 10, semi=True, couleur=TEXTE_FAIBLE)
+    b.t(30, y + 36, "3 145,00 $", 20, gras=True)
+    b.t(30, y + 66, "200 sacs · Gombe · avec transport", 9, couleur=TEXTE_FAIBLE)
+    b.r(30, y + 86, 258, 30, contour=TRAIT, ep=1, arrondi=6)
+    b.t(159, y + 101, "Télécharger le PDF", 9, semi=True, ancre="mm")
+    bouton(b, 30, y + 122, 258, 28, "Payer maintenant", principal=True, taille=9.5)
+    y += 168
+    y = bulle(b, y, "Paiement reçu. Votre bon de commande est émis.")
+    b.r(16, y, 286, 86, contour=TRAIT_FORT, ep=1, arrondi=8, remplissage=BLANC)
+    b.t(30, y + 12, "BON-2026-000456.pdf", 9.5, semi=True)
+    qr(b, 30, y + 30, 46, graine=17)
+    b.t(90, y + 34, "200 sacs CEM II", 9)
+    b.t(90, y + 50, "Code de retrait : 481902", 9, couleur=ACCENT)
+    b.t(90, y + 66, "Nominatif · usage unique", 8.5, couleur=TEXTE_FAIBLE)
+    y += 96
+    y = clavier_inline(b, y, [["Valider la réception", "Signaler un problème"]])
+    barre_saisie(b)
+    pied_ecran(b, "TGM-02", "Cotation et bon par Telegram")
+    return b
+
+
+def ecran_mel01() -> Toile:
+    b = Toile(1024, 700, ft=1.2)
+    b.r(0, 0, 1024, 46, remplissage=(14, 36, 54))
+    b.t(24, 23, "Messagerie — Boîte de réception", 13, semi=True, couleur=BLANC, ancre="lm")
+
+    b.r(0, 46, 220, 654, remplissage=(246, 247, 248))
+    b.t(24, 66, "Dossiers", 9, semi=True, couleur=TEXTE_FAIBLE)
+    y = 92
+    for dossier, actif in (("Boîte de réception", True), ("Envoyés", False), ("Archives", False),
+                           ("Indésirables", False)):
+        if actif:
+            b.r(12, y - 12, 196, 30, remplissage=REMPLI_FORT, arrondi=4)
+        b.t(24, y + 4, dossier, 10, semi=actif, ancre="lm")
+        y += 36
+
+    b.t(248, 66, "De : PPC Ciment <cotation@ppc.cd>", 9, couleur=TEXTE_FAIBLE)
+    b.t(248, 86, "À : kivu.trans@exemple.cd", 9, couleur=TEXTE_FAIBLE)
+    b.t(248, 106, "Objet : Votre cotation COT-2026-000123 — 3 145,00 $", 11, semi=True)
+    b.ligne(248, 126, 1004, 126, TRAIT)
+
+    y = 146
+    b.tl(248, y, 500, "Bonjour Kivu Trans SARL,", 10)
+    y += 26
+    b.tl(248, y, 500,
+         "Votre cotation est prête. Le prix est ferme jusqu'au 09/11/2026 à 14 h 35 : au-delà, "
+         "une nouvelle cotation sera calculée au prix en vigueur.", 10, couleur=TEXTE_FAIBLE)
+    y += 48
+    b.tl(248, y, 500,
+         "Pour payer, utilisez le bouton ci-dessous. Le lien est signé : il ouvre votre cotation "
+         "déjà authentifiée, sans ressaisie de mot de passe.", 10, couleur=TEXTE_FAIBLE)
+    y += 62
+
+    bouton(b, 248, y, 240, 44, "Payer 3 145,00 $", principal=True, taille=11)
+    b.r(500, y, 240, 44, contour=TRAIT_FORT, ep=1, arrondi=6)
+    b.t(620, y + 22, "Télécharger la cotation", 10, ancre="mm")
+    y += 60
+    b.r(248, y, 300, 40, contour=TRAIT, ep=1, arrondi=6)
+    b.t(264, y + 20, "COT-2026-000123.pdf · 84 Ko", 9, couleur=TEXTE_FAIBLE, ancre="lm")
+    y += 56
+    b.tl(248, y, 500,
+         "Ce message ne contient aucun prix pour un autre destinataire : le lien est propre au client et expire "
+         "avec la cotation.", 9, couleur=TEXTE_FAIBLE)
+
+    b.r(772, 146, 232, 250, contour=TRAIT_FORT, ep=1.5, arrondi=8)
+    b.t(790, 162, "Ce que l'e-mail change", 10, semi=True)
+    yp = 188
+    for point in ("Asynchrone : aucune session à tenir",
+                  "Lien signé, valable 48 heures",
+                  "Pièces jointes : cotation, reçu",
+                  "Relance automatique à J+1"):
+        b.tl(790, yp, 198, "· " + point, 9, couleur=TEXTE_FAIBLE, interligne=1.3)
+        yp += 34
+    b.tl(790, yp + 4, 198,
+         "On ne promet pas de réponse instantanée : on promet un dossier complet.", 9, couleur=ACCENT)
+
+    b.t(24, 660, "MEL-01 · E-mail de cotation avec lien signé — canal e-mail", 10, couleur=TEXTE_FAIBLE)
+    return b
+
+
+# --------------------------------------------------------------------------
 # Planches
 # --------------------------------------------------------------------------
 PLANCHES = [
@@ -1908,6 +2168,10 @@ PLANCHES = [
      "Géolocalisation côté client — suivi de la commande et dossier de preuve", ["cli12", "cli14"]),
     ("p21-geolocalisation-chauffeur",
      "Géolocalisation côté chauffeur — détail de la course et positions", ["chf03", "chf05"]),
+    ("p22-parite-ussd", "Parité des canaux · USSD — de la cotation au paiement", ["ussd01", "ussd02"]),
+    ("p23-parite-sms", "Parité des canaux · SMS — commande, paiement et bon par code", ["sms01", "sms02"]),
+    ("p24-parite-telegram", "Parité des canaux · Telegram — cotation et bon", ["tgm01", "tgm02"]),
+    ("p25-parite-email", "Parité des canaux · E-mail — cotation et lien signé", ["mel01"]),
 ]
 
 

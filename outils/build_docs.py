@@ -70,7 +70,7 @@ DOCUMENTS = [
         "source": "docs/05-presentation-mvp-interfaces.md",
         "sortie": "05-Presentation-MVP-interfaces.docx",
         "titre": "Présentation du MVP et de ses interfaces",
-        "sous_titre": "62 écrans, 10 interfaces, 4 parcours et 2 flux conversationnels",
+        "sous_titre": "69 écrans, 11 interfaces, 4 parcours et 2 flux conversationnels",
     },
     {
         "source": "annexes/regles-de-gestion.md",
@@ -89,6 +89,12 @@ DOCUMENTS = [
         "sortie": "A3-Plafonds-canaux-paiement.docx",
         "titre": "Annexe A3 — Plafonds des canaux de paiement en RDC",
         "sous_titre": "Grilles par opérateur et par palier de vérification, et conséquences pour le routage",
+    },
+    {
+        "source": "annexes/parite-des-canaux.md",
+        "sortie": "A4-Parite-des-canaux.docx",
+        "titre": "Annexe A4 — Parité des canaux",
+        "sous_titre": "Cotation, paiement et bon sur WhatsApp, Telegram, e-mail, SMS et USSD",
     },
 ]
 
