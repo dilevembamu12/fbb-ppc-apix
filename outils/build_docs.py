@@ -84,6 +84,12 @@ DOCUMENTS = [
         "titre": "Annexe A2 — Questions ouvertes à trancher avec PPC",
         "sous_titre": "Liste de cadrage et décisions attendues",
     },
+    {
+        "source": "annexes/plafonds-canaux-paiement.md",
+        "sortie": "A3-Plafonds-canaux-paiement.docx",
+        "titre": "Annexe A3 — Plafonds des canaux de paiement en RDC",
+        "sous_titre": "Grilles par opérateur et par palier de vérification, et conséquences pour le routage",
+    },
 ]
 
 # --------------------------------------------------------------------------

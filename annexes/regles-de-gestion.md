@@ -122,17 +122,17 @@ FBB pour PPC · version 1.0 · 4 novembre 2026
 
 ### Tableau 3.2 — Routage du paiement selon le montant
 
-Les seuils partent du plafond réellement constaté sur les canaux mobiles : **2 500 $ par transaction**. Au-delà, ni un portefeuille mobile money ni une carte ne passe, quel que soit le client.
+Les seuils ne peuvent pas partir d'un plafond unique : en République Démocratique du Congo, le plafond d'un paiement dépend du **palier de vérification du compte client** et du **palier du compte marchand de PPC**, et le plus contraignant des deux l'emporte. Le plafond de 2 500 $ constaté relève du compte marchand : aucun palier client courant ne l'atteint par transaction. La grille complète figure en **annexe A3**.
 
 | Tranche de montant | Canal privilégié | Contrôle associé |
 |---|---|---|
-| Jusqu'à 1 000 $ | Mobile money, portefeuille du client | Aucun contrôle supplémentaire si le compte est vérifié |
-| De 1 000 $ à 2 500 $ | Mobile money ou carte, dans la limite du plafond du canal ; compte marchand si le client en dispose | Vérification du palier du client |
-| Au-delà de 2 500 $ | **Virement bancaire obligatoire**, avec référence de cotation unique, ou échéancier | Rapprochement sous contrôle humain avant émission du bon |
+| Jusqu'à 1 000 $ | Mobile money, portefeuille du client | Vérification automatique du palier du client |
+| De 1 000 $ à 2 500 $ | Mobile money ou carte, dans la limite du plus contraignant des plafonds — client et marchand | Palier du client et plafond marchand contrôlés avant l'affichage des canaux |
+| Au-delà de 2 500 $ | **Virement bancaire**, avec référence de cotation unique, ou échéancier ; paiement multi-portefeuilles du même titulaire **si les opérateurs l'autorisent par écrit** | Rapprochement sous contrôle humain avant émission du bon |
 
 > **Ce que cela implique :** la tranche « au-delà de 2 500 $ » n'est pas un cas marginal — c'est précisément le segment que PPC veut capter, distributeurs et grands comptes compris. Le virement n'est donc pas une option de repli : c'est le **canal principal du B2B**, et il doit fonctionner dès le MVP.
 
-> **Point de vigilance contractuel :** le fractionnement d'un paiement pour rester sous un plafond est très souvent interdit par les conditions des opérateurs. Il doit être expressément autorisé par écrit, sinon il expose le compte marchand de PPC à une suspension — c'est-à-dire à l'arrêt de toute la plateforme.
+> **Point de vigilance contractuel :** le fractionnement d'un paiement sur un même portefeuille pour rester sous un plafond est très souvent interdit par les conditions des opérateurs. Il doit être expressément autorisé par écrit, sinon il expose le compte marchand de PPC à une suspension — c'est-à-dire à l'arrêt de toute la plateforme. Le paiement multi-portefeuilles du même titulaire relève de la même prudence : voir annexe A3, section 4.
 
 ---
 

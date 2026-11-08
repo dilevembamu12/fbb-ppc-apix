@@ -120,6 +120,8 @@ Ces points ont été soulevés en entretien et n'ont pas encore de réponse arr�
 | **Q-55** | Quel annuaire d'entreprise PPC utilise-t-il pour ses collaborateurs ? | Le SSO est souhaité pour les utilisateurs internes | La technologie (Active Directory, OpenID Connect) et les règles de rôle |
 | **Q-56** | Le canal WhatsApp doit-il être un canal de commande complet, ou seulement de notification et de suivi ? | La demande est explicite côté PPC | Le périmètre : notification seule, ou parcours de cotation et de paiement complet |
 | **Q-57** | Une intelligence artificielle locale est-elle une exigence, ou une préférence ? | La préférence pour une IA souveraine est exprimée ; le fonctionnement sans IA est exigé | Le caractère contractuel ou non de cette préférence |
+| **Q-58** | Le contrat marchand de PPC autorise-t-il plusieurs portefeuilles d'un même titulaire pour régler une même commande ? | Le fractionnement est souvent interdit par les conditions des opérateurs ; les paliers vérifiés plafonnent bien au-dessous des commandes de ciment | L'autorisation écrite, et le nombre de portefeuilles admis par commande |
+| **Q-59** | PPC peut-il ouvrir un compte marchand business (avec RCCM) chez Vodacom, Airtel et Orange ? | Les paliers marchands autorisent 10 000 000 FC par transaction, contre 2 500 000 FC au mieux pour un compte vérifié | Le coût, les pièces exigées et le délai d'ouverture — c'est la réponse de fond au plafond |
 
 ---
 
