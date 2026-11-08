@@ -32,3 +32,6 @@ venv/
 # Éditeurs
 .vscode/
 .idea/
+
+# Archive de livraison : regenerable par outils\build_livraison.ps1, 14 Mo, ne pas versionner
+dist/livraison/*.zip

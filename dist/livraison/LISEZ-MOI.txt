@@ -1,0 +1,44 @@
+DOSSIER APIX / PPC - TROIS PIECES A LIRE DANS CET ORDRE
+=======================================================
+
+1-APIX-Presentation-MVP-et-interfaces.docx   (Word)
+
+   Le perimetre du MVP et les 11 interfaces, ecran par ecran.
+   Contient les 69 ecrans des 11 interfaces, les cinq canaux externes
+   (WhatsApp, Telegram, e-mail, SMS, USSD) et les 25 planches de wireframes
+   en annexe A.
+   A lire en premier : les sections 2 (perimetre) et 3 (inventaire des ecrans).
+
+2-APIX-All-In-One-Presentation-PPC.pptx      (PowerPoint, 19 diapositives)
+
+   La presentation de reunion : 12 diapositives de fond, puis 7 annexes,
+   dont l'annexe A7 sur les cinq canaux - c'est la meme matiere que le film.
+
+3-APIX-Cinq-canaux-film-90s.mp4              (video, 1 minute 30)
+
+   Le film de cadrage. Il montre, il ne vend pas : les trois questions de la
+   reunion d'ouverture, la regle cotation-paiement-bon, puis les cinq canaux
+   et le controle cote PPC.
+   La voix est francaise, il n'y a pas de musique de fond.
+
+   Les trois moments a retenir :
+   - 34 s : le bon QR se transforme en code a six chiffres (SMS et USSD) ;
+   - 60 s : le verdict BON REFUSE, qui prouve que le controle existe ;
+   - 78 s : "meme cotation, meme bon, meme preuve".
+
+LE CHIFFRE QUI COMMANDE TOUT LE RESTE
+-------------------------------------
+
+Le plafond mobile money de 2 500 dollars n'est pas une limite technique :
+c'est un plafond de marchand, qui depend du contrat et du palier de chaque
+partie. Aucun palier client courant ne l'atteint.
+
+Le detail des grilles M-Pesa, Airtel et Orange, palier par palier, figure
+dans l'annexe "Plafonds des canaux de paiement", disponible separement.
+
+DOCUMENTS NON INCLUS
+--------------------
+
+Le dossier complet compte 11 documents Word, 4 classeurs et 7 annexes de
+presentation. Ils sont disponibles sur demande, ainsi qu'une version web du
+meme dossier.
