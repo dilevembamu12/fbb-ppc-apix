@@ -339,6 +339,13 @@ table.simple td:first-child{font-weight:600;color:var(--nuit);width:46%}
 .backoffice-large{position:absolute;left:630px;top:398px;width:580px}
 .chips{position:absolute;left:630px;top:634px;display:flex;gap:8px;flex-wrap:wrap}
 .chips span{font-size:11px;background:var(--nuit);color:#fff;padding:6px 13px;border-radius:20px}
+.canaux{position:absolute;left:630px;top:640px;right:70px;display:flex;gap:6px}
+.canal{flex:1;background:#fff;border-radius:6px;padding:6px 3px;text-align:center;
+  border-top:3px solid var(--gris-clair);display:flex;align-items:baseline;
+  justify-content:center;gap:4px;white-space:nowrap;overflow:hidden}
+.canal.qr{border-top-color:var(--orange)}
+.canal b{font-size:10px;color:var(--nuit);font-weight:600}
+.canal span{font-size:8.5px;color:var(--gris)}
 
 /* --- impression --- */
 @page{size:13.333in 7.5in;margin:0}
@@ -485,7 +492,7 @@ table.simple td:first-child{font-weight:600;color:var(--nuit);width:46%}
         </div>
         <div class="legende gauche">Back-office PPC — c'est vous qui homologuez</div>
       </div>
-      <div class="chips"><span>Android 8 et plus</span><span>Web</span><span>Hors connexion 72 h</span><span>SMS et USSD</span></div>
+      <div class="canaux"><div class="canal qr"><b>WhatsApp</b><span>bon en QR</span></div><div class="canal qr"><b>Telegram</b><span>bon en QR</span></div><div class="canal qr"><b>E-mail</b><span>bon en PDF</span></div><div class="canal"><b>SMS</b><span>code de retrait</span></div><div class="canal"><b>USSD</b><span>code de retrait</span></div></div>
       <p class="source">Maquettes schématiques, non contractuelles.</p></section><section class="slide sombre" id="argent" data-n="7">
       <div class="sombre">
         
