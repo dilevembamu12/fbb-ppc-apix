@@ -222,8 +222,13 @@ def s06() -> str:
           </table>
         </div>'''
 
-    supports = ["Android 8 et plus", "Web", "Hors connexion 72 h", "SMS et USSD"]
-    chips = "".join(f"<span>{s}</span>" for s in supports)
+    canaux = (("WhatsApp", "bon en QR", True), ("Telegram", "bon en QR", True),
+              ("E-mail", "bon en PDF", True), ("SMS", "code de retrait", False),
+              ("USSD", "code de retrait", False))
+    tuiles = "".join(
+        f'<div class="canal{" qr" if qr else ""}"><b>{nom}</b><span>{forme}</span></div>'
+        for nom, forme, qr in canaux
+    )
 
     return f'''
       {en_tete("L'ubiquité", "Partout où le client se trouve")}
@@ -241,7 +246,7 @@ def s06() -> str:
         {backoffice}
         <div class="legende gauche">Back-office PPC — c'est vous qui homologuez</div>
       </div>
-      <div class="chips">{chips}</div>
+      <div class="canaux">{tuiles}</div>
       <p class="source">Maquettes schématiques, non contractuelles.</p>'''
 
 
@@ -906,6 +911,13 @@ table.simple td:first-child{font-weight:600;color:var(--nuit);width:46%}
 .backoffice-large{position:absolute;left:630px;top:398px;width:580px}
 .chips{position:absolute;left:630px;top:634px;display:flex;gap:8px;flex-wrap:wrap}
 .chips span{font-size:11px;background:var(--nuit);color:#fff;padding:6px 13px;border-radius:20px}
+.canaux{position:absolute;left:630px;top:640px;right:70px;display:flex;gap:6px}
+.canal{flex:1;background:#fff;border-radius:6px;padding:6px 3px;text-align:center;
+  border-top:3px solid var(--gris-clair);display:flex;align-items:baseline;
+  justify-content:center;gap:4px;white-space:nowrap;overflow:hidden}
+.canal.qr{border-top-color:var(--orange)}
+.canal b{font-size:10px;color:var(--nuit);font-weight:600}
+.canal span{font-size:8.5px;color:var(--gris)}
 
 /* --- impression --- */
 @page{size:13.333in 7.5in;margin:0}

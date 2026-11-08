@@ -106,7 +106,7 @@ python outils\build_docs.py --check          # vérifie les tableaux Markdown sa
 | `dist/xlsx/02-Matrice-roles-droits.xlsx` | 30 fonctions × 9 rôles | Sécurité et conception des écrans |
 | `dist/xlsx/03-Grille-tarifaire-logistique.xlsx` | Référentiel d'axes, engins, simulateur de prix | Atelier barème avec PPC |
 | `dist/xlsx/04-Simulateur-groupage.xlsx` | Répartition des frais d'une course groupée | Démonstration client |
-| `dist/pptx/APIX-All-In-One-12-slides-PPC.pptx` | **Version réunion** : 12 diapositives + 6 annexes (règle 10/20/30) | Rendez-vous avec la direction générale |
+| `dist/pptx/APIX-All-In-One-12-slides-PPC.pptx` | **Version réunion** : 12 diapositives + 7 annexes (règle 10/20/30) | Rendez-vous avec la direction générale |
 | `dist/pptx/APIX-All-In-One-Presentation-PPC.pptx` | Version détaillée : 22 diapositives | Dossier de fond, réunion technique |
 | `dist/docs/F1-Fiche-cadrage-reglement-PPC.docx` | Fiche A4 d'une page : cinq questions sur le règlement des transporteurs, à compléter par PPC | À laisser en fin de réunion |
 
@@ -118,7 +118,7 @@ Deux fichiers, deux usages :
 
 | Version | Script | Format | Usage |
 |---|---|---|---|
-| Réunion | `outils/build_pptx_reunion.py` | 12 diapositives + 6 annexes | 20 minutes, règle 10/20/30 de Guy Kawasaki |
+| Réunion | `outils/build_pptx_reunion.py` | 12 diapositives + 7 annexes | 20 minutes, règle 10/20/30 de Guy Kawasaki |
 | Détaillée | `outils/build_pptx.py` | 22 diapositives | Dossier de fond, questions techniques |
 
 Séquence de la version réunion — les douleurs d'abord, le produit ensuite :
@@ -130,7 +130,7 @@ Séquence de la version réunion — les douleurs d'abord, le produit ensuite :
 | 3 | Trois fuites qui coûtent, sans figurer dans aucun rapport | Coût de l'inaction |
 | 4 | Il n'achète pas une application. Il achète une certitude. | Marché et cible |
 | 5 | La chaîne de preuve, en six jalons | Solution |
-| 6 | Partout où le client se trouve | Ubiquité et maquettes |
+| 6 | Partout où le client se trouve | Ubiquité, maquettes et cinq canaux |
 | 7 | Le client paie PPC. Le transporteur est payé sur preuve. | Circuit de l'argent |
 | 8 | Quatre éléments, un seul dossier | Preuve de livraison, photo géolocalisée |
 | 9 | Le transport cesse d'être un forfait | Barème et calculateur |

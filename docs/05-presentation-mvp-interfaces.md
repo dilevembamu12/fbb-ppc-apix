@@ -55,8 +55,9 @@ Trois conséquences directes :
 | Élément écarté | Pourquoi il est écarté du MVP | Version cible | Ce que l'interface prévoit déjà |
 |---|---|---|---|
 | Groupage logistique | Dépend de la constitution de lots, donc d'un volume réel ; ne sert à rien sur les premiers clients | V1 | L'écran de choix d'option annonce « groupage à venir » plutôt que de le simuler |
-| WhatsApp Business | Exige un compte marchand validé et une modération de messages | V1 | Le parcours conversationnel est **spécifié et maquetté** (IF-10) ; la console des canaux (IF-09) est décrite |
-| Commande par USSD et repli SMS | Dépend d'un opérateur et d'un menu à faire valider | V2 | Les libellés d'état sont courts et numérotables (`1` à `6`), réutilisables en menu USSD |
+| WhatsApp Business | Exige un compte marchand validé et une modération de messages | V1 | Parcours complet **spécifié et maquetté** (IF-10, planches A.14 et A.15), parité décrite en annexe A4 |
+| Telegram | Aucun compte marchand à négocier, mais une population plus étroite en RDC | V1.1 | Parcours complet maquetté (planche A.24) ; positionné comme canal de service, pas d'acquisition |
+| Commande par SMS et par USSD | Textes courts, pas d'image, passerelle et prestataire de collecte à raccorder | V1.2 | Parcours complet maquetté (planches A.22 et A.23) ; le bon y devient un code de retrait, accepté par la console de chargement |
 | Chatbot avec intelligence artificielle locale | PPC n'a pas arbitré entre IA locale et menus numérotés | V1 | Le parcours est déjà une suite de questions fermées, donc jouable en menus numérotés |
 | Facture normalisée | Exige un connecteur fiscal validé par le conseil fiscal de PPC | V1 | Le reçu certifié occupe la place, avec les mêmes numéros de pièce |
 | Score de fiabilité transporteur | Sans historique, le score n'a aucune valeur | V1 | Le portail affiche les courses et les règlements, pas encore de note |

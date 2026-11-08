@@ -93,7 +93,7 @@ Cette section est la plus importante du dossier. Elle parle du **client**, pas d
 
 Deux causes se cumulent, et aucune n'est un défaut d'application :
 
-1. **Le plafond des canaux.** Au-delà de **2 500 $ par transaction**, ni un portefeuille mobile money ni une carte ne passe. Or c'est exactement la tranche des distributeurs et des grands comptes — le segment que PPC veut capter. Le virement n'est donc pas un canal de secours : c'est le canal principal du B2B.
+1. **Le plafond des canaux.** Le plafond de **2 500 $ par transaction** n'est pas une fatalité du mobile money : il dépend du **palier de vérification du client** et du **palier du compte marchand**. Les grilles publiées montrent qu'aucun palier client courant n'atteint 2 500 $ par transaction, tandis qu'un compte marchand business autorise 10 000 000 de francs congolais — soit environ 3 600 $. Le plafond qui bloque aujourd'hui est donc, très probablement, celui du compte marchand de PPC. Or c'est exactement la tranche des distributeurs et des grands comptes — le segment que PPC veut capter. Trois réponses, dans cet ordre : relever le palier marchand, faire monter les clients en palier vérifié, et outiller le paiement multi-portefeuilles pour la tranche intermédiaire. Le détail des grilles figure en **annexe A3**.
 2. **La couverture bancaire.** Trois banques seulement sont connectées au dispositif d'encaissement. Le reste des flux est rapproché à la main, ou pas du tout.
 
 Ce n'est donc pas un marché à créer : c'est une **couverture à compléter** sur des clients qui existent déjà, avec des commandes qui existent déjà.
