@@ -35,3 +35,6 @@ venv/
 
 # Archive de livraison : regenerable par outils\build_livraison.ps1, 14 Mo, ne pas versionner
 dist/livraison/*.zip
+
+# Montage final du film, retravaille a la main : 47 Mo, hors versionnement.
+dist/video/*.mp4

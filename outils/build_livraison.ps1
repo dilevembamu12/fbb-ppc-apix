@@ -6,10 +6,10 @@
 # Trois pieces, renommees pour etre lues dans l'ordre :
 #   1 le document des interfaces (dist\docs)
 #   2 la presentation de reunion   (dist\pptx)
-#   3 le film de cadrage           (media\apix-cinq-canaux\renders)
+#   3 le film de cadrage           (dist\video)
 #
-# Le film retenu est le plus recent du dossier renders. La note de lecture
-# LISEZ-MOI.txt est versionnee ; elle est copiee telle quelle dans l'archive.
+# La note de lecture LISEZ-MOI.txt est versionnee ; elle est copiee telle
+# quelle dans l'archive.
 #
 # Ce fichier est volontairement en ASCII : PowerShell 5.1 lit les .ps1 sans BOM
 # en ANSI et abimerait les accents. Les accents sont dans LISEZ-MOI.txt, qui est
@@ -27,19 +27,18 @@ if (-not (Test-Path $note)) {
     throw "Note de lecture introuvable : $note"
 }
 
-# --- le film : le rendu le plus recent -------------------------------------
-$renders = Join-Path $racine 'media\apix-cinq-canaux\renders'
-$film = Get-ChildItem $renders -Filter *.mp4 -File -ErrorAction SilentlyContinue |
-        Sort-Object LastWriteTime |
-        Select-Object -Last 1
-if (-not $film) {
-    throw "Aucun rendu dans $renders. Lancer d'abord : npx hyperframes render"
+# --- le film : la version retravaillee a la main ---------------------------
+# C'est le montage final, pas le rendu brut d'HyperFrames. Il vit dans
+# dist\video et il est volontairement hors versionnement (47 Mo).
+$film = Join-Path $racine 'dist\video\APIX-Cinq-canaux.mp4'
+if (-not (Test-Path $film)) {
+    throw "Film introuvable : $film"
 }
 
 $pieces = @(
     @{ Source = (Join-Path $racine 'dist\docs\05-Presentation-MVP-interfaces.docx'); Nom = '1-APIX-Presentation-MVP-et-interfaces.docx' }
     @{ Source = (Join-Path $racine 'dist\pptx\APIX-All-In-One-12-slides-PPC.pptx');   Nom = '2-APIX-All-In-One-Presentation-PPC.pptx' }
-    @{ Source = $film.FullName;                                                       Nom = '3-APIX-Cinq-canaux-film-90s.mp4' }
+    @{ Source = $film;                                                               Nom = '3-APIX-Cinq-canaux.mp4' }
 )
 
 foreach ($piece in $pieces) {
@@ -66,7 +65,6 @@ try {
     $poids = [math]::Round((Get-Item $zip).Length / 1MB, 2)
     Write-Host "Archive : $zip"
     Write-Host "Poids   : $poids Mo"
-    Write-Host "Film    : $($film.Name)"
     foreach ($piece in $pieces) {
         $taille = [math]::Round((Get-Item (Join-Path $atelier $piece.Nom)).Length / 1MB, 2)
         Write-Host ("  {0,-46} {1,6} Mo" -f $piece.Nom, $taille)

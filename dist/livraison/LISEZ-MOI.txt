@@ -1,44 +1,69 @@
-DOSSIER APIX / PPC - TROIS PIECES A LIRE DANS CET ORDRE
-=======================================================
+DOSSIER APIX / PPC - TROIS PIECES, TROIS USAGES
+===============================================
 
-1-APIX-Presentation-MVP-et-interfaces.docx   (Word)
+Ce dossier contient trois pieces. Elles ne disent pas la meme chose et ne se
+lisent pas de la meme facon : l'une fixe ce qui sera construit, l'autre tient
+le propos en reunion, la troisieme le fait voir.
 
-   Le perimetre du MVP et les 11 interfaces, ecran par ecran.
-   Contient les 69 ecrans des 11 interfaces, les cinq canaux externes
-   (WhatsApp, Telegram, e-mail, SMS, USSD) et les 25 planches de wireframes
-   en annexe A.
-   A lire en premier : les sections 2 (perimetre) et 3 (inventaire des ecrans).
 
-2-APIX-All-In-One-Presentation-PPC.pptx      (PowerPoint, 19 diapositives)
+1-APIX-Presentation-MVP-et-interfaces.docx        (Word)
 
-   La presentation de reunion : 12 diapositives de fond, puis 7 annexes,
-   dont l'annexe A7 sur les cinq canaux - c'est la meme matiere que le film.
+   Ce que c'est
+   Le perimetre du MVP - ce qui entre, ce qui reste dehors - et l'inventaire
+   des 11 interfaces, ecran par ecran, soit 69 ecrans. Les 25 planches de
+   wireframes sont en annexe A.
 
-3-APIX-Cinq-canaux-film-90s.mp4              (video, 1 minute 30)
+   Pourquoi elle compte
+   C'est la seule des trois pieces qui tranche. Les deux autres racontent et
+   montrent ; celle-ci decide de ce qui existe et de ce qui n'existe pas.
+   Quand une question nait en reunion, c'est ici qu'on verifie si la reponse
+   est deja prise ou si elle reste ouverte.
 
-   Le film de cadrage. Il montre, il ne vend pas : les trois questions de la
-   reunion d'ouverture, la regle cotation-paiement-bon, puis les cinq canaux
-   et le controle cote PPC.
-   La voix est francaise, il n'y a pas de musique de fond.
+   Comment la lire
+   La section 2 d'abord : le perimetre et les trois options d'achat. Puis la
+   section 3 : les interfaces et leurs ecrans. Le reste - les parcours, la
+   matrice des roles, les criteres de recette - se consulte au besoin ; il ne
+   se lit pas d'un bout a l'autre.
 
-   Les trois moments a retenir :
-   - 34 s : le bon QR se transforme en code a six chiffres (SMS et USSD) ;
-   - 60 s : le verdict BON REFUSE, qui prouve que le controle existe ;
-   - 78 s : "meme cotation, meme bon, meme preuve".
 
-LE CHIFFRE QUI COMMANDE TOUT LE RESTE
--------------------------------------
+2-APIX-All-In-One-Presentation-PPC.pptx           (19 diapositives)
 
-Le plafond mobile money de 2 500 dollars n'est pas une limite technique :
-c'est un plafond de marchand, qui depend du contrat et du palier de chaque
-partie. Aucun palier client courant ne l'atteint.
+   Ce que c'est
+   La presentation de reunion : douze diapositives de fond, puis sept annexes.
 
-Le detail des grilles M-Pesa, Airtel et Orange, palier par palier, figure
-dans l'annexe "Plafonds des canaux de paiement", disponible separement.
+   Pourquoi elle compte
+   C'est la piece qui sert en salle. Elle tient le propos sans exiger que
+   quiconque ait lu le document avant d'entrer.
 
-DOCUMENTS NON INCLUS
---------------------
+   Comment la lire
+   Les douze premieres diapositives se suivent et se suffisent. Les annexes
+   sont une reserve : on les ouvre quand une question precise tombe, pas
+   avant. L'annexe sur les cinq canaux reprend la matiere du film.
 
-Le dossier complet compte 11 documents Word, 4 classeurs et 7 annexes de
-presentation. Ils sont disponibles sur demande, ainsi qu'une version web du
-meme dossier.
+
+3-APIX-Cinq-canaux.mp4                            (film, 1 mn 22)
+
+   Ce que c'est
+   Le film de cadrage. Il n'argumente pas, il montre.
+
+   Pourquoi il compte
+   C'est la seule piece qui fait comprendre en un peu plus d'une minute ce
+   qu'une direction met d'ordinaire plusieurs reunions a saisir : un bon de
+   commande peut naitre sur USSD et finir sur WhatsApp sans perdre sa valeur,
+   parce que la cotation, le paiement et le bon restent les memes d'un bout a
+   l'autre du parcours.
+
+   Comment le regarder
+   D'une traite, sans commentaire par-dessus, avant toute discussion. Le film
+   est fait pour etre recu, pas pour etre explique pendant qu'il passe. On
+   revient ensuite sur ce qui a accroche, en repartant de la question posee a
+   la premiere seconde et de la phrase qui ferme le film : meme cotation, meme
+   bon, meme preuve.
+
+
+CE QU'IL FAUT RETENIR DES TROIS
+-------------------------------
+
+Le document dit ce qui est construit. La presentation le met en ordre pour une
+salle. Le film le fait voir. Si une seule des trois devait rester, ce serait le
+document : les deux autres sont faites pour y renvoyer.
