@@ -320,15 +320,39 @@ def changer_orientation(doc: Document, paysage: bool) -> None:
 
 def rendre_image(doc: Document, legende: str, chemin: str,
                  largeur_cm: float | None = None) -> None:
-    """Insère une image centrée, suivie de sa légende en petits caractères."""
+    """Insère une image centrée, suivie de sa légende en petits caractères.
+
+    La largeur demandée est un plafond, pas une consigne. Une planche presque
+    carrée demandée en 24 cm de large ferait 22,7 cm de haut, alors que la page
+    paysage n'offre que 17,4 cm utiles : elle déborderait sous la marge basse.
+    On réduit donc l'image si elle ne tient pas dans la hauteur de la section,
+    en laissant la place de sa légende.
+    """
     fichier = (RACINE / chemin).resolve()
     if not fichier.exists():
         raise FileNotFoundError(f"Image introuvable : {chemin}")
+
+    section = doc.sections[-1]
+    hauteur_utile = (section.page_height.cm - section.top_margin.cm
+                     - section.bottom_margin.cm)
+    # Légende en 8,5 pt + espace après de 10 pt : un peu plus de six millimètres.
+    hauteur_max = hauteur_utile - (0.65 if legende else 0.30)
+    hauteur_max = max(hauteur_max, 4.0)
+
+    largeur = largeur_cm or 16.0
+    from PIL import Image
+    with Image.open(fichier) as image:
+        pixels_largeur, pixels_hauteur = image.size
+    if pixels_largeur and pixels_hauteur:
+        hauteur_visée = largeur * pixels_hauteur / pixels_largeur
+        if hauteur_visée > hauteur_max:
+            largeur = hauteur_max * pixels_largeur / pixels_hauteur
+
     paragraphe = doc.add_paragraph()
     paragraphe.alignment = WD_ALIGN_PARAGRAPH.CENTER
     paragraphe.paragraph_format.space_before = Pt(4)
     paragraphe.paragraph_format.space_after = Pt(2)
-    paragraphe.add_run().add_picture(str(fichier), width=Cm(largeur_cm or 16.0))
+    paragraphe.add_run().add_picture(str(fichier), width=Cm(largeur))
     if legende:
         texte_legende = doc.add_paragraph()
         texte_legende.alignment = WD_ALIGN_PARAGRAPH.CENTER
