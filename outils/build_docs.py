@@ -73,6 +73,12 @@ DOCUMENTS = [
         "sous_titre": "69 écrans, 11 interfaces, 4 parcours et 2 flux conversationnels",
     },
     {
+        "source": "docs/06-note-de-positionnement.md",
+        "sortie": "06-Note-de-positionnement.docx",
+        "titre": "Note de positionnement",
+        "sous_titre": "Une boutique en ligne plutôt qu'une place de marché : ce que chaque option engage",
+    },
+    {
         "source": "annexes/regles-de-gestion.md",
         "sortie": "A1-Regles-de-gestion.docx",
         "titre": "Annexe A1 — Règles de gestion",
