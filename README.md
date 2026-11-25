@@ -98,6 +98,7 @@ python outils\build_docs.py --check          # vérifie les tableaux Markdown sa
 | `dist/docs/04-Argumentaire-commercial.docx` | Positionnement et objections | Direction commerciale |
 | `dist/docs/05-Presentation-MVP-interfaces.docx` | 11 interfaces, 69 écrans, 4 parcours et 2 flux conversationnels, recette du MVP | Conception, développement, recette |
 | `dist/docs/06-Note-de-positionnement.docx` | Pourquoi une boutique en ligne plutôt qu'une place de marché : sur-périmètre, excès de pile, risque ERP | Arbitrage avec la direction technique |
+| `dist/docs/07-Lettre-arbitrage-technique.docx` | Lettre à Monsieur Eloge : ce que les six jours restants permettent de démontrer, et pourquoi l'architecture étendue ne peut pas tenir la date | Courrier de direction, avant le 27 novembre |
 | `dist/docs/A1-Regles-de-gestion.docx` | Règles numérotées et paramètres | Métier, développement, juridique |
 | `dist/docs/A2-Questions-ouvertes-PPC.docx` | Questions et décisions attendues | Chef de projet |
 | `dist/docs/A3-Plafonds-canaux-paiement.docx` | Grilles de plafonds mobile money par opérateur et par palier, routage du paiement | Atelier paiement avec PPC |
