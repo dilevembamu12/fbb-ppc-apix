@@ -33,8 +33,8 @@ Ces questions conditionnent la faisabilité du produit. Elles doivent être trai
 | **Q-11** | Combien de transporteurs partenaires PPC compte-t-il, et combien sont réellement actifs ? | Dimensionnement du pilote, nombre d'engins | Cadrage | |
 | **Q-12** | Quels types d'engins sont réellement utilisés sur chaque axe ? | Référentiel engins, règles de compatibilité | Cadrage | |
 | **Q-13** | Quels sont les axes prioritaires pour le pilote ? | Choix de l'axe pilote | Cadrage | |
-| **Q-14** | Existe-t-il une flotte propre à PPC, et doit-elle être intégrée ? | Périmètre du référentiel transporteurs | Cadrage | |
-| **Q-15** | Quels opérateurs de paiement mobile sont pertinents par région ? | Choix des intégrations du MVP | Conception | |
+| **Q-14** | Existe-t-il une flotte propre à PPC, et doit-elle être intégrée ? | Périmètre du référentiel transporteurs | Cadrage | **Non : il n'y a pas de flotte propre.** Les transporteurs sont des partenaires indépendants, homologués par PPC (D-12) |
+| **Q-15** | Quels opérateurs de paiement mobile sont pertinents par région ? | Choix des intégrations du MVP | Conception | **PPC fournit son intégrateur (D-13)** : la couverture est celle de l'intégrateur, ce n'est pas un choix de FBB |
 | **Q-16** | Existe-t-il un dispositif de facture normalisée en vigueur, et quel est son format ? | Module de facturation, conformité fiscale | Conception | |
 | **Q-17** | Quelles sont les exigences de conservation des documents comptables et de preuve ? | Politique d'archivage, coût de stockage | Conception | |
 | **Q-18** | PPC accepte-t-il un hébergement hors du territoire national, ou l'exige-t-il localement ? | Choix d'architecture et de fournisseur | Conception | |
@@ -122,12 +122,14 @@ Ces points ont été soulevés en entretien et n'ont pas encore de réponse arr�
 | **Q-57** | Une intelligence artificielle locale est-elle une exigence, ou une préférence ? | La préférence pour une IA souveraine est exprimée ; le fonctionnement sans IA est exigé | Le caractère contractuel ou non de cette préférence |
 | **Q-58** | Le contrat marchand de PPC autorise-t-il plusieurs portefeuilles d'un même titulaire pour régler une même commande ? | Le fractionnement est souvent interdit par les conditions des opérateurs ; les paliers vérifiés plafonnent bien au-dessous des commandes de ciment | L'autorisation écrite, et le nombre de portefeuilles admis par commande |
 | **Q-59** | PPC peut-il ouvrir un compte marchand business (avec RCCM) chez Vodacom, Airtel et Orange ? | Les paliers marchands autorisent 10 000 000 FC par transaction, contre 2 500 000 FC au mieux pour un compte vérifié | Le coût, les pièces exigées et le délai d'ouverture — c'est la réponse de fond au plafond |
-| **Q-60** | Quel prestataire encaisse les paiements initiés par USSD et par SMS ? | Africa's Talking fournit l'USSD et le SMS mais ne collecte pas les fonds ; un PSP ou un agrégateur est nécessaire derrière | Sans PSP raccordé, le menu USSD affiche un prix et ne peut pas être payé |
+| **Q-60** | Quel prestataire encaisse les paiements initiés par USSD et par SMS ? | Africa's Talking fournit l'USSD et le SMS mais ne collecte pas les fonds ; un PSP ou un agrégateur est nécessaire derrière. **Le principe est acquis (D-13) : ce sera l'intégrateur de PPC** | La spécification d'interface, le mandant de test, et la confirmation que l'encaissement depuis l'USSD et le SMS est couvert (Q-69) |
 | **Q-61** | PPC veut-il les cinq canaux en V1, ou un déploiement progressif ? | La parité complète est demandée ; elle représente cinq adaptateurs et un moteur de session | Le chiffrage, le calendrier, et le choix des deux premiers canaux |
 | **Q-62** | Quel mode d'échange avec SAP ECC : IDoc, service web ou API ? | PPC met à disposition « interfaces, APIs, IDocs, Web services, selon l'architecture retenue » (protocole, art. 4.1) | Le mode retenu, et le contrat d'échange gelé avec la DSI |
 | **Q-63** | Quel mandant SAP pour les tests, et sous quel délai ? | Aucun raccordement ne se recette sans environnement de test | L'accès, le délai, et les données de test disponibles |
 | **Q-64** | Altius fournira-t-il l'export des comptes et la documentation de son API ? | La reprise des identités, des dépôts et de l'historique en dépend (annexe A5, §7) | L'accord d'Altius, le format et la date de remise |
 | **Q-65** | Digiciment dispose-t-il d'une version web, et sera-t-elle maintenue ? | Le protocole évoque une expérience « côté mobile et côté web » (art. 4.3) | L'existence réelle d'un accès web, pour positionner IF-02 |
+| **Q-68** | Quel est l'intégrateur de paiement retenu par PPC : nom, mode d'appel, spécification, mandant de test et frais ? | PPC fournit son intégrateur (D-13) ; FBB l'intègre derrière un adaptateur et ne contracte pas avec les opérateurs | Le nom, la documentation d'interface, le mandant de test et la grille de frais — c'est-à-dire tout ce qui remplace les grilles publiques de l'annexe A3 |
+| **Q-69** | L'intégrateur de PPC permet-il un encaissement **initié depuis une session USSD ou un message SMS**, avec notification de paiement vers APIX ? | Les canaux SMS et USSD sont au MVP ; sans encaissement possible, ils resteraient consultatifs | La confirmation écrite, et le mécanisme de notification |
 
 ---
 
@@ -146,6 +148,8 @@ Ces points ont été soulevés en entretien et n'ont pas encore de réponse arr�
 | **D-09** | Mode d'échange avec SAP ECC et contrat d'interface gelé | DSI de PPC | Avant conception |
 | **D-10** | Mandant SAP de test, données de recette et délai d'accès | DSI de PPC | Conception |
 | **D-11** | Sort du service Digiciment, avenant et reprise des comptes | Direction PPC et Altius | Avant bascule |
+| **D-12** | Référentiel transporteurs : **aucune flotte propre à PPC** ; les transporteurs sont des partenaires indépendants, homologués par PPC | Direction PPC | **Acquise** — à confirmer par écrit |
+| **D-13** | **PPC fournit l'intégrateur de paiement mobile** ; FBB l'intègre derrière un adaptateur et n'ouvre aucun contrat avec les opérateurs | Direction PPC | **Acquise** — spécification d'interface à obtenir (Q-68) |
 
 ---
 

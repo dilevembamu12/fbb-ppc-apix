@@ -91,7 +91,7 @@ Faire les quatre premiers jalons de la chaîne de preuve très bien, plutôt que
 - Application chauffeur / transporteur avec mode hors-ligne.
 - Homologation des transporteurs dans le back-office PPC.
 - Preuve de livraison : QR nominatif, photo géolocalisée, horodatage, validation de conformité.
-- Encaissement certifié, ventilation de la part transport, règlement du transporteur sur preuve.
+- Encaissement certifié par l'**intégrateur de paiement fourni par PPC**, ventilation de la part transport, règlement du transporteur sur preuve.
 - **Virement bancaire dès le MVP** : au-delà de 2 500 $ par transaction, c'est le seul canal possible — et c'est le segment B2B que PPC veut capter.
 - **Une seule chaîne de preuve, sept points d'entrée** : application, web, WhatsApp Business, Telegram, e-mail, SMS et USSD. Mêmes jalons, même cotation, même bon ; sur SMS et USSD, le bon devient un **code de retrait** que l'agent saisit.
 - Back-office PPC : transporteurs, barèmes, litiges, tableau de bord, comptes internes par annuaire d'entreprise.
@@ -106,7 +106,7 @@ Faire les quatre premiers jalons de la chaîne de preuve très bien, plutôt que
 
 **Hors périmètre (assumé) :**
 
-- La gestion de la flotte propre de PPC, si elle existe.
+- La gestion d'une flotte propre : **PPC n'en a pas**, les transporteurs sont des partenaires indépendants homologués (D-12).
 - Le pilotage du processus de production usine.
 - Le crédit à la consommation (sauf préparation des données).
 

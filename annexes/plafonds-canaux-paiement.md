@@ -18,6 +18,20 @@ Un paiement passe si les deux le permettent. Autrement dit, le plafond qui bloqu
 
 > **Conséquence immédiate pour le dossier :** le plafond de 2 500 $ constaté chez PPC relève très probablement du **compte marchand**, pas du client. Aucun palier client courant n'atteint 2 500 $ par transaction chez Airtel ou Orange. C'est donc un sujet de **contrat**, pas de conception.
 
+### 1.1 L'intégrateur de paiement est fourni par PPC — ce que cela change
+
+**PPC fournit son intégrateur de paiement mobile, et FBB l'intègre** (décision D-13). FBB n'ouvre aucun contrat avec Vodacom, Airtel ou Orange, et n'appelle jamais un opérateur en direct.
+
+| Conséquence | Effet sur le dossier |
+|---|---|
+| **Un adaptateur, pas trois** | Une seule intégration à écrire, tester et exploiter — cohérent avec le principe P-07 (fournisseur remplaçable derrière un adaptateur) |
+| **Les grilles de cette annexe deviennent indicatives** | Elles restent utiles pour comprendre la mécanique et pour poser les bonnes questions ; **le contrat qui fait foi est celui de l'intégrateur** |
+| **Les plafonds deviennent une clause, pas un paramètre** | Le palier du compte marchand (Q-59), le fractionnement (Q-58) et la périodicité (Q-50) se traitent avec l'intégrateur, pas avec les opérateurs un par un |
+| **Un interlocuteur unique en cas d'incident** | Le diagnostic d'un paiement en échec ne se disperse pas entre trois supports |
+| **Une dépendance à documenter** | Mode d'appel, notification de paiement, idempotence, remboursement et frais : c'est la question **Q-68** |
+
+> **Le point à ne pas manquer :** l'intégrateur fournit-il un encaissement **initié depuis une session USSD ou un message SMS** (Q-69) ? Si non, ces deux canaux affichent un prix sans pouvoir le payer, et la quatrième vague d'ouverture est suspendue. C'est la seule vraie inconnue du dispositif.
+
 ---
 
 ## 2. Grilles par opérateur et par palier
@@ -112,3 +126,5 @@ Cela suppose que l'application connaisse, pour chaque opérateur : le palier du 
 | **Q-50** précisée | Le plafond s'applique-t-il par transaction ou par jour, et côté client ou côté marchand ? | Le multi-portefeuilles devient inutile |
 | **Q-58** | Le contrat marchand autorise-t-il plusieurs portefeuilles d'un même titulaire pour une même commande ? | Le dispositif ne peut pas être ouvert |
 | **Q-59** | PPC peut-il ouvrir un compte marchand business (RCCM) chez les trois opérateurs, et à quel coût ? | Le plafond par transaction reste bloquant à 2 500 $ |
+| **Q-68** | Quel intégrateur PPC retient-il : nom, mode d'appel, spécification, mandant de test, frais ? | Sans ce document, aucune recette de paiement n'est possible |
+| **Q-69** | L'intégrateur permet-il d'encaisser un paiement initié depuis l'USSD ou le SMS ? | Les canaux SMS et USSD restent consultatifs : la quatrième vague ne s'ouvre pas |

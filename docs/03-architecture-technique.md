@@ -394,8 +394,7 @@ sequenceDiagram
 | Intégration | Sens | Criticité | Mode | Parade en cas de panne |
 |---|---|---|---|---|
 | APIX certification CIMA | Sortant | Critique | Synchrone avec délai borné | File d'attente, statut « certification en cours », jamais de validation sans réponse |
-| Opérateur mobile money 1 | Les deux | Critique | Asynchrone (notification de paiement) | Bascule vers opérateur 2, paiement en attente visible |
-| Opérateur mobile money 2 | Les deux | Critique | Asynchrone | Idem |
+| **Intégrateur de paiement mobile — fourni par PPC** | Les deux | **Critique** | À documenter : API, redirection ou notification de paiement (Q-68) | File d'attente, paiement « en attente » visible, aucun bon émis avant confirmation ; alerte à l'exploitant au-delà du délai |
 | Banque — encaissement et règlements | Les deux | Critique | Fichier ou interface bancaire | Rappel manuel, rapprochement différé, blocage des règlements |
 | Passerelle SMS | Sortant | Élevé | Asynchrone | Nouvelle tentative, canal WhatsApp en repli, notification dans l'application |
 | Messagerie WhatsApp Business | Sortant | Moyen | Asynchrone | Repli sur SMS |
@@ -404,6 +403,8 @@ sequenceDiagram
 | Facturation électronique | Sortant | Élevé (V1) | Par lot | Génération différée, file d'attente |
 | **ERP PPC (SAP ECC) — prix et disponibilité** | Entrant | **Critique** | Synchrone avec cache horodaté | Aucun prix affiché sans réponse ; message « prix indisponible » |
 | **ERP PPC (SAP ECC) — proforma et confirmation de paiement** | Sortant | **Critique** | Asynchrone | Boîte d'envoi, reprise, file de rebut consultable (IF-08) |
+
+> **Un seul point d'intégration pour le paiement mobile.** PPC fournit son intégrateur (D-13) : FBB n'ouvre aucun contrat avec les opérateurs et n'appelle jamais un opérateur en direct. Un adaptateur au lieu de trois, un interlocuteur unique en cas d'incident, et une grille de plafonds qui devient une clause de contrat plutôt qu'un paramètre à deviner (annexe A3, §1.1). Contrepartie assumée : la couverture réelle de l'intégrateur — en particulier l'encaissement d'un paiement initié par USSD ou SMS (Q-69) — conditionne l'ouverture des deux derniers canaux.
 
 ### 8.2 Patron d'intégration
 

@@ -347,7 +347,7 @@ Le détail des règles (délai de validité du lot, prorata, annulation, ré-tar
 
 | Élément exclu | Raison | Conséquence à assumer |
 |---|---|---|
-| Gestion de la flotte propre de PPC | Non mentionnée comme besoin ; sujet distinct | À réévaluer si PPC possède des camions |
+| Gestion d'une flotte propre | **PPC n'a pas de flotte propre** : les transporteurs sont des partenaires indépendants, homologués par PPC (D-12) | Aucune : seul le référentiel des partenaires est tenu |
 | Achats de matières premières ou de clinker | Hors chaîne de distribution | Aucune |
 | Crédit à la consommation et financement | Nécessite agrément et scoring mature | Préparer la donnée pour une V2 |
 | Gestion des ressources humaines des transporteurs | Hors compétence | Aucune |

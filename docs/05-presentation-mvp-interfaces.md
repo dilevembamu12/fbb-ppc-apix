@@ -66,7 +66,6 @@ Ce qui reste hors MVP sur ces canaux n'est pas le parcours, c'est le confort : s
 | Litige partiel automatique sur écart de poids | L'écart ouvre un litige manuel au MVP ; l'automatisation vient après stabilisation de la tolérance | V1 | L'écran de réception affiche déjà l'écart calculé et le compare à la tolérance |
 | Utilisateurs rattachés à un compte entreprise | Les premiers clients sont des particuliers et des dépôts mono-utilisateur | V1 | Le modèle de compte prévoit plusieurs utilisateurs et trois rôles |
 | Estimation de stock d'un dépôt | Suppose un historique de ventes déclarées | V2 | Rien n'est affiché : mieux vaut pas d'estimation qu'une estimation fausse |
-| Agrégateur de paiement (Araka ou banque agrégateur) | Décision commerciale non prise, frais non négociés | À trancher | L'écran de paiement liste des canaux, pas des fournisseurs : le choix reste invisible au client |
 
 ### 2.4 Les trois options d'achat et leur effet sur les écrans
 
@@ -504,7 +503,7 @@ Légende : **L** lecture, **C** création ou saisie, **V** validation ou décisi
 | Tolérance d'écart de quantité | RG-CHG-03, RG-POD-04 | CHG-03, CLI-13 | « 1 % ou 2 sacs » : le seuil affiché, et donc le déclenchement du litige, en dépend |
 | Seuil haut de rapprochement manuel | RG-PAY-17 | CLI-09, BKO-05 | Détermine à partir de quel montant l'écran impose une référence de virement unique |
 | Accès des utilisateurs PPC par annuaire | US-M11-06 | BKO-10 | Si l'annuaire n'est pas disponible, l'écran retombe sur une gestion locale de comptes |
-| Agrégateur de paiement | Piste Araka ou banque agrégateur | CLI-09 | Le client ne voit que des canaux ; le choix du fournisseur ne modifie que les frais, pas l'écran |
+| Couverture de l'intégrateur de paiement | Q-68, Q-69 | CLI-09, USS-02, SMS-01 | PPC fournit son intégrateur (D-13) : le client ne voit que des canaux. Si l'encaissement depuis l'USSD ou le SMS n'est pas couvert, ces deux canaux n'affichent qu'un prix ou ne s'ouvrent pas |
 | Nombre de versements d'un échéancier | RG-PAY-18 | CLI-09 | Un échéancier à deux versements ne se présente pas comme un échéancier à quatre |
 | Périmètre du canal WhatsApp | Q-56 | WAB-02, WAB-03 | Si le canal se limite à la notification et au suivi, WAB-02 et WAB-03 disparaissent |
 | IA locale ou menus numérotés | Q-57 | WAB-02 | La formulation change, pas le parcours : le menu numéroté reste la référence |
