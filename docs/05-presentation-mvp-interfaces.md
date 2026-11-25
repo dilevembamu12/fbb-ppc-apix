@@ -50,14 +50,15 @@ Trois conséquences directes :
 
 > Les présentations commerciales n'affichent que les six premiers jalons : le septième est documentaire, il ne produit pas de preuve de terrain mais il conditionne la comptabilité du client.
 
+**Les canaux font partie du MVP, pas d'une version ultérieure.** La chaîne J1 à J4 se joue à l'identique sur **WhatsApp Business, Telegram, SMS et USSD** (IF-10), en plus de l'application et du web. Un client sans smartphone, sans forfait de données ou sans envie d'installer une application doit pouvoir acheter, payer et présenter son bon : l'exclure du MVP reviendrait à réserver la preuve à ceux qui ont déjà un smartphone récent.
+
+Ce qui reste hors MVP sur ces canaux n'est pas le parcours, c'est le confort : suivi de position en direct, historique exportable, litige déclaré depuis la conversation. Le client les retrouve dès qu'il ouvre l'application ou le web, avec les mêmes identifiants de dossier.
+
 ### 2.3 Ce qui est explicitement hors MVP
 
 | Élément écarté | Pourquoi il est écarté du MVP | Version cible | Ce que l'interface prévoit déjà |
 |---|---|---|---|
 | Groupage logistique | Dépend de la constitution de lots, donc d'un volume réel ; ne sert à rien sur les premiers clients | V1 | L'écran de choix d'option annonce « groupage à venir » plutôt que de le simuler |
-| WhatsApp Business | Exige un compte marchand validé et une modération de messages | V1 | Parcours complet **spécifié et maquetté** (IF-10, planches A.14 et A.15), parité décrite en annexe A4 |
-| Telegram | Aucun compte marchand à négocier, mais une population plus étroite en RDC | V1.1 | Parcours complet maquetté (planche A.24) ; positionné comme canal de service, pas d'acquisition |
-| Commande par SMS et par USSD | Textes courts, pas d'image, passerelle et prestataire de collecte à raccorder | V1.2 | Parcours complet maquetté (planches A.22 et A.23) ; le bon y devient un code de retrait, accepté par la console de chargement |
 | Chatbot avec intelligence artificielle locale | PPC n'a pas arbitré entre IA locale et menus numérotés | V1 | Le parcours est déjà une suite de questions fermées, donc jouable en menus numérotés |
 | Facture normalisée | Exige un connecteur fiscal validé par le conseil fiscal de PPC | V1 | Le reçu certifié occupe la place, avec les mêmes numéros de pièce |
 | Score de fiabilité transporteur | Sans historique, le score n'a aucune valeur | V1 | Le portail affiche les courses et les règlements, pas encore de note |
@@ -79,7 +80,7 @@ Trois conséquences directes :
 
 ---
 
-## 3. Les huit interfaces
+## 3. Les onze interfaces
 
 ### 3.1 Vue d'ensemble
 
@@ -93,15 +94,15 @@ Trois conséquences directes :
 | **IF-06** | Back-office PPC | AC-ADM — administrateur, AC-FIN — contrôleur financier | Navigateur, écran large | En ligne | 10 | M2, M3, M4, M6, M8, M11 |
 | **IF-07** | Console dépôt | AC-DEP — dépôt ou point de retrait agréé | Navigateur, tablette ou téléphone | En ligne | 3 | M5, M9 |
 | **IF-08** | Console d'exploitation APIX | AC-FBB — super-administrateur | Navigateur | En ligne | 3 | Transverse |
-| **IF-09** | Console d'automatisation et des canaux | AC-ADM — administrateur PPC, AC-FBB — exploitant | Navigateur, écran large | En ligne | 5 | Transverse (V1) |
-| **IF-10** | Canaux conversationnels et textuels | AC-CLI — client final | WhatsApp, Telegram, SMS, USSD | En ligne, et **sans internet** pour l'USSD | 10 | M1 à M4, M7, M8 (V1) |
-| **IF-11** | E-mail transactionnel | AC-CLI — client final et services achats | Courriel | Asynchrone | 1 | M2 à M4, M8 (V1) |
+| **IF-09** | Console d'automatisation et des canaux | AC-ADM — administrateur PPC, AC-FBB — exploitant | Navigateur, écran large | En ligne | 5 | Transverse (MVP) |
+| **IF-10** | Canaux conversationnels et textuels | AC-CLI — client final | WhatsApp, Telegram, SMS, USSD | En ligne, et **sans internet** pour l'USSD | 10 | M1 à M4, M7, M8 (MVP) |
+| **IF-11** | E-mail transactionnel | AC-CLI — client final et services achats | Courriel | Asynchrone | 1 | M2 à M4, M8 (MVP) |
 
 Total : **69 écrans**, dont 16 mutualisés entre l'application et le web client. La parité des canaux est décrite en **annexe A4**.
 
 > L'interface bancaire (AC-BNK) n'est pas une interface utilisateur : c'est une intégration. Elle n'apparaît donc pas dans cet inventaire, mais elle conditionne trois écrans (CLI-09, CLI-10, BKO-06).
 
-### 3.2 Principes communs aux huit interfaces
+### 3.2 Principes communs aux onze interfaces
 
 1. **Aucun prix sans identité.** Un visiteur non identifié ne voit ni grille, ni total, ni même un ordre de grandeur (RG-COT-01).
 2. **Un écran, un objectif, une action principale.** Si un écran demande deux décisions, il est coupé en deux.
@@ -124,12 +125,16 @@ Total : **69 écrans**, dont 16 mutualisés entre l'application et le web client
 | Application iOS | **MVP** | Même périmètre fonctionnel | Compte développeur Apple de PPC |
 | Web client (navigateur) | **MVP** | Même parcours, mise en page large, export tableur | — |
 | Notifications SMS | **MVP** | Envoi sortant sur changement d'état et sur décision de litige | Contrat passerelle SMS de PPC |
-| Courriel | MVP pour les reçus, **V1 pour le parcours complet** | Cotation, lien de paiement signé, bon et reçu en pièce jointe (IF-11) | Adresse vérifiée |
-| WhatsApp Business | **V1 — parcours complet** | Cotation, paiement et bon depuis la conversation (IF-10) | Compte marchand validé, gabarits de messages approuvés |
-| Telegram | **V1.1 — parcours complet** | Même parcours, servi par un bot, sans compte marchand à négocier | Bot créé, aucune négociation préalable |
-| SMS | Notifications au MVP, **parcours complet en V1.2** | `COT`, `PAY`, `BON`, `ETAT` par mots-clés ; bon transmis en **code de retrait** | Coût par message arbitré, et PSP raccordé |
-| USSD | **V1.2 — parcours complet** | Menus numérotés, paiement ouvert dans la session, bon en **code de retrait** | Passerelle USSD **et PSP raccordé** (Q-60) |
+| Courriel | **MVP** | Cotation, lien de paiement signé, bon et reçu en pièce jointe (IF-11) | Adresse vérifiée |
+| WhatsApp Business | **MVP — parcours complet** | Cotation, paiement et bon depuis la conversation (IF-10) | Compte marchand validé, gabarits de messages approuvés |
+| Telegram | **MVP — parcours complet** | Même parcours, servi par un bot, sans compte marchand à négocier | Bot créé, aucune négociation préalable |
+| SMS | **MVP — parcours complet** | `COT`, `PAY`, `BON`, `ETAT` par mots-clés ; bon transmis en **code de retrait** | Coût par message arbitré, et PSP raccordé |
+| USSD | **MVP — parcours complet** | Menus numérotés, paiement ouvert dans la session, bon en **code de retrait** | Passerelle USSD **et PSP raccordé** (Q-60) |
 | Chatbot avec IA locale | V1 | Interprétation d'une demande en langage libre, avec repli sur menus numérotés | Arbitrage de PPC sur l'hébergement de l'IA |
+
+> **Ce que « MVP » veut dire ici, et ce que cela coûte.** Les cinq entrées du dossier sont livrées ensemble, mais elles ne coûtent pas la même chose : l'application, le web et l'e-mail réutilisent le même moteur ; WhatsApp et Telegram n'ajoutent qu'un rendu ; SMS et USSD sont les deux seuls à exiger une passerelle et un prestataire d'encaissement raccordé. Le chiffrage distingue donc **un moteur de session et cinq adaptateurs**, jamais « un peu plus de travail » (Q-61).
+>
+> **Ce que « MVP » ne veut pas dire.** Un canal ouvert au MVP s'entend **parcours complet** : cotation, paiement, bon et preuve. Aucun canal n'est livré en lecture seule en attendant mieux : un canal qui affiche un prix sans pouvoir le payer est un canal qui déçoit le client au moment décisif.
 
 ---
 
@@ -296,11 +301,11 @@ L'interface reprend les seize écrans `CLI-01` à `CLI-16` en mise en page large
 - Aucun écran FBB ne permet de modifier un montant, un bon ou une décision de litige.
 - Toute action de support laisse une trace visible par PPC.
 
-### 4.9 IF-09 — Console d'automatisation et des canaux *(V1)*
+### 4.9 IF-09 — Console d'automatisation et des canaux *(MVP)*
 
 **Acteurs :** AC-ADM, administrateur PPC ; AC-FBB, exploitant APIX pour la partie technique.
 **Objectif :** ouvrir, configurer et surveiller les canaux externes — WhatsApp Business, SMS, e-mail, Telegram, USSD — sans jamais leur donner de pouvoir sur le prix, le bon de commande ou l'argent.
-**Mode :** navigateur, écran large. Cette interface est **hors périmètre MVP** : elle est spécifiée ici parce que PPC l'a demandée explicitement en réunion, et parce qu'aucun canal ne peut s'ouvrir sans elle.
+**Mode :** navigateur, écran large. Cette interface entre au MVP **parce qu'elle en conditionne l'ouverture** : aucun des quatre nouveaux canaux ne peut être mis en service sans modèle de message approuvé, sans règle de routage testée et sans journal d'envoi. Elle n'est pas un outil d'administration pour plus tard, c'est la salle des commandes des canaux.
 
 | Écran | Nom | Ce que l'utilisateur y fait | Point de contrôle |
 |---|---|---|---|
@@ -317,7 +322,7 @@ L'interface reprend les seize écrans `CLI-01` à `CLI-16` en mise en page large
 - Elle n'écrit jamais de message libre vers un client : tout part d'un modèle approuvé.
 - Le journal d'envoi conserve chaque message, son canal, son horodatage et son accusé de réception.
 
-### 4.10 IF-10 — Canaux conversationnels et textuels *(V1)*
+### 4.10 IF-10 — Canaux conversationnels et textuels *(MVP)*
 
 **Acteur :** AC-CLI, client final PPC.
 **Objectif :** obtenir une cotation, payer et recevoir son bon **sans installer d'application**, sur le canal que le client utilise déjà.
@@ -361,7 +366,7 @@ L'interface reprend les seize écrans `CLI-01` à `CLI-16` en mise en page large
 - Aucun canal n'annonce un délai de règlement du transporteur : il n'est pas connu.
 - Un changement de canal ne crée jamais un second dossier : le numéro de cotation est la clé de reprise.
 
-### 4.11 IF-11 — E-mail transactionnel *(V1)*
+### 4.11 IF-11 — E-mail transactionnel *(MVP)*
 
 **Acteur :** AC-CLI, et les services achats des entreprises et des dépôts.
 **Objectif :** recevoir une cotation opposable, payer en un clic, et conserver un dossier complet pour la comptabilité.

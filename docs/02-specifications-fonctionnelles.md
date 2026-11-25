@@ -460,14 +460,16 @@ En tant que client, je veux signaler un problème pendant le transport afin qu'i
 - La déclaration est horodatée et notifiée à PPC et au transporteur.
 - Un incident ouvert bloque la libération automatique des fonds jusqu'à décision.
 
-**US-M7-04 — Repli SMS / USSD** *(V1)*
-En tant que client sans smartphone, je veux commander et suivre par SMS afin de ne pas être exclu.
+**US-M7-04 — Commande et suivi par SMS et USSD** *(MVP)*
+En tant que client sans smartphone, ou sans internet au moment où il commande, je veux acheter et suivre par SMS ou par un menu USSD afin de ne pas être exclu.
 
 *Critères d'acceptation :*
+- Le client peut demander une cotation, payer et recevoir son **code de retrait** par SMS (`COT`, `PAY`, `BON`, `ETAT`).
 - Un menu USSD permet : consulter le solde de commande, l'état d'une livraison, demander un rappel.
+- Le bon émis par SMS ou USSD est accepté à la console de chargement sous forme de code, au même titre qu'un QR.
 - Le format SMS respecte la limite de caractères et reste lisible sur un téléphone à clavier.
 
-**US-M7-05 — Commander par WhatsApp Business** *(V1)*
+**US-M7-05 — Commander par WhatsApp Business ou Telegram** *(MVP)*
 En tant que client, je veux commander depuis la messagerie que j'utilise déjà afin de ne pas installer une application supplémentaire.
 
 *Critères d'acceptation :*
@@ -486,8 +488,10 @@ En tant que client, je veux commander depuis la messagerie que j'utilise déjà 
 | RF-M7-03 | Journal d'événements par commande, immuable | MVP |
 | RF-M7-04 | Tableau de bord des incidents en cours pour PPC | MVP |
 | RF-M7-05 | Lien de suivi partageable avec un tiers (destinataire final) | V1 |
-| RF-M7-06 | Canal WhatsApp Business bidirectionnel : cotation, paiement, bon de commande et suivi | V1 |
-| RF-M7-07 | Fonctionnement du canal WhatsApp en **menus numérotés**, sans dépendance à un modèle de langage | V1 |
+| RF-M7-06 | Canal WhatsApp Business bidirectionnel : cotation, paiement, bon de commande et suivi | MVP |
+| RF-M7-07 | Fonctionnement du canal WhatsApp en **menus numérotés**, sans dépendance à un modèle de langage | MVP |
+| RF-M7-08 | Canal Telegram : même moteur de session que WhatsApp, rendu en claviers en ligne | MVP |
+| RF-M7-09 | Canaux SMS et USSD : commande, paiement et bon en **code de retrait**, avec passerelle raccordée | MVP |
 
 ---
 

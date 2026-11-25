@@ -680,7 +680,7 @@ def d13_sequestre(prs):
     fond(diapo, NUIT)
     en_tete(diapo, "Le circuit de l'argent", "Le client paie PPC. Le transporteur est payé sur preuve.", 13, sombre=True)
     texte(diapo, MARGE, Inches(1.80), Inches(11.4), Inches(0.62),
-          "Encaissé avant le chargement, sur la référence d'une cotation. Or 15\u00a0à\u00a020\u00a0% seulement des encaissements "
+          "Encaissé avant le chargement, sur la référence d'une cotation. Or 10\u00a0à\u00a020\u00a0% seulement des encaissements "
           "passent par le digital, et au-delà de 2\u00a0500\u00a0$ aucun canal mobile ne passe.",
           taille=13, couleur=RGBColor(0xB6, 0xC6, 0xD4), italique=True, interligne=1.2)
 

@@ -159,7 +159,7 @@ RECITS = [
     ("US-M7-01", "E07", "Suivi de la commande", "MVP", 8, "C4", "Quatre états lisibles, dernière position horodatée, jamais de position inventée"),
     ("US-M7-02", "E07", "Notifications multi-canal", "MVP", 9, "C4", "SMS, WhatsApp et notification applicative, traces d'envoi"),
     ("US-M7-03", "E07", "Déclaration d'incident", "MVP", 7, "C4", "Incident géant la libération automatique des fonds"),
-    ("US-M7-04", "E07", "Repli SMS et USSD", "V2", 16, "C6", "Consultation de commande et d'état de livraison par menu USSD"),
+    ("US-M7-04", "E07", "Commande et suivi par SMS et USSD", "MVP", 16, "C6", "Cotation, paiement et bon en code de retrait par menu USSD, accepté au chargement"),
     ("US-M8-01", "E08", "Validation de réception par le client", "MVP", 12, "C4", "QR de livraison plus contrôle de scellé, ouverture de litige immédiate si refus"),
     ("US-M8-02", "E08", "Dossier de preuve à plusieurs éléments", "MVP", 12, "C4", "Dossier téléchargeable en PDF avec empreinte d'intégrité"),
     ("US-M8-03", "E08", "Ouverture d'un litige", "MVP", 8, "C4", "Types de litige, gel des fonds concernés, numéro de dossier"),

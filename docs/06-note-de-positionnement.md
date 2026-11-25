@@ -9,7 +9,7 @@
 Trois phrases, qui viennent de ses propres mots :
 
 1. **Vendre en ligne**, pas héberger des vendeurs : PPC veut maîtriser sa boutique, son prix, son bon.
-2. **Augmenter la part automatique du travail.** Notre interlocuteur chez PPC l'a chiffré : **environ 10 à 20 % des transactions passent déjà par le canal numérique d'APIX**, et sont donc traitées sans intervention. L'objectif est de porter **plus de la moitié des clients** vers le paiement numérique : le canal numérique étant déjà automatique, la part traitée sans agent augmente et le travail de back-office diminue d'autant.
+2. **Augmenter la part automatique du travail.** Notre interlocuteur chez PPC l'a confirmé : **10 à 20 % des transactions passent déjà par le canal numérique d'APIX**, et sont donc traitées sans intervention. L'objectif est de porter **plus de la moitié des clients** vers le paiement numérique : le canal numérique étant déjà automatique, la part traitée sans agent augmente et le travail de back-office diminue d'autant.
 3. **Ne pas perdre la preuve.** Un client qui paie doit pouvoir prouver qu'il a payé, et PPC doit pouvoir prouver ce qui est sorti de l'usine.
 
 Ces trois phrases décrivent un objectif de **part de clientèle**, pas une refonte du système d'information. Aucune ne demande une place de marché. Aucune ne demande de remplacer l'ERP.
@@ -124,7 +124,7 @@ Concrètement : notre interlocuteur chez PPC serait celui qui présente à ses c
 
 **3. L'adoption.** Le vrai enjeu de PPC n'est pas la technologie, c'est l'usage : passer d'un processus manuel à un processus outillé. Une pile plus lourde ne fait jamais adopter un outil ; un parcours plus court, si.
 
-**4. La mesure.** Le point de départ existe et il est connu : **10 à 20 % des transactions sont déjà automatiques**. L'objectif se lit donc comme une progression sur un indicateur simple — la part des paiements passant par le canal numérique — et non comme la promesse d'une refonte. La proposition technique, en remplaçant le système, efface la référence au lieu de l'améliorer : on ne peut plus dire si l'on a progressé, seulement si l'on a changé.
+**4. La mesure.** Le point de départ existe, il est confirmé par PPC et il s'écrit en une ligne : **10 à 20 % des transactions sont déjà automatiques**. L'objectif se lit donc comme une progression sur un indicateur simple — la part des paiements passant par le canal numérique — et non comme la promesse d'une refonte. La proposition technique, en remplaçant le système, efface la référence au lieu de l'améliorer : on ne peut plus dire si l'on a progressé, seulement si l'on a changé.
 
 **5. La réversibilité.** Notre approche laisse PPC libre : données exportables, ERP inchangé, aucun verrou. C'est un argument de confiance, et il se retourne en notre faveur le jour où PPC compare.
 
@@ -149,7 +149,7 @@ Concrètement : notre interlocuteur chez PPC serait celui qui présente à ses c
 | **Q-62** | Quel mode d'échange avec SAP : IDoc, service web ou API ? | Sans lui, le raccordement reste une intention |
 | **Q-63** | Quel mandant de test, et sous quel délai ? | Sans lui, aucune recette n'est possible |
 | **Q-66** | PPC veut-il vendre lui-même, ou accueillir des vendeurs tiers ? | C'est la question qui sépare une boutique d'une place de marché |
-| **Q-67** | Quel volume de commandes par mois, et quelle part passe aujourd'hui par le canal numérique ? | Les 10 à 20 % cités viennent d'un entretien : il faut les confirmer par écrit pour en faire un indicateur de départ |
+| **Q-67** | Quel volume de commandes par mois, et quelle part passe aujourd'hui par le canal numérique ? | Le taux est confirmé (10 à 20 %) ; il manque le volume absolu pour convertir le gain en heures d'agents de back-office |
 
 ---
 

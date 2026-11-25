@@ -358,9 +358,9 @@ Le détail des règles (délai de validité du lot, prorata, annulation, ré-tar
 
 | Version | Contenu | Objectif |
 |---|---|---|
-| **MVP** | Chaîne de preuve J1 → J7, option A et option B, barème simple, preuve de livraison, back-office minimal | Prouver que la chaîne fonctionne sur un axe |
+| **MVP** | Chaîne de preuve J1 → J7 sur les **cinq canaux** (WhatsApp, Telegram, e-mail, SMS, USSD) en plus de l'application et du web, option A et option B, barème simple, preuve de livraison, back-office minimal | Prouver que la chaîne fonctionne sur un axe, quel que soit l'appareil du client |
 | **V1** | Groupage inter-clients, multi-arrêts, score transporteur, litiges partiels automatisés, facturation normalisée | Généraliser et rentabiliser |
-| **V2** | Repli USSD / agents de proximité, crédit et fidélité, prévision de demande, place de marché logistique étendue | Étendre la couverture et la valeur |
+| **V2** | Agents de proximité, crédit et fidélité, prévision de demande, place de marché logistique étendue | Étendre la couverture et la valeur |
 
 ---
 

@@ -135,16 +135,20 @@ Trois règles de reprise :
 
 ---
 
-## 7. Dans quel ordre construire
+## 7. Dans quel ordre ouvrir — et non dans quel ordre construire
 
-| Phase | Canaux | Pourquoi cet ordre |
+Les cinq canaux sont **au périmètre du MVP**. Ce qui se découpe, c'est l'**ouverture**, parce que deux dépendances ne dépendent pas de nous : un compte marchand WhatsApp se valide en semaines, une passerelle USSD suppose un prestataire d'encaissement raccordé.
+
+| Vague d'ouverture | Canaux | Ce qui conditionne l'ouverture |
 |---|---|---|
-| **MVP** | Application et Web | Une seule chaîne de preuve à stabiliser, un seul front d'erreurs |
-| **V1** | WhatsApp et e-mail | Les deux canaux qui portent le volume ; l'e-mail réutilise les liens signés du web |
-| **V1.1** | Telegram | Bot rapide à ouvrir, aucun compte marchand, coût marginal faible |
-| **V1.2** | SMS et USSD | Les seuls qui fonctionnent sans internet, mais les plus chers à construire **et** à exploiter |
+| **Vague 1 — à la mise en service** | Application, Web | Rien d'externe : c'est la chaîne de preuve elle-même |
+| **Vague 2 — même semaine** | Telegram, e-mail | Bot créé sans négociation ; liens signés déjà éprouvés par le web |
+| **Vague 3 — dès validation du compte marchand** | WhatsApp Business | Compte marchand validé et gabarits de messages approuvés |
+| **Vague 4 — dès raccordement du prestataire** | SMS et USSD | Passerelle **et** PSP raccordé (Q-60) ; les seuls canaux qui coûtent à l'exploitation |
 
-> Les cinq canaux en V1 sont faisables — à condition de les chiffrer comme **cinq adaptateurs plus un moteur**, et non comme « un peu plus de travail ». C'est la question Q-61.
+> **Ce découpage n'est pas un phasage de périmètre.** Chaque canal ouvre en **parcours complet** — cotation, paiement, bon, preuve — jamais en lecture seule. Un canal qui affiche un prix sans pouvoir être payé décoit le client au moment décisif, et laisse PPC avec la même charge manuelle qu'avant.
+
+> Les cinq canaux sont faisables dans la fenêtre du MVP — à condition de les chiffrer comme **un moteur de session plus cinq adaptateurs**, et non comme « un peu plus de travail ». C'est la question Q-61.
 
 ---
 

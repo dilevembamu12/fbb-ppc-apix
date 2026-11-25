@@ -93,7 +93,7 @@ Faire les quatre premiers jalons de la chaîne de preuve très bien, plutôt que
 - Preuve de livraison : QR nominatif, photo géolocalisée, horodatage, validation de conformité.
 - Encaissement certifié, ventilation de la part transport, règlement du transporteur sur preuve.
 - **Virement bancaire dès le MVP** : au-delà de 2 500 $ par transaction, c'est le seul canal possible — et c'est le segment B2B que PPC veut capter.
-- **Commande et suivi par WhatsApp Business**, avec menus numérotés : le canal fonctionne même sans intelligence artificielle.
+- **Une seule chaîne de preuve, sept points d'entrée** : application, web, WhatsApp Business, Telegram, e-mail, SMS et USSD. Mêmes jalons, même cotation, même bon ; sur SMS et USSD, le bon devient un **code de retrait** que l'agent saisit.
 - Back-office PPC : transporteurs, barèmes, litiges, tableau de bord, comptes internes par annuaire d'entreprise.
 
 **Hors MVP, en V1 :**
@@ -102,7 +102,7 @@ Faire les quatre premiers jalons de la chaîne de preuve très bien, plutôt que
 - Multi-enlèvements sur un même trajet (itinéraire multi-arrêts).
 - Score de fiabilité transporteur et arbitrage des courses.
 - Intégration facturation normalisée DGI.
-- Menu USSD complet et agent de proximité pour les clients sans smartphone.
+- Agents de proximité pour les clients sans smartphone, en complément des canaux SMS et USSD ouverts au MVP.
 
 **Hors périmètre (assumé) :**
 
