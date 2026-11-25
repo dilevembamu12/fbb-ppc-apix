@@ -112,32 +112,6 @@ python outils\build_docs.py --check          # vérifie les tableaux Markdown sa
 
 > Les valeurs numériques des classeurs (distances, coûts, seuils) sont des **propositions de travail** à remplacer par les données de PPC.
 
-## Le MVP exécutable
-
-Le dossier décrit la chaîne ; `mvp/` l'exécute. C'est la même chaîne, sans rien autour : pas de
-serveur de messages, pas de base distante, pas de modèle de langage. Un fichier SQLite et la
-bibliothèque standard de Python.
-
-```
-powershell -ExecutionPolicy Bypass -File mvp\lancer.ps1      # http://127.0.0.1:8765
-python mvp\verifier_chaine.py                                # 24 vérifications des règles
-```
-
-| Élément | Rôle |
-|---|---|
-| `mvp/serveur.py` | Moteur : règles de gestion, base SQLite, interface JSON, pages statiques |
-| `mvp/verifier_chaine.py` | Épreuve de la chaîne : cotation, paiement, bon, trois refus, réception |
-| `mvp/web/` | Trois vues : parcours client, console de chargement, pilotage |
-
-**Ce qui est démontré.** Cotation numérotée et datée · paiement référencé à la cotation · bon émis
-uniquement après encaissement · QR signé **ou** code de retrait · usage unique (le second passage est
-refusé) · bon modifié refusé pour signature invalide · réception avec écart et seuil de tolérance.
-
-**Ce qui est simulé, et affiché comme tel.** Le paiement (aucun opérateur raccordé) et l'échange ERP
-(aucun mandant SAP accessible — Q-63). Le MVP ne prétend pas le contraire : la mention figure à
-l'écran de paiement et au pied de page.
-
-
 ### Présentation commerciale « APIX All In One »
 
 Deux fichiers, deux usages :
