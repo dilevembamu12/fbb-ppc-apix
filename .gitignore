@@ -38,3 +38,7 @@ dist/livraison/*.zip
 
 # Montage final du film, retravaille a la main : 47 Mo, hors versionnement.
 dist/video/*.mp4
+
+# Base de demonstration du MVP : regenerable, jamais versionnee
+mvp/mvp.sqlite3
+__pycache__/
