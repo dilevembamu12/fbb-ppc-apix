@@ -141,6 +141,8 @@ Total : **69 écrans**, dont 16 mutualisés entre l'application et le web client
 **Objectif :** obtenir un prix ferme, payer, et détenir une preuve — sans appeler personne.
 **Mode :** en ligne ; les écrans de consultation restent lisibles après une coupure, les actions sont rejouées au retour du réseau.
 
+**Reprise du périmètre Digiciment.** Cette interface couvre à l'identique les fonctions rendues aujourd'hui par l'application publiée : deux profils à la connexion (agent commercial et responsable d'entrepôt), inscription en quatre étapes avec pièces d'identité, vérification par code reçu par SMS, rattachement à un dépôt validé par PPC, catalogue avec prix au sac, option de livraison chiffrée, paiement par carte bancaire et par portefeuille mobile. Elle ajoute la cotation numérotée à durée de validité, le bon nominatif à usage unique et la preuve de livraison. Détail et hypothèses : annexe A5.
+
 | Écran | Nom | Ce que le client y fait | Point de contrôle |
 |---|---|---|---|
 | CLI-01 | Ouverture de session par numéro | Saisit son numéro, reçoit un code à usage unique | Code valable 5 minutes, 3 tentatives (RG-KYC-01) |
@@ -172,6 +174,8 @@ Total : **69 écrans**, dont 16 mutualisés entre l'application et le web client
 
 **Acteur :** AC-CLI travaillant depuis un poste fixe — dépôts, entreprises de construction, services achats.
 **Objectif :** le même parcours que l'application, avec la densité d'information d'un écran large.
+
+**Reprise du périmètre Digiciment.** L'accès web n'est pas un écran mobile agrandi : c'est l'interface des dépôts et des services achats, qui commandent en série et exportent pour leur comptabilité. À confirmer : l'existence d'une version web du service actuel (Q-65).
 
 L'interface reprend les seize écrans `CLI-01` à `CLI-16` en mise en page large. Trois écrans n'existent qu'en web :
 

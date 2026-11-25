@@ -59,16 +59,16 @@ Ces questions conditionnent la faisabilité du produit. Elles doivent être trai
 
 ---
 
-## 4. Questions sur Digicement
+## 4. Questions sur Digiciment
 
 Ces questions sont sensibles et doivent être posées avec tact. Elles visent à comprendre le terrain, pas à attaquer un partenaire de PPC.
 
 | N° | Question | Utilité | Réponse obtenue |
 |---|---|---|---|
-| **Q-30** | Quelles fonctions de Digicement sont réellement utilisées par les clients PPC aujourd'hui ? | Savoir ce qu'il faut égaler, et ce qu'il faut dépasser | |
-| **Q-31** | Digicement est-il intégré à des systèmes PPC (facturation, comptabilité, stocks) ? | Éviter une rupture d'intégration | |
-| **Q-32** | Y a-t-il un engagement contractuel entre PPC et Digicement, et jusqu'à quand ? | Calendrier de substitution possible | |
-| **Q-33** | Quels retours les clients finaux font-ils sur Digicement ? | Identifier les douleurs non couvertes | |
+| **Q-30** | Quelles fonctions de Digiciment sont réellement utilisées par les clients PPC aujourd'hui ? | Savoir ce qu'il faut égaler, et ce qu'il faut dépasser | |
+| **Q-31** | Digiciment est-il intégré à des systèmes PPC (facturation, comptabilité, stocks) ? | Éviter une rupture d'intégration | |
+| **Q-32** | Y a-t-il un engagement contractuel entre PPC et Digiciment, et jusqu'à quand ? | Calendrier de substitution possible | |
+| **Q-33** | Quels retours les clients finaux font-ils sur Digiciment ? | Identifier les douleurs non couvertes | |
 
 ---
 
@@ -124,6 +124,10 @@ Ces points ont été soulevés en entretien et n'ont pas encore de réponse arr�
 | **Q-59** | PPC peut-il ouvrir un compte marchand business (avec RCCM) chez Vodacom, Airtel et Orange ? | Les paliers marchands autorisent 10 000 000 FC par transaction, contre 2 500 000 FC au mieux pour un compte vérifié | Le coût, les pièces exigées et le délai d'ouverture — c'est la réponse de fond au plafond |
 | **Q-60** | Quel prestataire encaisse les paiements initiés par USSD et par SMS ? | Africa's Talking fournit l'USSD et le SMS mais ne collecte pas les fonds ; un PSP ou un agrégateur est nécessaire derrière | Sans PSP raccordé, le menu USSD affiche un prix et ne peut pas être payé |
 | **Q-61** | PPC veut-il les cinq canaux en V1, ou un déploiement progressif ? | La parité complète est demandée ; elle représente cinq adaptateurs et un moteur de session | Le chiffrage, le calendrier, et le choix des deux premiers canaux |
+| **Q-62** | Quel mode d'échange avec SAP ECC : IDoc, service web ou API ? | PPC met à disposition « interfaces, APIs, IDocs, Web services, selon l'architecture retenue » (protocole, art. 4.1) | Le mode retenu, et le contrat d'échange gelé avec la DSI |
+| **Q-63** | Quel mandant SAP pour les tests, et sous quel délai ? | Aucun raccordement ne se recette sans environnement de test | L'accès, le délai, et les données de test disponibles |
+| **Q-64** | Altius fournira-t-il l'export des comptes et la documentation de son API ? | La reprise des identités, des dépôts et de l'historique en dépend (annexe A5, §7) | L'accord d'Altius, le format et la date de remise |
+| **Q-65** | Digiciment dispose-t-il d'une version web, et sera-t-elle maintenue ? | Le protocole évoque une expérience « côté mobile et côté web » (art. 4.3) | L'existence réelle d'un accès web, pour positionner IF-02 |
 
 ---
 

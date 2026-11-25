@@ -402,7 +402,8 @@ sequenceDiagram
 | Fonds de carte auto-hébergé | Sortant | Moyen | Synchrone (tuiles) | Cache local, affichage sans fond de carte |
 | Géocodage | Sortant | Faible | Synchrone | Saisie manuelle du point de repère |
 | Facturation électronique | Sortant | Élevé (V1) | Par lot | Génération différée, file d'attente |
-| Comptabilité PPC | Sortant | Moyen (V1) | Par lot | Export manuel |
+| **ERP PPC (SAP ECC) — prix et disponibilité** | Entrant | **Critique** | Synchrone avec cache horodaté | Aucun prix affiché sans réponse ; message « prix indisponible » |
+| **ERP PPC (SAP ECC) — proforma et confirmation de paiement** | Sortant | **Critique** | Asynchrone | Boîte d'envoi, reprise, file de rebut consultable (IF-08) |
 
 ### 8.2 Patron d'intégration
 
@@ -425,6 +426,66 @@ Conséquences : un changement de fournisseur ne touche qu'un adaptateur ; toute 
 - **Réconciliation quotidienne obligatoire** entre les relevés des opérateurs et les paiements enregistrés.
 - **Le montant et la devise sont toujours recontrôlés** à la réception d'une notification de paiement.
 - **Toute notification externe est authentifiée** (signature ou vérification de source) avant traitement.
+
+### 8.4 Raccordement à l'ERP de PPC (SAP ECC)
+
+PPC exploite **SAP ECC** pour la gestion des ventes, de la facturation et de la comptabilité. APIX n'est pas un ERP et ne cherche pas à en devenir un. Le raccordement est donc un **contrat de répartition** : chaque fait a un propriétaire unique, et aucun n'est dupliqué.
+
+#### 8.4.1 Répartition des registres
+
+| | SAP ECC | APIX |
+|---|---|---|
+| **Ce qu'il détient** | Prix, taxes, document de vente, facture, créance, encaissement comptable | Cotation émise, paiement encaissé et rapproché, bon émis, chargement, livraison, litige, reçu vérifiable |
+| **Fait foi sur** | Le commercial et le comptable | Le terrain et la preuve |
+| **Décide du prix** | **Toujours lui** | Jamais : APIX reçoit le prix, ne le calcule pas et ne l'estime pas |
+
+#### 8.4.2 Les quatre flux
+
+| Réf. | Sens | Contenu | Mode | Panne |
+|---|---|---|---|---|
+| **F1** | SAP → APIX | Produits, prix par profil, conditions, disponibilité | Synchrone avec cache horodaté | Cache servi, mention de fraîcheur affichée ; au-delà du cache, « prix indisponible » |
+| **F2** | APIX → SAP | Demande de proforma : client, produit, quantité, zone, canal d'origine | Asynchrone, boîte d'envoi | Cotation mise en attente, jamais émise sans réponse |
+| **F3** | APIX → SAP | Confirmation de paiement : référence de cotation, montant, canal, date, identifiant bancaire | Asynchrone, boîte d'envoi | Bon non émis tant que la confirmation n'est pas acceptée (RG-CMD-01) |
+| **F4** | SAP → APIX | Avoir, annulation, correction de prix | Événement, reprise | Incident tracé ; aucune correction silencieuse |
+
+#### 8.4.3 Le mode d'échange n'est pas présumé
+
+Le protocole d'accord prévoit que PPC met à disposition l'accès technique à son ERP, « interfaces, APIs, IDocs, Web services, selon l'architecture retenue ». **Nous ne présumons donc aucun mode.** Trois conséquences d'architecture :
+
+- l'adaptateur SAP est le **seul** point à écrire ou à remplacer ; le domaine métier ne connaît que la porte d'intégration (§8.2) ;
+- le contrat d'échange est gelé avec la DSI de PPC avant tout développement (**Q-62**) ;
+- aucun test de bout en bout n'est possible avant la mise à disposition d'un mandant de test (**Q-63**).
+
+#### 8.4.4 Règles en cas de désaccord entre les deux registres
+
+1. **Aucun prix non confirmé par SAP n'est affiché.** Le message est explicite, jamais une estimation.
+2. **Aucune cotation n'est émise si SAP refuse ou ne répond pas à la demande de proforma.**
+3. **Aucun bon n'est émis si le paiement n'est pas confirmé** (RG-CMD-01).
+4. **Tout écart ouvre un incident tracé**, avec les deux valeurs et l'horodatage. La correction se fait par un nouvel événement, jamais par écrasement (P-06).
+
+#### 8.4.5 Contraintes non fonctionnelles
+
+| Point | Exigence |
+|---|---|
+| Idempotence | Chaque appel porte une clé unique ; un rejeu ne crée ni double proforma ni double bon (P-04) |
+| Résilience | Boîte d'envoi persistée avant appel ; reprise à intervalle croissant ; file de rebut visible en exploitation |
+| Rapprochement | Contrôle quotidien automatique des proformas et des paiements entre les deux registres ; écart non nul = alerte |
+| Réseau | Échanges restreints par liste d'adresses ou tunnel privé ; aucun accès exposé sur internet |
+| Traçabilité | Chaque appel conservé avec sa requête, sa réponse, son code et sa durée, rattaché à l'identifiant de corrélation de la commande (P-10) |
+| Latence | Budget F1 : 1,5 s au 95e centile, cache exclu ; au-delà, repli sur cache avec mention de fraîcheur |
+
+#### 8.4.6 Quand l'ERP est indisponible
+
+APIX continue d'accepter les demandes de cotation mais **ne les certifie pas**. Elles sont mises en attente, l'état est visible du client, et elles sont certifiées au rétablissement. C'est un **état d'interface à prévoir** dans IF-01 et IF-02, pas une exception technique : un client qui voit « cotation en préparation » attend ; un client qui voit une cotation qui échoue au paiement ne revient pas.
+
+#### 8.4.7 Ce que le raccordement interdit
+
+- APIX **ne calcule aucun prix** : ni remise, ni arrondi, ni conversion de devise non fournie par l'ERP.
+- APIX **n'émet aucune facture** : il conserve le reçu vérifiable, la facture reste du ressort de l'ERP.
+- APIX **ne corrige aucune écriture comptable** : un avoir vient de SAP (F4), il n'est pas fabriqué côté APIX.
+- APIX **ne resynchronise jamais en écrasant** : toute divergence devient un incident.
+
+> Le détail fonctionnel — périmètre à égaler, reprise des comptes, bascule — figure dans l'annexe A5.
 
 ---
 

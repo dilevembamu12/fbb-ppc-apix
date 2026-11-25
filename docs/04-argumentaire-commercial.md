@@ -1,6 +1,6 @@
 # 04 — Argumentaire commercial
 
-**APIX étendu face à Digicement — dossier de conviction pour PPC**
+**APIX étendu face à Digiciment — dossier de conviction pour PPC**
 FBB · version 1.0
 
 > **Note de lecture :** ce document est destiné à être utilisé en réunion, avec ou sans support de présentation. Chaque section peut être lue seule. Les chiffres marqués `[À VALIDER PPC]` doivent être remplacés par les données réelles avant toute présentation externe.
@@ -10,7 +10,7 @@ FBB · version 1.0
 ## Sommaire
 
 1. [Positionnement](#1-positionnement)
-2. [Grille comparative Digicement / APIX](#2-grille-comparative-digiciment--apix)
+2. [Grille comparative Digiciment / APIX](#2-grille-comparative-digiciment--apix)
 3. [Les douleurs de PPC et la réponse APIX](#3-les-douleurs-de-ppc-et-la-réponse-apix)
 4. [Les douleurs du client final et la réponse APIX](#4-les-douleurs-du-client-final-et-la-réponse-apix)
 5. [Les douleurs du transporteur partenaire](#5-les-douleurs-du-transporteur-partenaire)
@@ -26,16 +26,16 @@ FBB · version 1.0
 
 ### 1.1 La phrase de positionnement
 
-> **Digicement numérise des transactions. APIX certifie une chaîne de responsabilité — du paiement jusqu'au sac livré.**
+> **Digiciment numérise des transactions. APIX certifie une chaîne de responsabilité — du paiement jusqu'au sac livré.**
 
-C'est l'axe de différenciation, et il doit être tenu sans dérive. Toute tentative de concurrencer Digicement sur son propre terrain (« nous faisons aussi des petites transactions ») affaiblit APIX : elle installe l'idée que les deux produits sont comparables.
+C'est l'axe de différenciation, et il doit être tenu sans dérive. Toute tentative de concurrencer Digiciment sur son propre terrain (« nous faisons aussi des petites transactions ») affaiblit APIX : elle installe l'idée que les deux produits sont comparables.
 
 ### 1.2 Ce que FBB ne vend pas
 
 | Ce que FBB ne revendique pas | Pourquoi |
 |---|---|
 | Remplacer l'application existante de PPC | Crée une résistance interne inutile |
-| Faire mieux que Digicement sur les micro-paiements | Terrain adverse, valeur marginale |
+| Faire mieux que Digiciment sur les micro-paiements | Terrain adverse, valeur marginale |
 | Devenir transporteur | FBB n'exploite pas de camions et ne doit pas en porter le risque |
 | Supprimer le réseau de dépôts | Détruirait le canal commercial de PPC |
 
@@ -51,11 +51,11 @@ Trois mots à répéter : **continuité**, **preuve**, **contrôle**.
 
 ---
 
-## 2. Grille comparative Digicement / APIX
+## 2. Grille comparative Digiciment / APIX
 
 ### 2.1 Comparaison fonctionnelle
 
-| Critère de comparaison | Digicement | APIX étendu | Pourquoi PPC doit s'en soucier |
+| Critère de comparaison | Digiciment | APIX étendu | Pourquoi PPC doit s'en soucier |
 |---|---|---|---|
 | Nature du produit | Application de petites transactions avec module logistique léger | Plateforme de certification financière **étendue** à la chaîne logistique | Un module léger devient un point de rupture dès que les volumes montent |
 | Couverture du parcours | Paiement, et une partie de la logistique, séparément | Commande → paiement → chargement → transport → livraison → facture, **en un seul flux** | Une chaîne discontinue crée des zones où plus personne n'est responsable |
@@ -71,7 +71,7 @@ Trois mots à répéter : **continuité**, **preuve**, **contrôle**.
 
 ### 2.2 Comparaison sur les critères de décision d'un comité PPC
 
-| Question que posera la direction PPC | Digicement | APIX étendu |
+| Question que posera la direction PPC | Digiciment | APIX étendu |
 |---|---|---|
 | « Est-ce que cela protège notre marque ? » | Partiellement : le transporteur reste non documenté | Oui : homologation, barème, preuve de livraison |
 | « Est-ce que cela tient à l'échelle nationale ? » | Non démontré | Oui : référentiels d'axes, moteur de barème, groupage |
@@ -255,7 +255,7 @@ Un transporteur qui refuse ces contreparties n'est pas un partenaire : c'est un 
 
 ## 6. Réponses aux objections
 
-### O-01 — « Pourquoi ne pas simplement demander à Digicement d'ajouter ces fonctionnalités ? »
+### O-01 — « Pourquoi ne pas simplement demander à Digiciment d'ajouter ces fonctionnalités ? »
 
 Parce que la valeur ne vient pas des fonctionnalités, mais de **l'actif de confiance** : la certification APIX est déjà en production, et la logistique doit s'y adosser, pas l'inverse. Ajouter la logistique à une application de transactions, c'est empiler deux systèmes qui devront se réconcilier chaque jour. APIX fait de la logistique une **extension de la certification existante**.
 
@@ -370,7 +370,7 @@ La démonstration doit être faite avec **leurs** chiffres, sur trois lignes seu
 | 2 – 5 min | **Les trois douleurs qui coûtent cher** : camions à moitié vides, litiges non arbitrables, prix final non maîtrisé | Parler en coûts, pas en fonctionnalités |
 | 5 – 8 min | **La chaîne de preuve** : les sept jalons, de la cotation à la facture | Montrer la continuité, pas des écrans |
 | 8 – 10 min | **Le circuit de l'argent** : « le client paie PPC, PPC paie le transport sur preuve » | C'est l'argument qui reste en mémoire |
-| 10 – 12 min | **Le groupage** : 30 petits acheteurs deviennent une commande de 30 tonnes | Réponse directe à Digicement |
+| 10 – 12 min | **Le groupage** : 30 petits acheteurs deviennent une commande de 30 tonnes | Réponse directe à Digiciment |
 | 12 – 14 min | **Le contrôle reste chez PPC** : homologation, barème, litiges | Lever la crainte de la perte de souveraineté |
 | 14 – 15 min | **Les cinq décisions à prendre** et le calendrier | Sortir de la réunion avec un engagement daté |
 
@@ -406,7 +406,7 @@ La crédibilité se gagne par la démonstration, pas par le discours.
 
 | À éviter | Pourquoi | Formulation de remplacement |
 |---|---|---|
-| « Nous allons tuer Digicement » | Met PPC en position d'arbitre géné, et donne à Digicement un statut d'égal | « Nous couvrons ce que Digicement ne peut structurellement pas couvrir » |
+| Tout vocabulaire de conquête ou de substitution — « remplacer », « prendre la place de », « s'imposer face à » | Met PPC en position d'arbitre entre deux fournisseurs, et donne au prestataire en place un statut d'égal | « Nous couvrons ce que Digiciment ne peut structurellement pas couvrir » |
 | « Notre application fait tout » | Crée une attente de périmètre impossible | « Notre périmètre du MVP est celui-ci ; le reste est planifié » |
 | « L'argent du client est bloqué jusqu'à la livraison » | Faux : le client paie PPC avant le chargement | « La part transport n'est réglée au transporteur qu'après preuve de livraison » |
 | « Les transporteurs seront obligés d'accepter » | Impossible, et perçu comme autoritaire | « Les transporteurs qui acceptent les règles accèdent à des courses payées d'avance » |
@@ -423,7 +423,7 @@ La crédibilité se gagne par la démonstration, pas par le discours.
 
 - [ ] Schéma unique de la chaîne de preuve en sept jalons
 - [ ] Tableau des huit douleurs de PPC (section 3.9)
-- [ ] Grille comparative Digicement / APIX (section 2.1)
+- [ ] Grille comparative Digiciment / APIX (section 2.1)
 - [ ] Les cinq décisions à obtenir (document 00, section 7)
 - [ ] Grille de questions ouvertes (annexe A2)
 

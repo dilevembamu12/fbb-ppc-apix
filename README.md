@@ -2,7 +2,7 @@
 
 > **Maître d'ouvrage :** FBB — concepteur d'APIX
 > **Client cible :** PPC (cimentier, République Démocratique du Congo)
-> **Concurrent identifié :** **Digicement** (application de petites transactions + module logistique léger)
+> **Concurrent identifié :** **Digiciment** (application de petites transactions + module logistique léger)
 > **Statut :** Cadrage — version 1.0
 
 ---
@@ -15,7 +15,7 @@ Ce dossier formalise l'extension d'**APIX** (aujourd'hui plateforme de certifica
 2. aux **transporteurs partenaires** homologués par PPC (flotte tierce, et non flotte propre PPC) ;
 3. aux **équipes administratives PPC** (homologation, barèmes, litiges, pilotage).
 
-L'objectif stratégique est double : **verrouiller la relation PPC ↔ client final** et **rendre APIX indispensable** face à Digicement, en unifiant sur une seule chaîne la finance certifiée et la logistique physique.
+L'objectif stratégique est double : **verrouiller la relation PPC ↔ client final** et **rendre APIX indispensable** face à Digiciment, en unifiant sur une seule chaîne la finance certifiée et la logistique physique.
 
 ---
 
@@ -101,7 +101,7 @@ python outils\build_docs.py --check          # vérifie les tableaux Markdown sa
 | `dist/docs/A2-Questions-ouvertes-PPC.docx` | Questions et décisions attendues | Chef de projet |
 | `dist/docs/A3-Plafonds-canaux-paiement.docx` | Grilles de plafonds mobile money par opérateur et par palier, routage du paiement | Atelier paiement avec PPC |
 | `dist/docs/A4-Parite-des-canaux.docx` | Matrice de parité WhatsApp / Telegram / e-mail / SMS / USSD, grammaire, phasage | Atelier canaux avec PPC |
-| `dist/docs/A5-Reprise-Digicement-et-SAP.docx` | Périmètre Digicement à égaler, place de SAP ECC, quatre flux du raccordement, reprise des comptes | Réunion technique avec la DSI de PPC et ALTUS |
+| `dist/docs/A5-Reprise-Digiciment-et-SAP.docx` | Périmètre Digiciment à égaler, place de SAP ECC, quatre flux du raccordement, reprise des comptes | Réunion technique avec la DSI de PPC et ALTUS |
 | `dist/xlsx/01-Backlog-APIX-Logistique.xlsx` | 13 épopées, 60 récits estimés, charge par cycle | Planification |
 | `dist/xlsx/02-Matrice-roles-droits.xlsx` | 30 fonctions × 9 rôles | Sécurité et conception des écrans |
 | `dist/xlsx/03-Grille-tarifaire-logistique.xlsx` | Référentiel d'axes, engins, simulateur de prix | Atelier barème avec PPC |

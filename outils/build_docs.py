@@ -97,9 +97,9 @@ DOCUMENTS = [
         "sous_titre": "Cotation, paiement et bon sur WhatsApp, Telegram, e-mail, SMS et USSD",
     },
     {
-        "source": "annexes/reprise-digicement-sap.md",
-        "sortie": "A5-Reprise-Digicement-et-SAP.docx",
-        "titre": "Annexe A5 — Reprise du périmètre Digicement et raccordement à SAP ECC",
+        "source": "annexes/reprise-digiciment-sap.md",
+        "sortie": "A5-Reprise-Digiciment-et-SAP.docx",
+        "titre": "Annexe A5 — Reprise du périmètre Digiciment et raccordement à SAP ECC",
         "sous_titre": "Couvrir ce qui existe, brancher l'ERP de PPC, reprendre les comptes",
     },
 ]

@@ -33,7 +33,7 @@ Or la valeur perçue par le client final de PPC ne se joue pas au moment du paie
 2. **Protection de la marque.** Un sac volé, mouillé ou détourné se retourne contre le logo PPC, pas contre le transporteur. La preuve de livraison à trois preuves déplace la responsabilité vers celui qui la porte réellement.
 3. **Désengorgement des sites de chargement.** Le groupage remplace quinze camionnettes par un porteur rempli à 85 %, et transforme des commandes éparses en **carnet de commandes prépayé**.
 4. **Visibilité sur la demande finale.** Pour la première fois, PPC voit les achats de ses clients finaux en temps réel, par axe, par produit, par période — un signal direct sur la production.
-5. **Verrouillage de l'écosystème.** Digicement fait des transactions. APIX fait des transactions **et** la chaîne physique, dans le même identifiant client.
+5. **Verrouillage de l'écosystème.** Digiciment fait des transactions. APIX fait des transactions **et** la chaîne physique, dans le même identifiant client.
 
 ---
 
@@ -60,11 +60,11 @@ Or la valeur perçue par le client final de PPC ne se joue pas au moment du paie
 
 ---
 
-## 5. La différenciation face à Digicement
+## 5. La différenciation face à Digiciment
 
 La bonne réponse n'est pas « nous gérons aussi les petites transactions ». La bonne réponse est structurelle :
 
-| Critère | Digicement | APIX étendu |
+| Critère | Digiciment | APIX étendu |
 |---|---|---|
 | Périmètre | Petites transactions, module logistique léger | Certificat **APIX** + commande + paiement + transport + livraison |
 | Source de vérité | Finance d'un côté, logistique de l'autre | **Un identifiant client, un flux, une réconciliation** |
@@ -75,7 +75,7 @@ La bonne réponse n'est pas « nous gérons aussi les petites transactions ». L
 | Petits volumes | Traités isolément | **Groupage multi-clients avec TTL et prorata** |
 | Réseau dégradé | Dépendance totale à Internet | **Mode hors-ligne transporteur, repli SMS / USSD** |
 
-**Argument de clôture :** *« Digicement numérise des transactions. APIX certifie une chaîne de responsabilité. Le jour où un contentieux arrive sur 500 sacs, ce n'est pas la transaction qu'on vous demandera de produire, c'est la preuve. »*
+**Argument de clôture :** *« Digiciment numérise des transactions. APIX certifie une chaîne de responsabilité. Le jour où un contentieux arrive sur 500 sacs, ce n'est pas la transaction qu'on vous demandera de produire, c'est la preuve. »*
 
 ---
 
