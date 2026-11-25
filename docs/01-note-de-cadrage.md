@@ -28,7 +28,7 @@ FBB pour PPC · version 1.0
 
 **FBB** a conçu **APIX**, plateforme de **certification des transactions de paiement CIMA** appliquée aux comptes de **PPC**. APIX est donc aujourd'hui une brique de confiance **financière** : elle atteste qu'une transaction est authentique, conforme et traçable.
 
-**PPC**, cimentier, dispose par ailleurs d'un collaborateur technologique, **Digiciment**, qui opère :
+**PPC**, cimentier, dispose par ailleurs d'un collaborateur technologique, **Digicement**, qui opère :
 
 - une application de **petites transactions** destinée aux petits clients finaux ;
 - un **module logistique léger** de gestion de la livraison.
@@ -49,7 +49,7 @@ FBB souhaite **étendre APIX** pour couvrir la chaîne complète de la vente de 
 
 Il est explicitement double :
 
-- **gagner et conserver le marché** face à Digiciment ;
+- **gagner et conserver le marché** face à Digicement ;
 - **rendre APIX indispensable** à PPC en devenant la couche d'intégration entre la finance et la supply chain.
 
 ---
@@ -159,7 +159,7 @@ PPC vend largement par un réseau de **dépôts et revendeurs**. Une application
 - leur donner un **accès dédié** (réapprovisionnement, tarifs, visibilité) ;
 - ne jamais casser leur marge sans décision explicite de PPC.
 
-C'est aussi un argument face à Digiciment : **APIX renforce le réseau existant, Digiciment le contourne.**
+C'est aussi un argument face à Digicement : **APIX renforce le réseau existant, Digicement le contourne.**
 
 ### 2.11 Point de vigilance n° 10 — Le cash reste roi
 
@@ -177,7 +177,7 @@ Une part importante des transactions se règle en espèces. Si l'application n'a
 
 ### 2.13 Point de vigilance n° 12 — La concurrence ne doit pas être sous-estimée sur son terrain
 
-Digiciment est déjà présent sur les **petites transactions**. Attaquer frontalement sur ce terrain, c'est jouer à domicile chez l'adversaire. Le terrain où APIX est imbattable est **la preuve et la responsabilité** : dossier de litige complet, règlement conditionné, homologation, barème opposable.
+Digicement est déjà présent sur les **petites transactions**. Attaquer frontalement sur ce terrain, c'est jouer à domicile chez l'adversaire. Le terrain où APIX est imbattable est **la preuve et la responsabilité** : dossier de litige complet, règlement conditionné, homologation, barème opposable.
 
 **Recommandation :** ne pas se battre sur « nous faisons aussi les petits paiements », mais sur « nous sommes les seuls à pouvoir prouver ce qui s'est passé ».
 
@@ -391,7 +391,7 @@ Le détail des règles (délai de validité du lot, prorata, annulation, ré-tar
 | **R-04** | Rejet commercial par le réseau de dépôts | Élevé | Moyenne | Intégration des dépôts comme points de retrait, décision explicite de PPC sur les marges |
 | **R-05** | Rejet par le conseil juridique du circuit d'encaissement et de règlement | Très élevé | Moyenne | Validation écrite du circuit avant développement, convention avec la banque de PPC |
 | **R-06** | Couverture réseau insuffisante | Moyen | Élevée | Mode hors ligne, repli SMS / USSD, points de rendez-vous logistiques |
-| **R-07** | Concurrence active de Digiciment sur les comptes PPC | Élevé | Moyenne | Différenciation par la preuve, verrouillage contractuel, arguments de la note commerciale |
+| **R-07** | Concurrence active de Digicement sur les comptes PPC | Élevé | Moyenne | Différenciation par la preuve, verrouillage contractuel, arguments de la note commerciale |
 | **R-08** | Dépendance à une seule banque ou un seul opérateur mobile money | Moyen | Moyenne | Abstraction technique, au moins deux fournisseurs par fonction critique |
 | **R-09** | Dérive du périmètre en cours de projet | Moyen | Élevée | Découpage MVP / V1 / V2 opposable, comité d'arbitrage mensuel |
 | **R-10** | Écart entre le barème théorique et le coût réel constaté | Élevé | Élevée | Revue trimestrielle du barème, indicateur d'écart, procédure de révision |
@@ -478,7 +478,7 @@ Le vocabulaire doit être arrêté avec PPC avant tout développement. Les défi
 | **Bon de sortie** | Variante du bon de commande utilisée pour l'enlèvement sans transporteur |
 | **Bon de livraison** | Document constatant la remise effective de la marchandise au client final |
 | **Certification** | Acte par lequel APIX atteste l'authenticité et la conformité d'une transaction ou d'une preuve |
-| **Digiciment** | Application de petites transactions et de logistique légère, présente chez PPC |
+| **Digicement** | Application de petites transactions et de logistique légère, présente chez PPC |
 | **Engin** | Véhicule de transport caractérisé par sa charge utile, son type de caisse et son gabarit |
 | **Groupage** | Mutualisation de plusieurs commandes de petits volumes dans un même camion pour en réduire le coût unitaire |
 | **Homologation** | Acte administratif par lequel PPC autorise un transporteur à recevoir des courses dans APIX |

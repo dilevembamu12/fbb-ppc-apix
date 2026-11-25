@@ -59,16 +59,16 @@ Ces questions conditionnent la faisabilité du produit. Elles doivent être trai
 
 ---
 
-## 4. Questions sur Digiciment
+## 4. Questions sur Digicement
 
 Ces questions sont sensibles et doivent être posées avec tact. Elles visent à comprendre le terrain, pas à attaquer un partenaire de PPC.
 
 | N° | Question | Utilité | Réponse obtenue |
 |---|---|---|---|
-| **Q-30** | Quelles fonctions de Digiciment sont réellement utilisées par les clients PPC aujourd'hui ? | Savoir ce qu'il faut égaler, et ce qu'il faut dépasser | |
-| **Q-31** | Digiciment est-il intégré à des systèmes PPC (facturation, comptabilité, stocks) ? | Éviter une rupture d'intégration | |
-| **Q-32** | Y a-t-il un engagement contractuel entre PPC et Digiciment, et jusqu'à quand ? | Calendrier de substitution possible | |
-| **Q-33** | Quels retours les clients finaux font-ils sur Digiciment ? | Identifier les douleurs non couvertes | |
+| **Q-30** | Quelles fonctions de Digicement sont réellement utilisées par les clients PPC aujourd'hui ? | Savoir ce qu'il faut égaler, et ce qu'il faut dépasser | |
+| **Q-31** | Digicement est-il intégré à des systèmes PPC (facturation, comptabilité, stocks) ? | Éviter une rupture d'intégration | |
+| **Q-32** | Y a-t-il un engagement contractuel entre PPC et Digicement, et jusqu'à quand ? | Calendrier de substitution possible | |
+| **Q-33** | Quels retours les clients finaux font-ils sur Digicement ? | Identifier les douleurs non couvertes | |
 
 ---
 
