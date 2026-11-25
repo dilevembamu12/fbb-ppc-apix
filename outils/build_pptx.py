@@ -62,7 +62,7 @@ HAUTEUR = Inches(7.5)
 MARGE = Inches(0.85)
 LARGEUR_UTILE = LARGEUR - 2 * MARGE
 
-SUJET_TOTAL = 22
+SUJET_TOTAL = 23
 
 
 # ---------------------------------------------------------------------------
@@ -920,7 +920,7 @@ def d18_controle(prs):
 def d19_indicateurs(prs):
     diapo = prs.slides.add_slide(prs.slide_layouts[6])
     fond(diapo, SABLE)
-    en_tete(diapo, "La valeur", "Huit douleurs, huit indicateurs que vous pourrez suivre", 19)
+    en_tete(diapo, "La valeur", "Huit douleurs, huit indicateurs que vous pourrez suivre", 20)
 
     donnees = [
         ["Douleur actuelle", "Ce que vous pourrez mesurer"],
@@ -951,7 +951,7 @@ def d19_indicateurs(prs):
 def d20_calendrier(prs):
     diapo = prs.slides.add_slide(prs.slide_layouts[6])
     fond(diapo, NUIT)
-    en_tete(diapo, "Le calendrier", "Un axe pilote opérationnel en seize semaines après cadrage", 20, sombre=True)
+    en_tete(diapo, "Le calendrier", "Un axe pilote opérationnel en seize semaines après cadrage", 21, sombre=True)
 
     etapes = [
         ("S1 – S3", "Cadrage", "Décisions prises, barème initial, référentiel transporteurs"),
@@ -992,7 +992,7 @@ def d20_calendrier(prs):
 def d21_decisions(prs):
     diapo = prs.slides.add_slide(prs.slide_layouts[6])
     fond(diapo, SABLE)
-    en_tete(diapo, "La suite", "Cinq décisions à prendre, et nous commençons", 21)
+    en_tete(diapo, "La suite", "Cinq décisions à prendre, et nous commençons", 22)
 
     decisions = [
         ("D1", "Qui est le donneur d'ordre du transport ?", "Le client final ou PPC ? Cela fixe la responsabilité et le circuit de paiement."),
@@ -1060,6 +1060,83 @@ def d22_credits(prs):
     pied(diapo, sombre=True)
 
 
+def d19b_erp(prs):
+    """Le raccordement à l'ERP de PPC et la reprise du périmètre Digiciment."""
+    diapo = prs.slides.add_slide(prs.slide_layouts[6])
+    fond(diapo, SABLE)
+    en_tete(diapo, "Le raccordement", "Deux registres, un seul bon", 19)
+
+    texte(diapo, MARGE, Inches(1.42), LARGEUR_UTILE, Inches(0.5),
+          "SAP ECC garde le commercial et le comptable. APIX tient la preuve d'exécution. "
+          "Aucun fait n'est écrit deux fois.",
+          taille=13, couleur=GRIS, italique=True, interligne=1.25)
+
+    largeur = (LARGEUR_UTILE - Inches(0.4)) / 2
+    hauteur = Inches(2.3)
+    y = Inches(2.05)
+
+    rectangle(diapo, MARGE, y, largeur, hauteur, BLANC, arrondi=True)
+    texte(diapo, MARGE + Inches(0.3), y + Inches(0.24), largeur - Inches(0.6), Inches(0.3),
+          "SAP ECC — le commercial et le comptable", taille=12.5, couleur=NUIT, gras=True,
+          police=POLICE_TITRE)
+    liste(diapo, MARGE + Inches(0.3), y + Inches(0.72), largeur - Inches(0.6), Inches(1.1),
+          ["Prix, taxes et conditions", "Document de vente", "Facture et créance",
+           "Encaissement comptable"],
+          taille=10.5, couleur=NUIT, puce=GRIS, espace=5)
+    texte(diapo, MARGE + Inches(0.3), y + hauteur - Inches(0.5), largeur - Inches(0.6), Inches(0.26),
+          "Il décide du prix. Toujours.", taille=10, couleur=NUIT, gras=True)
+
+    x2 = MARGE + largeur + Inches(0.4)
+    rectangle(diapo, x2, y, largeur, hauteur, NUIT, arrondi=True)
+    texte(diapo, x2 + Inches(0.3), y + Inches(0.24), largeur - Inches(0.6), Inches(0.3),
+          "APIX — la preuve d'exécution", taille=12.5, couleur=BLANC, gras=True,
+          police=POLICE_TITRE)
+    liste(diapo, x2 + Inches(0.3), y + Inches(0.72), largeur - Inches(0.6), Inches(1.1),
+          ["Cotation émise, numérotée, datée", "Paiement encaissé et rapproché",
+           "Bon, chargement, livraison", "Litige et reçu vérifiable"],
+          taille=10.5, couleur=RGBColor(0xD8, 0xE2, 0xEA), puce=ORANGE, espace=5)
+    texte(diapo, x2 + Inches(0.3), y + hauteur - Inches(0.5), largeur - Inches(0.6), Inches(0.26),
+          "Il ne calcule aucun prix.", taille=10, couleur=ORANGE, gras=True)
+
+    texte(diapo, MARGE, Inches(4.56), LARGEUR_UTILE, Inches(0.24),
+          "LES QUATRE ÉCHANGES", taille=9.5, couleur=GRIS, gras=True)
+    flux = [
+        ("F1", "SAP → APIX", "Prix et disponibilité", "Synchrone, cache horodaté"),
+        ("F2", "APIX → SAP", "Demande de proforma", "Boîte d'envoi"),
+        ("F3", "APIX → SAP", "Confirmation de paiement", "Boîte d'envoi"),
+        ("F4", "SAP → APIX", "Avoir, annulation", "Événement, reprise"),
+    ]
+    largeur_flux = (LARGEUR_UTILE - Inches(0.6)) / 4
+    for index, (ref, sens, objet, mode) in enumerate(flux):
+        x = MARGE + index * (largeur_flux + Inches(0.2))
+        rectangle(diapo, x, Inches(4.86), largeur_flux, Inches(1.02), BLANC, arrondi=True)
+        texte(diapo, x + Inches(0.18), Inches(4.96), Inches(0.45), Inches(0.24),
+              ref, taille=11, couleur=ORANGE, gras=True)
+        texte(diapo, x + Inches(0.66), Inches(4.98), largeur_flux - Inches(0.8), Inches(0.22),
+              sens, taille=8.5, couleur=GRIS, gras=True)
+        texte(diapo, x + Inches(0.18), Inches(5.26), largeur_flux - Inches(0.36), Inches(0.24),
+              objet, taille=10, couleur=NUIT, gras=True)
+        texte(diapo, x + Inches(0.18), Inches(5.56), largeur_flux - Inches(0.36), Inches(0.22),
+              mode, taille=8.5, couleur=GRIS, italique=True)
+
+    rectangle(diapo, MARGE, Inches(6.08), LARGEUR_UTILE, Inches(0.58), NUIT, arrondi=True)
+    texte(diapo, MARGE + Inches(0.28), Inches(6.2), LARGEUR_UTILE - Inches(0.56), Inches(0.34),
+          "Si l'ERP ne confirme pas, APIX n'invente pas : il attend, et le client le voit.",
+          taille=11, couleur=BLANC, gras=True)
+
+    texte(diapo, MARGE, Inches(6.78), LARGEUR_UTILE, Inches(0.24),
+          "Le périmètre que Digiciment couvre aujourd'hui est repris à l'identique : comptes, "
+          "dépôts et historique — annexe A5.",
+          taille=9, couleur=GRIS)
+    pied(diapo)
+    notes(diapo, "Trois messages, dans cet ordre. Un : nous ne remplaçons pas l'ERP, nous nous y branchons — "
+                 "le prix reste décidé par SAP, nous ne le calculons jamais. Deux : la différence n'est pas "
+                 "l'application, c'est la preuve — cotation numérotée, bon nominatif, chargement pesé, "
+                 "livraison confirmée. Trois : le périmètre de Digiciment est repris à l'identique, comptes et "
+                 "historique compris ; la reprise suppose un avenant avec Altius et l'export de ses comptes, "
+                 "donc un calendrier, pas une annonce. Ne jamais parler de remplacement : parler de couverture.")
+
+
 # ---------------------------------------------------------------------------
 # Programme principal
 # ---------------------------------------------------------------------------
@@ -1072,7 +1149,7 @@ def construire(chemin: Path) -> int:
         d01_couverture, d02_probleme, d03_questions, d04_douleurs_ppc, d05_section_marche,
         d06_client_final, d07_transporteur, d08_cout_inaction, d09_section_reponse, d10_all_in_one,
         d11_chaine_preuve, d12_ubiquite, d13_sequestre, d14_preuve_livraison, d15_bareme,
-        d16_groupage, d17_comparaison, d18_controle, d19_indicateurs, d20_calendrier,
+        d16_groupage, d17_comparaison, d18_controle, d19b_erp, d19_indicateurs, d20_calendrier,
         d21_decisions, d22_credits,
     ]
     for constructeur in constructeurs:

@@ -106,8 +106,8 @@ python outils\build_docs.py --check          # vérifie les tableaux Markdown sa
 | `dist/xlsx/02-Matrice-roles-droits.xlsx` | 30 fonctions × 9 rôles | Sécurité et conception des écrans |
 | `dist/xlsx/03-Grille-tarifaire-logistique.xlsx` | Référentiel d'axes, engins, simulateur de prix | Atelier barème avec PPC |
 | `dist/xlsx/04-Simulateur-groupage.xlsx` | Répartition des frais d'une course groupée | Démonstration client |
-| `dist/pptx/APIX-All-In-One-12-slides-PPC.pptx` | **Version réunion** : 12 diapositives + 7 annexes (règle 10/20/30) | Rendez-vous avec la direction générale |
-| `dist/pptx/APIX-All-In-One-Presentation-PPC.pptx` | Version détaillée : 22 diapositives | Dossier de fond, réunion technique |
+| `dist/pptx/APIX-All-In-One-12-slides-PPC.pptx` | **Version réunion** : 12 diapositives + 8 annexes (règle 10/20/30) | Rendez-vous avec la direction générale |
+| `dist/pptx/APIX-All-In-One-Presentation-PPC.pptx` | Version détaillée : 23 diapositives | Dossier de fond, réunion technique |
 | `dist/docs/F1-Fiche-cadrage-reglement-PPC.docx` | Fiche A4 d'une page : cinq questions sur le règlement des transporteurs, à compléter par PPC | À laisser en fin de réunion |
 
 > Les valeurs numériques des classeurs (distances, coûts, seuils) sont des **propositions de travail** à remplacer par les données de PPC.
@@ -138,7 +138,7 @@ Séquence de la version réunion — les douleurs d'abord, le produit ensuite :
 | 11 | Deux approches, deux natures différentes | Concurrence |
 | 12 | PPC garde la main — cinq décisions | Souveraineté et appel à l'action |
 
-Annexes : A1 modèle économique, A2 équipe, A3 feuille de route, A4 arbitrage du groupage, A5 preuve et litige, A6 socle technique. À n'ouvrir que sur question.
+Annexes : A1 modèle économique, A2 équipe, A3 feuille de route, A4 arbitrage du groupage, A5 preuve et litige, A6 socle technique, A7 parité des canaux, A8 systèmes de PPC. À n'ouvrir que sur question.
 
 Points communs :
 

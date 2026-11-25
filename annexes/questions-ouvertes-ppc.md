@@ -143,6 +143,9 @@ Ces points ont été soulevés en entretien et n'ont pas encore de réponse arr�
 | **D-06** | Modèle économique retenu | Direction PPC et FBB | Fin du cadrage |
 | **D-07** | Choix d'hébergement et cadre juridique des données | DSI et conseil juridique PPC | Conception |
 | **D-08** | Calendrier de généralisation après pilote | Comité de pilotage | Après pilote |
+| **D-09** | Mode d'échange avec SAP ECC et contrat d'interface gelé | DSI de PPC | Avant conception |
+| **D-10** | Mandant SAP de test, données de recette et délai d'accès | DSI de PPC | Conception |
+| **D-11** | Sort du service Digiciment, avenant et reprise des comptes | Direction PPC et Altius | Avant bascule |
 
 ---
 

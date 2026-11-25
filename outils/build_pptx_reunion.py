@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-build_pptx_reunion.py — Version « réunion » : 12 diapositives + 7 annexes.
+build_pptx_reunion.py — Version « réunion » : 12 diapositives + 8 annexes.
 
 Contrainte : règle 10/20/30 (12 diapositives maximum en séquence, 20 minutes).
 Registre : celui du dossier détaillé — titres déclaratifs, phrases courtes, une
 idée par diapositive, les douleurs avant le produit.
 
     Diapositives 1 à 12 : séquence présentée
-    Annexes A1 à A7     : ouvertes uniquement sur question
+    Annexes A1 à A8     : ouvertes uniquement sur question
 
 Les maquettes d'interface sont dessinées avec des formes natives : aucune capture
 d'écran tierce, aucun nom de produit existant.
@@ -1101,6 +1101,87 @@ def a07_canaux(prs):
 
 
 # ---------------------------------------------------------------------------
+def a08_erp(prs):
+    diapo = prs.slides.add_slide(prs.slide_layouts[6])
+    fond(diapo, SABLE)
+    en_tete(diapo, "Annexe A8 · Systèmes de PPC", "Deux registres, un seul bon", 20)
+
+    texte(diapo, MARGE, Inches(1.42), LARGEUR_UTILE, Inches(0.5),
+          "SAP ECC garde le commercial et le comptable. APIX tient la preuve d'exécution. "
+          "Aucun fait n'est écrit deux fois.",
+          taille=13, couleur=GRIS, italique=True, interligne=1.25)
+
+    largeur = (LARGEUR_UTILE - Inches(0.4)) / 2
+    hauteur = Inches(2.3)
+    y = Inches(2.05)
+
+    # --- ce que détient l'ERP -------------------------------------------------
+    rectangle(diapo, MARGE, y, largeur, hauteur, BLANC, arrondi=True)
+    rectangle(diapo, MARGE, y, Inches(0.06), hauteur, GRIS_CLAIR)
+    texte(diapo, MARGE + Inches(0.3), y + Inches(0.24), largeur - Inches(0.6), Inches(0.3),
+          "SAP ECC — le commercial et le comptable", taille=12.5, couleur=NUIT, gras=True,
+          police=POLICE_TITRE)
+    liste(diapo, MARGE + Inches(0.3), y + Inches(0.72), largeur - Inches(0.6), Inches(1.1),
+          ["Prix, taxes et conditions", "Document de vente", "Facture et créance",
+           "Encaissement comptable"],
+          taille=10.5, couleur=NUIT, puce=GRIS, espace=5)
+    texte(diapo, MARGE + Inches(0.3), y + hauteur - Inches(0.5), largeur - Inches(0.6), Inches(0.26),
+          "Il décide du prix. Toujours.", taille=10, couleur=NUIT, gras=True)
+
+    # --- ce que tient APIX ----------------------------------------------------
+    x2 = MARGE + largeur + Inches(0.4)
+    rectangle(diapo, x2, y, largeur, hauteur, NUIT, arrondi=True)
+    texte(diapo, x2 + Inches(0.3), y + Inches(0.24), largeur - Inches(0.6), Inches(0.3),
+          "APIX — la preuve d'exécution", taille=12.5, couleur=BLANC, gras=True,
+          police=POLICE_TITRE)
+    liste(diapo, x2 + Inches(0.3), y + Inches(0.72), largeur - Inches(0.6), Inches(1.1),
+          ["Cotation émise, numérotée, datée", "Paiement encaissé et rapproché",
+           "Bon, chargement, livraison", "Litige et reçu vérifiable"],
+          taille=10.5, couleur=RGBColor(0xD8, 0xE2, 0xEA), puce=ORANGE, espace=5)
+    texte(diapo, x2 + Inches(0.3), y + hauteur - Inches(0.5), largeur - Inches(0.6), Inches(0.26),
+          "Il ne calcule aucun prix.", taille=10, couleur=ORANGE, gras=True)
+
+    # --- les quatre flux ------------------------------------------------------
+    texte(diapo, MARGE, Inches(4.56), LARGEUR_UTILE, Inches(0.24),
+          "LES QUATRE ÉCHANGES", taille=9.5, couleur=GRIS, gras=True)
+    flux = [
+        ("F1", "SAP → APIX", "Prix et disponibilité", "Synchrone, cache horodaté"),
+        ("F2", "APIX → SAP", "Demande de proforma", "Boîte d'envoi"),
+        ("F3", "APIX → SAP", "Confirmation de paiement", "Boîte d'envoi"),
+        ("F4", "SAP → APIX", "Avoir, annulation", "Événement, reprise"),
+    ]
+    largeur_flux = (LARGEUR_UTILE - Inches(0.6)) / 4
+    for index, (ref, sens, objet, mode) in enumerate(flux):
+        x = MARGE + index * (largeur_flux + Inches(0.2))
+        rectangle(diapo, x, Inches(4.86), largeur_flux, Inches(1.02), BLANC, arrondi=True)
+        texte(diapo, x + Inches(0.18), Inches(4.96), Inches(0.45), Inches(0.24),
+              ref, taille=11, couleur=ORANGE, gras=True)
+        texte(diapo, x + Inches(0.66), Inches(4.98), largeur_flux - Inches(0.8), Inches(0.22),
+              sens, taille=8.5, couleur=GRIS, gras=True)
+        texte(diapo, x + Inches(0.18), Inches(5.26), largeur_flux - Inches(0.36), Inches(0.24),
+              objet, taille=10, couleur=NUIT, gras=True)
+        texte(diapo, x + Inches(0.18), Inches(5.56), largeur_flux - Inches(0.36), Inches(0.22),
+              mode, taille=8.5, couleur=GRIS, italique=True)
+
+    rectangle(diapo, MARGE, Inches(6.08), LARGEUR_UTILE, Inches(0.58), NUIT, arrondi=True)
+    texte(diapo, MARGE + Inches(0.28), Inches(6.2), LARGEUR_UTILE - Inches(0.56), Inches(0.34),
+          "Si l'ERP ne confirme pas, APIX n'invente pas : il attend, et le client le voit.",
+          taille=11, couleur=BLANC, gras=True)
+
+    texte(diapo, MARGE, Inches(6.78), LARGEUR_UTILE, Inches(0.24),
+          "Périmètre repris de Digiciment, reprise des comptes et bascule : annexe A5 du dossier.",
+          taille=9, couleur=GRIS)
+    pied(diapo)
+    notes(diapo, "Annexe : à ouvrir si PPC demande « où est SAP ? » ou « que devient Digiciment ? ». "
+                 "Trois messages, dans cet ordre. Un : nous ne remplaçons pas l'ERP, nous nous y branchons — "
+                 "le prix reste décidé par SAP, nous ne le calculons jamais. Deux : la différence n'est pas "
+                 "l'application, c'est la preuve — cotation numérotée, bon nominatif, chargement pesé, "
+                 "livraison confirmée. Trois : le périmètre de Digiciment est repris à l'identique, comptes et "
+                 "historique compris ; la reprise suppose un avenant avec Altius et l'export de ses comptes, "
+                 "donc un calendrier, pas une annonce. Ne jamais parler de remplacement : parler de couverture.")
+
+
+# ---------------------------------------------------------------------------
 def construire(chemin: Path) -> int:
     prs = Presentation()
     prs.slide_width = LARGEUR
@@ -1110,14 +1191,14 @@ def construire(chemin: Path) -> int:
         s01_titre, s02_probleme, s03_fuites, s04_marche, s05_chaine, s06_ubiquite,
         s07_sequestre, s08_preuve, s09_bareme, s10_groupage, s11_concurrence, s12_decisions,
         a01_modele, a02_equipe, a03_route, a04_groupage, a05_preuve_detail, a06_technique,
-        a07_canaux,
+        a07_canaux, a08_erp,
     ):
         constructeur(prs)
 
     prs.core_properties.title = "APIX All In One — 12 diapositives (version réunion)"
     prs.core_properties.author = "FBB"
     prs.core_properties.subject = "Extension APIX : clients finaux, paiement séquestré et logistique ciment"
-    prs.core_properties.comments = "Généré par outils/build_pptx_reunion.py — 12 diapositives + 7 annexes"
+    prs.core_properties.comments = "Généré par outils/build_pptx_reunion.py — 12 diapositives + 8 annexes"
 
     chemin.parent.mkdir(parents=True, exist_ok=True)
     prs.save(chemin)
@@ -1126,7 +1207,7 @@ def construire(chemin: Path) -> int:
 
 def main() -> int:
     nom = construire(SORTIE)
-    print(f"[OK] {SORTIE.relative_to(RACINE)} — {nom} diapositives (12 + 7 annexes)")
+    print(f"[OK] {SORTIE.relative_to(RACINE)} — {nom} diapositives (12 + 8 annexes)")
     return 0
 
 
