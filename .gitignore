@@ -42,3 +42,6 @@ dist/video/*.mp4
 # Base de demonstration du MVP : regenerable, jamais versionnee
 mvp/mvp.sqlite3
 __pycache__/
+
+# Dossier de livraison extrait (contient le film, 47 Mo) : jamais versionne
+dist/livraison/APIX-dossier-PPC/

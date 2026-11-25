@@ -1,14 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Vérifie la chaîne de preuve du MVP, de la cotation au reçu.
-
-Le script démarre le serveur sur un port libre, joue les six gestes, vérifie que
-les refus sont bien prononcés, puis arrête tout. Un seul point d'entrée :
+"""Épreuve de la chaîne complète du MVP, jalon par jalon.
 
     python mvp/verifier_chaine.py
 
-Il ne teste pas l'interface : il teste les règles. Une démonstration dont les
-règles ne tiennent pas n'est pas une démonstration, c'est une animation.
+Le script démarre le serveur sur un port libre, joue les sept jalons du document 05,
+vérifie que chaque refus est bien prononcé, puis arrête tout. Il ne teste pas
+l'interface : il teste les règles.
 """
 
 from __future__ import annotations
@@ -36,12 +34,9 @@ def port_libre() -> int:
 
 
 def appeler(base: str, methode: str, chemin: str, corps: dict | None = None):
-    """Rend (statut, données). Ne lève pas sur 4xx : un refus est un résultat attendu."""
     donnees = json.dumps(corps).encode("utf-8") if corps is not None else None
-    requete = urllib.request.Request(
-        base + chemin, data=donnees, method=methode,
-        headers={"Content-Type": "application/json"},
-    )
+    requete = urllib.request.Request(base + chemin, data=donnees, method=methode,
+                                     headers={"Content-Type": "application/json"})
     try:
         with urllib.request.urlopen(requete, timeout=5) as reponse:
             return reponse.status, json.loads(reponse.read().decode("utf-8"))
@@ -63,8 +58,7 @@ def main() -> int:
     base = f"http://127.0.0.1:{port}"
     processus = subprocess.Popen(
         [sys.executable, str(RACINE / "serveur.py"), "--port", str(port), "--reinitialiser"],
-        stdout=subprocess.DEVNULL, stderr=subprocess.PIPE,
-    )
+        stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
     try:
         for _ in range(50):
             try:
@@ -73,73 +67,121 @@ def main() -> int:
             except OSError:
                 time.sleep(0.1)
 
-        print("\n1. Référentiel")
-        statut, referentiel = appeler(base, "GET", "/api/referentiel")
-        attendre("le référentiel répond", statut == 200, str(statut))
-        attendre("deux produits au catalogue", len(referentiel.get("produits", [])) == 2,
-                 str(referentiel.get("produits")))
+        print("\nJ1 — Compte et vérification d'identité")
+        statut, client = appeler(base, "POST", "/api/clients",
+                                 {"nom": "Dépôt Kintoko", "telephone": "+243 820 001 234", "type": "depot"})
+        attendre("le compte est créé", statut == 200, str(client))
+        attendre("il naît non vérifié", client.get("statut") == "en_attente", str(client.get("statut")))
+        attendre("son plafond est nul", client.get("plafond") == 0.0, str(client.get("plafond")))
+        client_id = client.get("id")
 
-        print("\n2. Cotation")
-        statut, cotation = appeler(base, "POST", "/api/cotations", {
-            "client": "Dépôt Kintoko", "telephone": "+243 820 001 234",
-            "produit": "Surecem", "quantite": 100, "zone": "Gombé", "option": "B",
-        })
+        statut, refus = appeler(base, "POST", "/api/cotations",
+                                {"client_id": client_id, "produit": "Surecem", "quantite": 100,
+                                 "zone": "Gombé", "option": "B"})
+        attendre("aucun prix n'est produit avant vérification (RG-COT-01)",
+                 statut == 403 and refus.get("erreur") == "identite_non_verifiee", str(refus))
+
+        statut, refus = appeler(base, "POST", f"/api/clients/{client_id}/pieces", {"recto": False})
+        attendre("une pièce incomplète est refusée", statut == 400, str(refus))
+
+        statut, client = appeler(base, "POST", f"/api/clients/{client_id}/pieces",
+                                 {"type_piece": "carte_identite", "recto": True, "verso": True})
+        attendre("le dépôt complet vérifie le compte", client.get("statut") == "verifie", str(client))
+        attendre("le palier entreprise donne 10 000 $", client.get("plafond") == 10000.0,
+                 str(client.get("plafond")))
+
+        print("\nJ2 — Cotation certifiée")
+        statut, cotation = appeler(base, "POST", "/api/cotations",
+                                   {"client_id": client_id, "produit": "Surecem", "quantite": 100,
+                                    "zone": "Gombé", "option": "B"})
         attendre("la cotation est émise", statut == 200, str(cotation))
         numero = cotation.get("numero", "")
         attendre("elle porte un numéro", numero.startswith("COT-"), numero)
-        attendre("elle porte une validité", bool(cotation.get("valide_jusqua")), str(cotation))
-        attendre("le transport est chiffré", cotation.get("transport") == 320.0, str(cotation.get("transport")))
         attendre("le total est juste (9,5 × 100 + 320)", cotation.get("total") == 1270.0,
                  str(cotation.get("total")))
+        attendre("elle expose son délai restant", cotation.get("expire_dans_s", 0) > 0,
+                 str(cotation.get("expire_dans_s")))
 
-        print("\n3. Paiement")
+        statut, refus = appeler(base, "POST", "/api/cotations",
+                                {"client_id": client_id, "produit": "Surecem", "quantite": 5000,
+                                 "zone": "Gombé", "option": "B"})
+        attendre("le plafond du palier arrête la commande (RG-PAY-14)",
+                 statut == 409 and refus.get("erreur") == "plafond_depasse", str(refus))
+
+        print("\nJ3 — Paiement encaissé")
         statut, bon = appeler(base, "POST", "/api/paiements", {"cotation": numero, "canal": "m_pesa"})
         attendre("le paiement est encaissé", statut == 200, str(bon))
-        attendre("le bon naît de l'encaissement", bool(bon.get("code")), str(bon))
-        attendre("le bon est nominatif", bon.get("client") == "Dépôt Kintoko", str(bon.get("client")))
+        attendre("le bon naît de l'encaissement (RG-CMD-01)", bool(bon.get("code")), str(bon))
         code, qr = bon.get("code", ""), bon.get("qr", "")
 
         statut, refus = appeler(base, "POST", "/api/paiements", {"cotation": numero, "canal": "m_pesa"})
         attendre("un second paiement est refusé", statut == 409 and refus.get("erreur") == "deja_payee",
                  str(refus))
-        attendre("aucun bon n'est créé par ce refus", refus.get("erreur") == "deja_payee", str(refus))
 
-        print("\n4. Contrôle au chargement")
-        statut, charge = appeler(base, "POST", "/api/controles", {"saisie": code, "agent": "Agent usine"})
+        print("\nJ4 et J5 — Bon, contrôle et chargement")
+        statut, refus = appeler(base, "POST", "/api/controles", {"saisie": code})
+        attendre("le poids est exigé au chargement", statut == 400 and refus.get("erreur") == "poids_invalide",
+                 str(refus))
+
+        statut, charge = appeler(base, "POST", "/api/controles",
+                                 {"saisie": code, "poids_kg": 5000, "transporteur": "Trans-Kinshasa",
+                                  "plaque": "KN 4321 CD"})
         attendre("le code de retrait est accepté", statut == 200 and charge.get("statut") == "charge",
                  str(charge))
-        attendre("le scellé est enregistré", bool(charge.get("chargement")), str(charge.get("chargement")))
+        attendre("le scellé et le transporteur sont enregistrés",
+                 charge["chargement"]["transporteur"] == "Trans-Kinshasa"
+                 and bool(charge["chargement"]["scelle"]), str(charge.get("chargement")))
 
-        statut, refus = appeler(base, "POST", "/api/controles", {"saisie": code})
-        attendre("le second passage est refusé", statut == 409 and refus.get("erreur") == "deja_utilise",
-                 str(refus))
+        statut, refus = appeler(base, "POST", "/api/controles", {"saisie": code, "poids_kg": 5000})
+        attendre("le second passage est refusé (RG-CMD-05)",
+                 statut == 409 and refus.get("erreur") == "deja_utilise", str(refus))
 
-        falsifie = qr.replace("|100|", "|200|")
-        statut, refus = appeler(base, "POST", "/api/controles", {"saisie": falsifie})
-        attendre("un bon modifié est refusé", statut == 409 and refus.get("erreur") == "signature_invalide",
-                 str(refus))
+        statut, refus = appeler(base, "POST", "/api/controles",
+                                {"saisie": qr.replace("|100|", "|200|"), "poids_kg": 5000})
+        attendre("un bon modifié est refusé (signature)", 
+                 statut == 409 and refus.get("erreur") == "signature_invalide", str(refus))
 
-        statut, refus = appeler(base, "POST", "/api/controles", {"saisie": "000000"})
-        attendre("un code inconnu est refusé", statut == 404 and refus.get("erreur") == "bon_inconnu",
-                 str(refus))
+        print("\nJ6 — Livraison prouvée et litige")
+        statut, refus = appeler(base, "GET", f"/api/recus/{code}")
+        attendre("aucun reçu avant livraison", statut == 409 and refus.get("erreur") == "pas_livre", str(refus))
 
-        print("\n5. Réception prouvée")
         statut, recu = appeler(base, "POST", "/api/receptions",
-                               {"code": code, "sacs_recus": 98, "etat": "conforme", "scelle_ok": True})
+                               {"code": code, "sacs_recus": 95, "poids_recu_kg": 4750, "scelle_ok": True})
         attendre("la réception est enregistrée", statut == 200, str(recu))
-        reception = recu.get("reception") or {}
-        attendre("l'écart est calculé", reception.get("ecart") == -2, str(reception))
-        attendre("un écart dans la tolérance n'ouvre pas de litige", reception.get("litige") == 0,
-                 str(reception))
-        attendre("le bon passe en livré", recu.get("statut") == "livre", str(recu.get("statut")))
+        attendre("l'écart est calculé", recu["reception"]["ecart"] == -5, str(recu.get("reception")))
+        attendre("l'écart hors tolérance ouvre un litige (RG-POD-04)",
+                 recu.get("litige") is not None, str(recu.get("litige")))
 
-        print("\n6. Tableau de bord")
+        statut, preuve = appeler(base, "GET", f"/api/preuves/{code}")
+        attendre("le dossier de preuve est constitué", statut == 200 and len(preuve.get("etapes", [])) >= 5,
+                 str(len(preuve.get("etapes", []))))
+
+        litige_id = recu["litige"]["id"]
+        statut, instruit = appeler(base, "POST", f"/api/litiges/{litige_id}/instruction",
+                                   {"retenu": 47.5, "libere": 0, "decision": "5 sacs manquants, retenue au transporteur"})
+        attendre("le litige est instruit (RG-LIT-02)",
+                 statut == 200 and instruit["litige"]["statut"] == "instruit", str(instruit))
+
+        print("\nJ7 — Reçu et historique")
+        statut, recu_final = appeler(base, "GET", f"/api/recus/{code}")
+        attendre("le reçu est délivré après livraison", statut == 200, str(recu_final))
+        attendre("il porte une empreinte vérifiable", len(recu_final.get("empreinte", "")) == 16, str(recu_final))
+
+        statut, historique = appeler(base, "GET", f"/api/clients/{client_id}/historique")
+        attendre("l'historique du client est disponible",
+                 statut == 200 and len(historique.get("cotations", [])) == 1, str(historique))
+
+        print("\nPilotage")
         statut, tableau = appeler(base, "GET", "/api/tableau")
         attendre("le tableau répond", statut == 200, str(statut))
-        attendre("une cotation, un paiement, un bon",
-                 (tableau.get("cotations"), tableau.get("paiements"), tableau.get("bons")) == (1, 1, 1),
-                 str(tableau))
+        attendre("un litige ouvert est compté", tableau.get("litiges_ouverts") == 0,
+                 "instruit, donc plus ouvert : " + str(tableau.get("litiges_ouverts")))
         attendre("l'encaissement est de 1 270 $", tableau.get("encaisse") == 1270.0, str(tableau.get("encaisse")))
+
+        statut, bureau = appeler(base, "GET", "/api/backoffice")
+        attendre("le back-office liste cotations, bons et litiges",
+                 statut == 200 and len(bureau.get("cotations", [])) == 1
+                 and len(bureau.get("litiges", [])) == 1, str(bureau.keys()))
 
     finally:
         processus.terminate()

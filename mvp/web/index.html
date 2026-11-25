@@ -10,48 +10,84 @@
     <header class="entete">
       <div class="marque">APIX <span>·</span> All In One</div>
       <nav class="modes">
-        <button data-mode="client" class="actif">Client</button>
-        <button data-mode="console">Console de chargement</button>
-        <button data-mode="pilotage">Pilotage</button>
+        <button data-mode="compte">1 · Compte</button>
+        <button data-mode="client" class="actif">2 · Client</button>
+        <button data-mode="console">3 · Chargement</button>
+        <button data-mode="litiges">4 · Litiges</button>
+        <button data-mode="pilotage">5 · Pilotage</button>
       </nav>
-      <div class="mention">MVP · chaîne de preuve · démonstration</div>
+      <div class="mention">MVP · sept jalons · démonstration</div>
     </header>
 
     <main>
-      <!-- ================================================================ -->
-      <!-- CLIENT                                                           -->
-      <!-- ================================================================ -->
-      <section class="vue visible" id="vue-client">
-        <div class="surtitre">Parcours client</div>
-        <h1>Obtenir un prix ferme, payer, et détenir une preuve</h1>
+      <!-- ============================================================ J1 -->
+      <section class="vue" id="vue-compte">
+        <div class="surtitre">J1 · Compte et vérification d'identité</div>
+        <h1>Aucun prix n'existe avant l'identité</h1>
         <p class="chapeau">
-          Cinq gestes, un seul dossier. Le bon de commande n'existe qu'après l'encaissement :
-          aucun écran ne permet de le créer autrement.
+          Un compte neuf ne voit aucun prix et ne peut pas demander de cotation. Le dépôt des pièces
+          fait monter de palier, et le palier fixe le plafond.
         </p>
+
+        <div class="carte">
+          <h2>Ouvrir un compte</h2>
+          <div class="grille" style="margin-top: 16px">
+            <div class="champ">
+              <label for="c-nom">Nom ou raison sociale</label>
+              <input id="c-nom" value="Dépôt Kintoko" />
+            </div>
+            <div class="champ">
+              <label for="c-tel">Téléphone</label>
+              <input id="c-tel" value="+243 820 001 234" />
+            </div>
+            <div class="champ">
+              <label for="c-type">Type</label>
+              <select id="c-type">
+                <option value="depot">Dépôt</option>
+                <option value="particulier">Particulier</option>
+                <option value="entreprise">Entreprise</option>
+              </select>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="action" id="btn-compte">Créer le compte</button>
+            <button class="discret" id="btn-lister">Voir les comptes</button>
+          </div>
+        </div>
+
+        <div id="compte-courant"></div>
+        <div id="liste-comptes"></div>
+        <div id="compte-erreur"></div>
+      </section>
+
+      <!-- ============================================================ J2 à J7 -->
+      <section class="vue visible" id="vue-client">
+        <div class="surtitre">J2 à J7 · Parcours client</div>
+        <h1>Un prix ferme, un paiement référencé, un bon, une preuve</h1>
+        <p class="chapeau">
+          Cinq gestes, un seul dossier. Le bon de commande n'existe qu'après l'encaissement ;
+          la réception produit l'écart, le litige et le reçu.
+        </p>
+
+        <div class="carte" id="bandeau-client" style="padding: 14px 20px">
+          <span class="note" style="margin: 0">Aucun compte sélectionné — ouvrez un compte dans l'onglet 1.</span>
+        </div>
 
         <div class="etapes" id="etapes">
           <div class="etape courante" data-etape="1"><span class="num">1</span> Demande de cotation</div>
-          <div class="etape" data-etape="2"><span class="num">2</span> Cotation certifiée</div>
+          <div class="etape" data-etape="2"><span class="num">2</span> Cotation</div>
           <div class="etape" data-etape="3"><span class="num">3</span> Paiement</div>
-          <div class="etape" data-etape="4"><span class="num">4</span> Bon de commande</div>
+          <div class="etape" data-etape="4"><span class="num">4</span> Bon</div>
           <div class="etape" data-etape="5"><span class="num">5</span> Réception</div>
+          <div class="etape" data-etape="6"><span class="num">6</span> Reçu</div>
         </div>
 
         <div id="client-erreur"></div>
 
-        <!-- 1 — demande -->
         <div id="bloc-1">
           <div class="carte">
             <h2>Votre commande</h2>
             <div class="grille" style="margin-top: 18px">
-              <div class="champ">
-                <label for="client">Dépôt ou client</label>
-                <input id="client" value="Dépôt Kintoko" />
-              </div>
-              <div class="champ">
-                <label for="telephone">Téléphone</label>
-                <input id="telephone" value="+243 820 001 234" />
-              </div>
               <div class="champ">
                 <label for="produit">Produit</label>
                 <select id="produit"></select>
@@ -74,70 +110,88 @@
             </div>
             <div class="actions">
               <button class="action" id="btn-cotation">Demander une cotation</button>
-              <span class="note" style="margin: 0">Aucun prix n'est affiché avant la cotation.</span>
+              <span class="note" style="margin: 0">Plafond appliqué au total de la cotation.</span>
             </div>
           </div>
         </div>
 
-        <!-- 2 — cotation -->
         <div id="bloc-2" style="display: none"></div>
-
-        <!-- 3 — paiement -->
         <div id="bloc-3" style="display: none"></div>
-
-        <!-- 4 — bon -->
         <div id="bloc-4" style="display: none"></div>
-
-        <!-- 5 — réception -->
         <div id="bloc-5" style="display: none"></div>
+        <div id="bloc-6" style="display: none"></div>
       </section>
 
-      <!-- ================================================================ -->
-      <!-- CONSOLE DE CHARGEMENT                                            -->
-      <!-- ================================================================ -->
+      <!-- ============================================================ J5 -->
       <section class="vue" id="vue-console">
-        <div class="surtitre">Console de chargement</div>
-        <h1>Contrôler le bon avant de charger</h1>
+        <div class="surtitre">J5 · Console de chargement</div>
+        <h1>Contrôler le bon, peser, sceller</h1>
         <p class="chapeau">
-          Le bon est présenté sous deux formes : un QR signé, ou un code de retrait à six chiffres.
-          Une seule utilisation est possible — c'est le second passage qui fait la preuve.
+          Le bon est présenté par son QR signé ou par son code de retrait. Le poids pesé entre dans
+          le dossier de preuve. Une seule utilisation est possible.
         </p>
 
         <div class="carte">
-          <label for="saisie">Saisie du bon</label>
-          <input id="saisie" placeholder="Code à six chiffres, ou contenu du QR" autocomplete="off" />
+          <div class="grille">
+            <div class="champ">
+              <label for="saisie">Saisie du bon</label>
+              <input id="saisie" placeholder="Code à six chiffres, ou contenu du QR" autocomplete="off" />
+            </div>
+            <div class="champ">
+              <label for="poids">Poids pesé (kg)</label>
+              <input id="poids" type="number" value="5000" min="1" step="1" />
+            </div>
+            <div class="champ">
+              <label for="transporteur">Transporteur</label>
+              <input id="transporteur" value="Trans-Kinshasa" />
+            </div>
+            <div class="champ">
+              <label for="plaque">Plaque</label>
+              <input id="plaque" value="KN 4321 CD" />
+            </div>
+          </div>
           <div class="actions">
             <button class="action" id="btn-controle">Contrôler</button>
             <button class="discret" id="btn-scan">Simuler un scan du QR</button>
             <button class="discret" id="btn-vider">Vider</button>
           </div>
-          <p class="note">
-            Le bouton « simuler un scan » place dans le champ le contenu exact du QR du dernier bon émis.
-          </p>
         </div>
 
         <div id="resultat-controle"></div>
       </section>
 
-      <!-- ================================================================ -->
-      <!-- PILOTAGE                                                         -->
-      <!-- ================================================================ -->
+      <!-- ============================================================ J6 -->
+      <section class="vue" id="vue-litiges">
+        <div class="surtitre">J6 · Instruction des litiges</div>
+        <h1>Qui paie les manquants</h1>
+        <p class="chapeau">
+          Un écart hors tolérance ou un scellé rompu ouvre un litige. Il est instruit par une décision
+          motivée, avec un montant retenu et un montant libéré. Rien ne se corrige en silence.
+        </p>
+        <div id="liste-litiges"></div>
+        <div class="actions">
+          <button class="discret" id="btn-rafraichir-litiges">Rafraîchir</button>
+        </div>
+      </section>
+
+      <!-- ============================================================ Pilotage -->
       <section class="vue" id="vue-pilotage">
         <div class="surtitre">Pilotage</div>
         <h1>Ce que la journée a produit</h1>
         <p class="chapeau">
           Compteurs de la base de démonstration. Le montant encaissé n'est pas une recette :
-          c'est la somme des paiements <em>confirmés</em>.
+          c'est la somme des paiements confirmés.
         </p>
         <div class="compteurs" id="compteurs"></div>
         <div class="actions">
           <button class="discret" id="btn-rafraichir">Rafraîchir</button>
         </div>
+        <div id="historique-client" style="margin-top: 24px"></div>
       </section>
     </main>
 
     <div class="pied">
-      APIX All In One · FBB — démonstration MVP. Paiement et échange ERP simulés.
+      APIX All In One · FBB — démonstration MVP. Paiement, vérification d'identité et échange ERP simulés.
     </div>
 
     <script src="app.js"></script>
